@@ -1,5 +1,13 @@
 <div class="header">
   <div class="container">
-    <ng-content></ng-content>
+    <div class="header-box">
+      <div class="logo">
+        <h2><a [routerLink]="['/']">LOGO</a></h2>
+      </div>
+      <div *ngIf="storageService.userLogged">
+        User in system
+        <button (click)="storageService.logout()">Logout</button>
+      </div>
+    </div>
   </div>
 </div>
