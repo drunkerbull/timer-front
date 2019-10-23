@@ -1,0 +1,8 @@
+<h2>register</h2>
+<form [formGroup]="form">
+  <input type="text" placeholder="email" formControlName="email">
+  <input type="text" placeholder="nickname" formControlName="nickname">
+  <input type="password" placeholder="pass" formControlName="pass">
+  <button (click)="register()">Register</button>
+</form>
+

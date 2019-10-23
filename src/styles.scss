@@ -1,1 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+@import '../src/assets/scss/styles';
+
+img {
+  max-width: 100%; /* This rule is very important, please do not ignore this! */
+}
+body{
+  padding: 0;
+  margin: 0;
+}
