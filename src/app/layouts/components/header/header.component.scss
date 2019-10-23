@@ -7,10 +7,12 @@
   display: block;
   background: grey;
 }
-.header-box{
+
+.header-box {
   display: flex;
   align-items: center;
-  .logo{
+
+  .logo {
     margin-right: 16px;
   }
 }

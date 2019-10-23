@@ -6,8 +6,10 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./layouts/guest/guest-routing.module').then(mod => mod.GuestRoutingModule)
-  }, {
+  },
+  {
     path: 'user',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./layouts/user/user-routing.module').then(mod => mod.UserRoutingModule)
   }
 ];

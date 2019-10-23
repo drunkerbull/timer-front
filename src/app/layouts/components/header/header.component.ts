@@ -9,7 +9,7 @@ import {BaseComponent} from '../../../shared/components/base.component';
 export class HeaderComponent extends BaseComponent implements OnInit {
 
   constructor() {
-    super()
+    super();
   }
 
   ngOnInit() {

@@ -22,7 +22,9 @@ export class StorageService {
 
   logout() {
     this.delete(StorageService.USER_TOKEN);
-    this.router.navigate(['/user']);
+    setTimeout(() => {
+      this.router.navigate(['/']);
+    });
   }
 
   get userLogged() {

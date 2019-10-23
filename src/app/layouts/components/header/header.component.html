@@ -5,7 +5,11 @@
         <h2><a [routerLink]="['/']">LOGO</a></h2>
       </div>
       <div *ngIf="storageService.userLogged">
-        User in system
+        <div>
+          <a [routerLink]="['/user/projects']">Projects</a>
+          <a [routerLink]="['/user/messages']">Messages</a>
+          <a [routerLink]="['/user/statistics']">Statistics</a>
+        </div>
         <button (click)="storageService.logout()">Logout</button>
       </div>
     </div>
