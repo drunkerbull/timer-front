@@ -1,1 +1,6 @@
-<p>projects works!</p>
+<button (click)="createRandomProject()">Add random project</button>
+<div>
+  <ul *ngIf="projects">
+    <li *ngFor="let project of projects.reverse()"><a [routerLink]="'/projects/'+project._id">{{project.name + '||' + project._id}}</a></li>
+  </ul>
+</div>
