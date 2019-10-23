@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
-import {BaseHttpService} from '../../shared/services/base-http.service';
+import {BaseHttpService} from '../../../shared/services/base-http.service';
 import {map} from 'rxjs/operators';
-import {IUser} from '../../shared/interfaces/IUser.interface';
-import {IUserLogged} from '../../shared/interfaces/IUserLogged.interface';
+import {IUser} from '../../../shared/interfaces/IUser.interface';
+import {IUserLogged} from '../../../shared/interfaces/IUserLogged.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GuestService {
+export class HomeService {
 
   constructor(public baseHttp: BaseHttpService) {
   }
