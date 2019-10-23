@@ -6,8 +6,8 @@ export class ErrorHandlingService {
   constructor() {
   }
 
-  showError(error){
-    console.log('ERROR:', error)
+  showError(error) {
+    console.log('ERROR:', error);
   }
 
 }

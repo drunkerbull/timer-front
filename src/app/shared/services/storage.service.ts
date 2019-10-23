@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class StorageService {
   static USER_TOKEN: string = 'timer-token';
 
-  constructor() {
+  constructor(public router: Router) {
   }
 
   get(key: string) {
@@ -21,7 +22,13 @@ export class StorageService {
 
   logout() {
     this.delete(StorageService.USER_TOKEN);
+    setTimeout(() => {
+      this.router.navigate(['/']);
+    });
   }
 
+  get userLogged() {
+    return this.get(StorageService.USER_TOKEN);
+  }
 
 }
