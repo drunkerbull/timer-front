@@ -2,13 +2,13 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class StorageService {
-  static USER_COOKIE: string = 'timer-user';
+  static USER_TOKEN: string = 'timer-token';
 
   constructor() {
   }
 
   get(key: string) {
-    return JSON.parse(localStorage.getItem(key));
+    return localStorage.getItem(key);
   }
 
   put(key: string, val: any) {
@@ -20,7 +20,7 @@ export class StorageService {
   }
 
   logout() {
-    this.delete(StorageService.USER_COOKIE);
+    this.delete(StorageService.USER_TOKEN);
   }
 
 
