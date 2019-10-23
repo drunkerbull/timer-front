@@ -1,0 +1,8 @@
+<div>
+  <h3>{{project.name}}</h3>
+  <button (click)="addTask()">+</button>
+</div>
+<h4>tasks</h4>
+<ul *ngIf="!loading">
+  <li *ngFor="let task of project.tasks.reverse()">{{task.name}}</li>
+</ul>
