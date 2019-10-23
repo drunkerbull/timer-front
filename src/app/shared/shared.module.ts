@@ -5,10 +5,17 @@ import {RouterModule} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 import {BaseHttpService} from './services/base-http.service';
 import {StorageService} from './services/storage.service';
+import {HeaderComponent} from '../layouts/components/header/header.component';
+import {ErrorHandlingService} from './services/error-handling.service';
+import {PageComponent} from '../layouts/components/page/page.component';
 
 @NgModule({
-  declarations: [],
-  exports: [],
+  declarations: [
+    HeaderComponent,
+    PageComponent],
+  exports: [
+    HeaderComponent, PageComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -18,6 +25,7 @@ import {StorageService} from './services/storage.service';
   ],
   providers: [
     BaseHttpService,
+    ErrorHandlingService,
     StorageService
   ]
 })
