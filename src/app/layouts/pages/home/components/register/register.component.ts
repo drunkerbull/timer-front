@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {GuestService} from '../../guest.service';
+import {HomeService} from '../../home.service';
 import {FormControl, FormGroup} from '@angular/forms';
-import {IUser} from '../../../../shared/interfaces/IUser.interface';
-import {IUserLogged} from '../../../../shared/interfaces/IUserLogged.interface';
-import {StorageService} from '../../../../shared/services/storage.service';
-import {BaseComponent} from '../../../../shared/components/base.component';
+import {IUser} from '../../../../../shared/interfaces/IUser.interface';
+import {IUserLogged} from '../../../../../shared/interfaces/IUserLogged.interface';
+import {StorageService} from '../../../../../shared/services/storage.service';
+import {BaseComponent} from '../../../../../shared/components/base.component';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +18,7 @@ export class RegisterComponent extends BaseComponent implements OnInit {
     pass: new FormControl('')
   });
 
-  constructor(public guestService: GuestService) {
+  constructor(public homeService: HomeService) {
     super();
   }
 
@@ -27,11 +27,11 @@ export class RegisterComponent extends BaseComponent implements OnInit {
 
   register() {
     const pack = this.form.value;
-    const subRegister = this.guestService.register(pack).subscribe((res: IUser) => {
+    const subRegister = this.homeService.register(pack).subscribe((res: IUser) => {
       const {nickname, ...otherAuthPack} = pack;
-      this.guestService.login(otherAuthPack).subscribe((res: IUserLogged) => {
+      this.homeService.login(otherAuthPack).subscribe((res: IUserLogged) => {
         this.storageService.put(StorageService.USER_TOKEN, res.token);
-        this.router.navigate(['/user']);
+        this.router.navigate(['/']);
       });
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subRegister);

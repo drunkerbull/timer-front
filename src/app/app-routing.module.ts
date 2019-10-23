@@ -5,13 +5,28 @@ import {AuthGuard} from './shared/services/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./layouts/guest/guest-routing.module').then(mod => mod.GuestRoutingModule)
+    loadChildren: () => import('./layouts/pages/home/home-routing.module').then(mod => mod.HomeRoutingModule)
   },
   {
-    path: 'user',
+    path: 'messages',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./layouts/user/user-routing.module').then(mod => mod.UserRoutingModule)
-  }
+    loadChildren: () => import('./layouts/pages/messages/messages-routing.module').then(mod => mod.MessagesRoutingModule)
+  },
+  {
+    path: 'projects',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./layouts/pages/projects/projects-routing.module').then(mod => mod.ProjectsRoutingModule)
+  },
+  {
+    path: 'statistics',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./layouts/pages/statistics/statistics-routing.module').then(mod => mod.StatisticsRoutingModule)
+  },
+  {
+    path: 'settings',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./layouts/pages/settings/settings-routing.module').then(mod => mod.SettingsRoutingModule)
+  },
 ];
 
 @NgModule({
