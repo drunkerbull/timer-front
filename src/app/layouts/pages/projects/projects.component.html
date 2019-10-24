@@ -1,6 +1,22 @@
-<button (click)="createRandomProject()">Add random project</button>
-<div>
+<div class="add-project-box" [ngClass]="{'add-project-box--open':openAddBox}">
+  <span (click)="openAddBox = true">+</span>
+  <form [formGroup]="form">
+    <div class="add-wrapper">
+      <input type="text" placeholder="Name of project" formControlName="name">
+      <div class="add-btn">
+        <button (click)="openAddBox = false">Cancel</button>
+        <button (click)="createProject()">Create project</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="projects-box">
   <ul *ngIf="projects">
-    <li *ngFor="let project of projects.reverse()"><a [routerLink]="'/projects/'+project._id">{{project.name + '||' + project._id}}</a></li>
+    <li *ngFor="let project of projects.reverse()">
+      <a [routerLink]="'/projects/'+project._id" [ngClass]="{'owner': projectOwner(project.owner._id)}">
+        <h3>{{project.name}}</h3>
+        <span>For {{project.owner.nickname}}</span>
+      </a>
+    </li>
   </ul>
 </div>

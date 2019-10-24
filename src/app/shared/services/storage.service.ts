@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
+import {IUser} from '../interfaces/IUser.interface';
 
 @Injectable()
 export class StorageService {
+  static USER_INFO: string = 'timer-user';
   static USER_TOKEN: string = 'timer-token';
-  static USER_REFRESH_TOKEN: string = 'timer-token';
-  _
+  static USER_REFRESH_TOKEN: string = 'timer-refresh-token';
 
   constructor(public router: Router) {
   }
@@ -21,10 +22,12 @@ export class StorageService {
   delete(key: string) {
     localStorage.removeItem(key);
   }
-  setToken(data){
+
+  setToken(data) {
     this.put(StorageService.USER_TOKEN, data.token);
     this.put(StorageService.USER_REFRESH_TOKEN, data.refresh_token);
   }
+
   logout() {
     this.delete(StorageService.USER_TOKEN);
     setTimeout(() => {
@@ -35,5 +38,7 @@ export class StorageService {
   get userLogged() {
     return this.get(StorageService.USER_TOKEN);
   }
-
+  get user(): IUser {
+    return JSON.parse(this.get(StorageService.USER_INFO));
+  }
 }

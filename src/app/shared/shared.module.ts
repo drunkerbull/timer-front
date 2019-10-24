@@ -15,7 +15,8 @@ import {APIInterceptor} from './services/APIInterceptor.service';
     HeaderComponent,
     PageComponent],
   exports: [
-    HeaderComponent, PageComponent
+    HeaderComponent, PageComponent, ReactiveFormsModule, CommonModule,
+    RouterModule
   ],
   imports: [
     CommonModule,
