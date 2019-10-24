@@ -27,6 +27,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
     const pack = this.form.value;
     const subLogin = this.homeService.login(pack).subscribe((res: IUserLogged) => {
       this.storageService.put(StorageService.USER_TOKEN, res.token);
+      this.storageService.put(StorageService.USER_INFO, JSON.stringify(res.user));
       this.router.navigate(['/projects']);
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subLogin);

@@ -4,6 +4,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { ProjectComponent } from './pages/project/project.component';
 import {RouterModule} from '@angular/router';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -12,8 +13,7 @@ import {RouterModule} from '@angular/router';
   ],
   imports: [
     SharedModule,
-    CommonModule,
-    RouterModule
+
   ]
 })
 export class ProjectsModule {

@@ -5,6 +5,7 @@ img {
 body {
   padding: 0;
   margin: 0;
+  background: #f0f0f0;
 }
 
 .container {
@@ -28,5 +29,13 @@ body {
 
   @media (min-width: 1200px) {
     max-width: 1140px;
+  }
+}
+
+ul{
+  padding: 0;
+  margin: 0;
+  li{
+    list-style: none;
   }
 }
