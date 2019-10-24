@@ -1,8 +1,30 @@
-<div>
-  <h3>{{project.name}}</h3>
-  <button (click)="addTask()">+</button>
+<div class="project-info">
+  <h1>{{project.name}}</h1>
+  <p>Owner: {{project.owner.nickname}}</p>
 </div>
-<h4>tasks</h4>
-<ul *ngIf="!loading">
-  <li *ngFor="let task of project.tasks.reverse()">{{task.name}}</li>
+<div class="add-project-box" [ngClass]="{'add-project-box--open':openAddBox}">
+  <span (click)="openAddBox = true">+</span>
+  <form [formGroup]="form">
+    <div class="add-wrapper">
+      <input type="text" placeholder="Name of task" formControlName="name">
+      <input type="text" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Start" formControlName="start">
+      <owl-date-time #dt1></owl-date-time>
+      <input type="text" placeholder="End" formControlName="end">
+      <div class="add-btn">
+        <button (click)="openAddBox = false">Cancel</button>
+        <button (click)="addTask()">Create task</button>
+      </div>
+    </div>
+  </form>
+</div>
+<ul *ngIf="!loading" class="task-list">
+  <li *ngFor="let task of project.tasks.reverse()">
+    <h2>{{task.name}}</h2>
+    <p>Created by: {{task.owner.nickname}}</p>
+    <br>
+    <p>Start:</p>
+    <p>End:</p>
+    <h4>Total:</h4>
+  </li>
 </ul>
+

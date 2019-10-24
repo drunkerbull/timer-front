@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {BaseComponent} from '../../../../../shared/components/base.component';
-import {Project} from '../../../../../shared/interfaces/project.interface';
+import {IProject} from '../../../../../shared/interfaces/IProject.interface';
 import {ActivatedRoute} from '@angular/router';
 import {ProjectsService} from '../../projects.service';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-project',
@@ -10,8 +11,14 @@ import {ProjectsService} from '../../projects.service';
   styleUrls: ['./project.component.scss']
 })
 export class ProjectComponent extends BaseComponent implements OnInit {
-  project: Project;
+  project: IProject;
   loading: boolean = false;
+  openAddBox: boolean = false;
+  form: FormGroup = new FormGroup({
+    name: new FormControl(''),
+    start: new FormControl(''),
+    end: new FormControl(''),
+  });
 
   constructor(public activatedRoute: ActivatedRoute, public projectsService: ProjectsService) {
     super();
@@ -20,7 +27,7 @@ export class ProjectComponent extends BaseComponent implements OnInit {
   addTask() {
     this.loading = true;
     const pack = {
-      name: 'testTaskOKCreate ' + Math.random(),
+      ...this.form.value,
       project: this.project._id
     };
     const subDataAddTask = this.projectsService.addTaskToProject(pack).subscribe((task: any) => {
@@ -31,7 +38,7 @@ export class ProjectComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    const subData = this.activatedRoute.data.subscribe((project: { project: Project }) => {
+    const subData = this.activatedRoute.data.subscribe((project: { project: IProject }) => {
       this.project = project.project;
       this.loading = true;
       const subDataTasks = this.projectsService.getTasksOfProject(this.project._id).subscribe((tasks: any) => {

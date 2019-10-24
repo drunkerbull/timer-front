@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ProjectsService} from './projects.service';
-import {Project} from '../../../shared/interfaces/project.interface';
+import {IProject} from '../../../shared/interfaces/IProject.interface';
 import {FormControl, FormGroup} from '@angular/forms';
 import {BaseComponent} from '../../../shared/components/base.component';
 
@@ -10,7 +10,7 @@ import {BaseComponent} from '../../../shared/components/base.component';
   styleUrls: ['./projects.component.scss']
 })
 export class ProjectsComponent extends BaseComponent implements OnInit {
-  projects: Project[];
+  projects: IProject[];
   openAddBox: boolean = false;
   form: FormGroup = new FormGroup({
     name: new FormControl('')

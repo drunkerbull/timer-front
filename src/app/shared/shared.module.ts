@@ -9,6 +9,8 @@ import {HeaderComponent} from '../layouts/components/header/header.component';
 import {ErrorHandlingService} from './services/error-handling.service';
 import {PageComponent} from '../layouts/components/page/page.component';
 import {APIInterceptor} from './services/APIInterceptor.service';
+import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -16,14 +18,17 @@ import {APIInterceptor} from './services/APIInterceptor.service';
     PageComponent],
   exports: [
     HeaderComponent, PageComponent, ReactiveFormsModule, CommonModule,
-    RouterModule
+    RouterModule,  OwlDateTimeModule,
+    OwlNativeDateTimeModule,
   ],
   imports: [
     CommonModule,
     FormsModule,
     RouterModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
   ],
   providers: [
     {
