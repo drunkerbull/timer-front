@@ -1,11 +1,12 @@
 import {IUser} from './IUser.interface';
+import {ITasks} from './ITasks.interface';
 
-export interface Project {
+export interface IProject {
   _id: string,
   createdAt: string,
   updatedAt: string,
   name: string,
   owner: IUser,
-  tasks?: any[],
+  tasks: ITasks[],
   workers: string[]
 }

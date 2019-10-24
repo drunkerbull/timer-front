@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BaseHttpService} from '../../../shared/services/base-http.service';
 import {map} from 'rxjs/operators';
-import {Project} from '../../../shared/interfaces/project.interface';
+import {IProject} from '../../../shared/interfaces/IProject.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +13,17 @@ export class ProjectsService {
 
   projects() {
     return this.baseHttp.get('/projects')
-      .pipe(map(resp => resp as Project[]));
+      .pipe(map(resp => resp as IProject[]));
   }
 
   createProject(pack) {
     return this.baseHttp.post('/projects', pack)
-      .pipe(map(resp => resp as Project));
+      .pipe(map(resp => resp as IProject));
   }
 
   getProject(id) {
     return this.baseHttp.get('/projects/' + id)
-      .pipe(map(resp => resp as Project));
+      .pipe(map(resp => resp as IProject));
   }
   getTasksOfProject(id){
     return this.baseHttp.get('/projects/' + id + '/tasks')

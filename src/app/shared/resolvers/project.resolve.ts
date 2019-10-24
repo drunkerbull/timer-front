@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve} from '@angular/router';
-import {Project} from '../interfaces/project.interface';
+import {IProject} from '../interfaces/IProject.interface';
 import {ProjectsService} from '../../layouts/pages/projects/projects.service';
 import {BaseComponent} from '../components/base.component';
 import {catchError} from 'rxjs/operators';
@@ -10,7 +10,7 @@ import {Observable, of} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ProjectResolve extends BaseComponent implements Resolve<Project> {
+export class ProjectResolve extends BaseComponent implements Resolve<IProject> {
 
   constructor(public projectsService: ProjectsService) {
     super();
