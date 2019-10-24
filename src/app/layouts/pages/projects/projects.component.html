@@ -12,7 +12,7 @@
 </div>
 <div class="projects-box">
   <ul *ngIf="projects">
-    <li *ngFor="let project of projects.reverse()">
+    <li *ngFor="let project of projects">
       <a [routerLink]="'/projects/'+project._id" [ngClass]="{'owner': projectOwner(project.owner._id)}">
         <h3>{{project.name}}</h3>
         <span>For {{project.owner.nickname}}</span>
