@@ -31,7 +31,7 @@ export class RegisterComponent extends BaseComponent implements OnInit {
       const {nickname, ...otherAuthPack} = pack;
       this.homeService.login(otherAuthPack).subscribe((res: IUserLogged) => {
         this.storageService.put(StorageService.USER_TOKEN, res.token);
-        this.storageService.put(StorageService.USER_INFO, res.user);
+        this.storageService.put(StorageService.USER_INFO, JSON.stringify(res.user));
         this.router.navigate(['/projects']);
       });
     }, (err) => this.errorHandlingService.showError(err));

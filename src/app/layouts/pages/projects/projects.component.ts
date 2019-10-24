@@ -40,7 +40,7 @@ export class ProjectsComponent extends BaseComponent implements OnInit {
 
   getProjects() {
     const subGetProjects = this.projectsService.projects().subscribe(res => {
-      this.projects = res;
+      this.projects = res.reverse();
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subGetProjects);
   }

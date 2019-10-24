@@ -25,13 +25,24 @@ export class ProjectsService {
     return this.baseHttp.get('/projects/' + id)
       .pipe(map(resp => resp as IProject));
   }
-  getTasksOfProject(id){
+
+  getTasksOfProject(id) {
     return this.baseHttp.get('/projects/' + id + '/tasks')
       .pipe(map(resp => resp as any));
   }
 
-  addTaskToProject(pack){
-    return this.baseHttp.post('/tasks',pack)
+  addTaskToProject(pack) {
+    return this.baseHttp.post('/tasks', pack)
+      .pipe(map(resp => resp as any));
+  }
+
+  startTimer(id, pack) {
+    return this.baseHttp.post('/tasks/' + id + '/timer', pack)
+      .pipe(map(resp => resp as any));
+  }
+
+  stopTimer(id, pack) {
+    return this.baseHttp.put('/tasks/' + id + '/timer', pack)
       .pipe(map(resp => resp as any));
   }
 }
