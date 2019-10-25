@@ -37,11 +37,22 @@ export class ProjectsService {
   }
 
   updateTask(id, pack) {
-    return this.baseHttp.put('/tasks/' + id , pack)
+    return this.baseHttp.put('/tasks/' + id, pack)
       .pipe(map(resp => resp as any));
   }
- deleteTask(id) {
+
+  deleteTask(id) {
     return this.baseHttp.delete('/tasks/' + id)
+      .pipe(map(resp => resp as any));
+  }
+
+  addWorker(id, pack) {
+    return this.baseHttp.post('/projects/' + id + '/worker', pack)
+      .pipe(map(resp => resp as any));
+  }
+
+  deleteWorker(id, pack) {
+    return this.baseHttp.delete('/projects/' + id + '/worker/' +pack._id)
       .pipe(map(resp => resp as any));
   }
 }

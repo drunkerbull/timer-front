@@ -1,6 +1,19 @@
 <div class="project-info" [ngClass]="{'owner': storageService.user._id === project.owner._id}">
   <h1>{{project.name}}</h1>
   <p>Owner: {{project.owner.nickname}}</p>
+  <hr>
+  <div>
+    <div>
+      <input type="text" [(ngModel)]="newWorker">
+      <button (click)="addWorker()">AddWorker</button>
+    </div>
+    Workers:
+    <ul>
+      <li *ngFor="let worker of project.workers; let i = index">{{i +1}}) {{worker.nickname}} <button (click)="deleteWorker(worker,i)">DeleteWorker</button></li>
+    </ul>
+
+  </div>
+
 </div>
 <div class="add-project-box" [ngClass]="{'add-project-box--open':openAddBox}">
   <span (click)="openAddBox = true">+</span>
