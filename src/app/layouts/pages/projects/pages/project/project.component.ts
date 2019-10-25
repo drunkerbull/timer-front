@@ -18,15 +18,16 @@ export class ProjectComponent extends BaseComponent implements OnInit {
   project: IProject;
   loading: boolean = false;
   openAddBox: boolean = false;
-  form: FormGroup = new FormGroup({
-    name: new FormControl(''),
-    start: new FormControl(''),
-    end: new FormControl(''),
-  });
+  name: string = null;
+  start: string = null;
+  end: string = null;
   currentTimer: any = null;
   timerNow: string = '00:00:00';
   timerTimeout: any = null;
-
+  datePickerConfig = {
+    locale: 'en',
+    format: "DD-MM-YYYY HH:mm:ss"
+  };
 
   constructor(public activatedRoute: ActivatedRoute, public projectsService: ProjectsService) {
     super();
@@ -37,12 +38,12 @@ export class ProjectComponent extends BaseComponent implements OnInit {
   addTask() {
     this.loading = true;
     const pack = {
-      name: this.form.value.name,
+      name: this.name,
       total: 0,
       project: this.project._id
     };
-    if (this.form.value.start && this.form.value.end) {
-      pack.total = moment(this.form.value.end).diff(moment(this.form.value.start));
+    if (this.start && this.end) {
+      pack.total = moment(this.end).diff(moment(this.start));
     }
     const subDataAddTask = this.projectsService.addTaskToProject(pack).subscribe((task: any) => {
       task.owner = this.storageService.user;
