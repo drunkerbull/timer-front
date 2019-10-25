@@ -26,7 +26,7 @@ export class ProjectComponent extends BaseComponent implements OnInit {
   currentTimer: any = null;
   timerNow: string = '00:00:00';
   timerTimeout: any = null;
-
+  newWorker: string = '';
 
   constructor(public activatedRoute: ActivatedRoute, public projectsService: ProjectsService) {
     super();
@@ -37,6 +37,23 @@ export class ProjectComponent extends BaseComponent implements OnInit {
     this.form.get(name).setValue(event);
   }
 
+  deleteWorker(worker, i) {
+    const subDeleteWorker = this.projectsService.deleteWorker(this.project._id, worker).subscribe(res => {
+      this.project.workers.splice(i, 1);
+    }, (err) => this.errorHandlingService.showError(err));
+    this.someSubscriptions.add(subDeleteWorker);
+  }
+
+  addWorker() {
+    const pack = {
+      email: this.newWorker
+    };
+    const subAddWorker = this.projectsService.addWorker(this.project._id, pack).subscribe(res => {
+      this.project.workers.push(res);
+    }, (err) => this.errorHandlingService.showError(err));
+    this.someSubscriptions.add(subAddWorker);
+  }
+
   addTask() {
     this.loading = true;
     const pack = {
@@ -45,13 +62,13 @@ export class ProjectComponent extends BaseComponent implements OnInit {
       project: this.project._id
     };
     if (this.form.value.start && this.form.value.end) {
-      pack.total = moment(this.form.value.end, 'DD-MM-YYYY HH:mm').diff(moment(this.form.value.start,'DD-MM-YYYY HH:mm'));
+      pack.total = moment(this.form.value.end, 'DD-MM-YYYY HH:mm').diff(moment(this.form.value.start, 'DD-MM-YYYY HH:mm'));
     }
     const subDataAddTask = this.projectsService.addTaskToProject(pack).subscribe((task: any) => {
       task.owner = this.storageService.user;
       this.project.tasks.unshift(task);
       this.loading = false;
-    });
+    }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subDataAddTask);
   }
 
@@ -60,7 +77,7 @@ export class ProjectComponent extends BaseComponent implements OnInit {
       this.project = project.project;
       this.loading = true;
       this.getTasks();
-    });
+    }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subData);
   }
 
@@ -75,7 +92,7 @@ export class ProjectComponent extends BaseComponent implements OnInit {
         }
       }
       this.loading = false;
-    });
+    }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subDataTasks);
 
   }
@@ -91,28 +108,33 @@ export class ProjectComponent extends BaseComponent implements OnInit {
 
   startTimer(task, i) {
     const time = moment().format();
-    this.projectsService.updateTask(task._id, {timerStarted: time}).subscribe((resTask) => {
+    const updateTimerStart = this.projectsService.updateTask(task._id, {timerStarted: time}).subscribe((resTask) => {
       this.currentTimer = time;
       this.project.tasks[i].timerStarted = time;
       this.timerTimeout = setInterval(() => this.updateTimer(), 1000);
-    });
+    }, (err) => this.errorHandlingService.showError(err));
+    this.someSubscriptions.add(updateTimerStart);
   }
 
   deleteTask(task, i) {
-    this.projectsService.deleteTask(task._id).subscribe((res) => {
+    const updateTaskDelete = this.projectsService.deleteTask(task._id).subscribe((res) => {
       this.project.tasks.splice(i, 1);
-    });
+    }, (err) => this.errorHandlingService.showError(err));
+    this.someSubscriptions.add(updateTaskDelete);
   }
 
   stopTimer(task, i) {
     const total = task.total + moment().diff(moment(task.timerStarted));
-    this.projectsService.updateTask(task._id, {timerStarted: '', total}).subscribe((resTask) => {
-      console.log('this task with start and stop timer');
+    const updateTimerStop = this.projectsService.updateTask(task._id, {
+      timerStarted: '',
+      total
+    }).subscribe((resTask) => {
       clearInterval(this.timerTimeout);
       this.timerNow = '00:00:00';
       this.project.tasks[i].timerStarted = resTask.timerStarted;
       this.project.tasks[i].total = resTask.total;
       this.currentTimer = null;
-    });
+    }, (err) => this.errorHandlingService.showError(err));
+    this.someSubscriptions.add(updateTimerStop);
   }
 }

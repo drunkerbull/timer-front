@@ -8,5 +8,5 @@ export interface IProject {
   name: string,
   owner: IUser,
   tasks: ITasks[],
-  workers: string[]
+  workers: IUser[]
 }
