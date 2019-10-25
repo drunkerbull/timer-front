@@ -9,22 +9,22 @@ import {HeaderComponent} from '../layouts/components/header/header.component';
 import {ErrorHandlingService} from './services/error-handling.service';
 import {PageComponent} from '../layouts/components/page/page.component';
 import {APIInterceptor} from './services/APIInterceptor.service';
-import {DpDatePickerModule} from 'ng2-jalali-date-picker';
+import {DatetimepickerComponent} from '../layouts/components/datetimepicker/datetimepicker.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
+    DatetimepickerComponent,
     PageComponent],
   exports: [
     HeaderComponent, PageComponent, ReactiveFormsModule, CommonModule,
-    RouterModule, FormsModule, DpDatePickerModule
+    RouterModule, FormsModule, DatetimepickerComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     RouterModule,
     HttpClientModule,
-    DpDatePickerModule,
     ReactiveFormsModule,
 
   ],

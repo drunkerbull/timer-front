@@ -18,32 +18,34 @@ export class ProjectComponent extends BaseComponent implements OnInit {
   project: IProject;
   loading: boolean = false;
   openAddBox: boolean = false;
-  name: string = null;
-  start: string = null;
-  end: string = null;
+  form: FormGroup = new FormGroup({
+    name: new FormControl(''),
+    start: new FormControl(''),
+    end: new FormControl(''),
+  });
   currentTimer: any = null;
   timerNow: string = '00:00:00';
   timerTimeout: any = null;
-  datePickerConfig = {
-    locale: 'en',
-    format: "DD-MM-YYYY HH:mm:ss"
-  };
+
 
   constructor(public activatedRoute: ActivatedRoute, public projectsService: ProjectsService) {
     super();
 
   }
 
+  changePicker(name, event) {
+    this.form.get(name).setValue(event);
+  }
 
   addTask() {
     this.loading = true;
     const pack = {
-      name: this.name,
+      name: this.form.value.name,
       total: 0,
       project: this.project._id
     };
-    if (this.start && this.end) {
-      pack.total = moment(this.end).diff(moment(this.start));
+    if (this.form.value.start && this.form.value.end) {
+      pack.total = moment(this.form.value.end, 'DD-MM-YYYY HH:mm').diff(moment(this.form.value.start,'DD-MM-YYYY HH:mm'));
     }
     const subDataAddTask = this.projectsService.addTaskToProject(pack).subscribe((task: any) => {
       task.owner = this.storageService.user;
@@ -91,8 +93,7 @@ export class ProjectComponent extends BaseComponent implements OnInit {
     const time = moment().format();
     this.projectsService.updateTask(task._id, {timerStarted: time}).subscribe((resTask) => {
       this.currentTimer = time;
-      this.project.tasks[i] = resTask;
-      console.log(task);
+      this.project.tasks[i].timerStarted = time;
       this.timerTimeout = setInterval(() => this.updateTimer(), 1000);
     });
   }
@@ -109,7 +110,8 @@ export class ProjectComponent extends BaseComponent implements OnInit {
       console.log('this task with start and stop timer');
       clearInterval(this.timerTimeout);
       this.timerNow = '00:00:00';
-      this.project.tasks[i] = resTask;
+      this.project.tasks[i].timerStarted = resTask.timerStarted;
+      this.project.tasks[i].total = resTask.total;
       this.currentTimer = null;
     });
   }
