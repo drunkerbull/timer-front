@@ -1,15 +1,24 @@
 <div class="project-info" [ngClass]="{'owner': storageService.user._id === project.owner._id}">
-  <h1>{{project.name}}</h1>
+  <h1>{{project.name}}
+
+  </h1>
+  <input type="text" [(ngModel)]="project.name" *ngIf="changeProjectMode">
+  <div *ngIf="storageService.user._id === project.owner._id">
+    <button (click)="changeProject()">ChangeProject</button>
+    <button (click)="deleteProject()">DeleteProject</button>
+  </div>
   <p>Owner: {{project.owner.nickname}}</p>
   <hr>
   <div>
     <div>
-      <input type="text" [(ngModel)]="newWorker">
+      <input type="text" placeholder="email" [(ngModel)]="newWorker">
       <button (click)="addWorker()">AddWorker</button>
     </div>
     Workers:
     <ul>
-      <li *ngFor="let worker of project.workers; let i = index">{{i +1}}) {{worker.nickname}} <button (click)="deleteWorker(worker,i)">DeleteWorker</button></li>
+      <li *ngFor="let worker of project.workers; let i = index">{{i + 1}}) {{worker.nickname}}
+        <button *ngIf="worker._id !== project.owner._id" (click)="deleteWorker(worker,i)">DeleteWorker</button>
+      </li>
     </ul>
 
   </div>
@@ -18,12 +27,12 @@
 <div class="add-project-box" [ngClass]="{'add-project-box--open':openAddBox}">
   <span (click)="openAddBox = true">+</span>
   <form [formGroup]="form" *ngIf="openAddBox">
-    <div class="add-wrapper" >
+    <div class="add-wrapper">
       <input type="text" placeholder="Name of task" formControlName="name">
       <app-datetimepicker [placeholder]="'start'" (changeEl)="changePicker('start',$event)"></app-datetimepicker>
       <app-datetimepicker [placeholder]="'end'" (changeEl)="changePicker('end',$event)"></app-datetimepicker>
       <div class="add-btn">
-        <button (click)="openAddBox = false">Cancel</button>
+        <button (click)="openAddBox = false;form.reset()">Cancel</button>
         <button (click)="addTask()">Create task</button>
       </div>
     </div>
