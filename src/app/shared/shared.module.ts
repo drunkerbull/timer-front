@@ -9,18 +9,7 @@ import {HeaderComponent} from '../layouts/components/header/header.component';
 import {ErrorHandlingService} from './services/error-handling.service';
 import {PageComponent} from '../layouts/components/page/page.component';
 import {APIInterceptor} from './services/APIInterceptor.service';
-import {OWL_DATE_TIME_FORMATS, OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
-import {OwlMomentDateTimeModule} from 'ng-pick-datetime-moment';
-
-export const owlMomentFormat = {
-  parseInput: 'l LT',
-  fullPickerInput: 'DD-MM-YYYY HH:mm:ss',
-  datePickerInput: 'DD-MM-YYYY',
-  timePickerInput: 'HH:mm:ss',
-  monthYearLabel: 'MMM YYYY',
-  dateA11yLabel: 'LL',
-  monthYearA11yLabel: 'MMMM YYYY',
-};
+import {DpDatePickerModule} from 'ng2-jalali-date-picker';
 
 @NgModule({
   declarations: [
@@ -28,18 +17,16 @@ export const owlMomentFormat = {
     PageComponent],
   exports: [
     HeaderComponent, PageComponent, ReactiveFormsModule, CommonModule,
-    RouterModule, OwlDateTimeModule,
-    OwlNativeDateTimeModule, FormsModule, OwlMomentDateTimeModule
+    RouterModule, FormsModule, DpDatePickerModule
   ],
   imports: [
     CommonModule,
     FormsModule,
     RouterModule,
     HttpClientModule,
+    DpDatePickerModule,
     ReactiveFormsModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
-    OwlMomentDateTimeModule
+
   ],
   providers: [
     {
@@ -47,7 +34,6 @@ export const owlMomentFormat = {
       useClass: APIInterceptor,
       multi: true
     },
-    {provide: OWL_DATE_TIME_FORMATS, useValue: owlMomentFormat},
     BaseHttpService,
     ErrorHandlingService,
     StorageService

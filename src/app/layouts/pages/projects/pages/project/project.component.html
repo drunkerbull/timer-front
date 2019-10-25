@@ -4,19 +4,25 @@
 </div>
 <div class="add-project-box" [ngClass]="{'add-project-box--open':openAddBox}">
   <span (click)="openAddBox = true">+</span>
-  <form [formGroup]="form">
     <div class="add-wrapper">
-      <input type="text" placeholder="Name of task" formControlName="name">
-      <input type="text" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Start" formControlName="start">
-      <owl-date-time #dt1></owl-date-time>
-      <input type="text" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" placeholder="End" formControlName="end">
-      <owl-date-time #dt2></owl-date-time>
+      <input type="text" placeholder="Name of task"   [(ngModel)]="name">
+      <dp-date-picker
+          [(ngModel)]="start"
+          theme='dp-material'
+          mode='daytime'
+          [config]="datePickerConfig">
+      </dp-date-picker>
+      <dp-date-picker
+          [(ngModel)]="end"
+          theme='dp-material'
+          mode='daytime'
+          [config]="datePickerConfig">
+      </dp-date-picker>
       <div class="add-btn">
         <button (click)="openAddBox = false">Cancel</button>
         <button (click)="addTask()">Create task</button>
       </div>
     </div>
-  </form>
 </div>
 <ul *ngIf="!loading" class="task-list">
   <li *ngFor="let task of project.tasks; let i = index">
