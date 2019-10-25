@@ -7,10 +7,11 @@ import {SharedModule} from './shared/shared.module';
 import {AppInjector} from './shared/services/app-injector.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
+import { DatetimepickerComponent } from './layouts/components/datetimepicker/datetimepicker.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -18,6 +19,8 @@ import {ToastrModule} from 'ngx-toastr';
     AppRoutingModule,
     SharedModule,
     ToastrModule.forRoot()
+  ],
+  exports: [
   ],
   bootstrap: [AppComponent]
 })

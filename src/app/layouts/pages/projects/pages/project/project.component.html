@@ -4,25 +4,17 @@
 </div>
 <div class="add-project-box" [ngClass]="{'add-project-box--open':openAddBox}">
   <span (click)="openAddBox = true">+</span>
-    <div class="add-wrapper">
-      <input type="text" placeholder="Name of task"   [(ngModel)]="name">
-      <dp-date-picker
-          [(ngModel)]="start"
-          theme='dp-material'
-          mode='daytime'
-          [config]="datePickerConfig">
-      </dp-date-picker>
-      <dp-date-picker
-          [(ngModel)]="end"
-          theme='dp-material'
-          mode='daytime'
-          [config]="datePickerConfig">
-      </dp-date-picker>
+  <form [formGroup]="form" *ngIf="openAddBox">
+    <div class="add-wrapper" >
+      <input type="text" placeholder="Name of task" formControlName="name">
+      <app-datetimepicker (changeEl)="changePicker('start',$event)"></app-datetimepicker>
+      <app-datetimepicker (changeEl)="changePicker('end',$event)"></app-datetimepicker>
       <div class="add-btn">
         <button (click)="openAddBox = false">Cancel</button>
         <button (click)="addTask()">Create task</button>
       </div>
     </div>
+  </form>
 </div>
 <ul *ngIf="!loading" class="task-list">
   <li *ngFor="let task of project.tasks; let i = index">
