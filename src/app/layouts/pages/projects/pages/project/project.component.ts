@@ -22,6 +22,7 @@ export class ProjectComponent extends BaseComponent implements OnInit {
     name: new FormControl(''),
     start: new FormControl(''),
     end: new FormControl(''),
+    worker: new FormControl('')
   });
   currentTimer: any = null;
   timerNow: string = '00:00:00';
@@ -80,6 +81,7 @@ export class ProjectComponent extends BaseComponent implements OnInit {
     this.loading = true;
     const pack = {
       name: this.form.value.name,
+      worker: this.project.workers[this.form.value.worker],
       total: 0,
       project: this.project._id
     };
@@ -88,6 +90,7 @@ export class ProjectComponent extends BaseComponent implements OnInit {
     }
     const subDataAddTask = this.projectsService.addTaskToProject(pack).subscribe((task: any) => {
       task.owner = this.storageService.user;
+      task.worker = this.project.workers[this.form.value.worker];
       this.project.tasks.unshift(task);
       this.loading = false;
       this.openAddBox = false
