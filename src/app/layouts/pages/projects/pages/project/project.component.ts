@@ -5,6 +5,9 @@ import {ActivatedRoute} from '@angular/router';
 import {ProjectsService} from '../../projects.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import * as moment from 'moment';
+import * as momentFormat from 'moment-duration-format';
+
+momentFormat(moment);
 
 @Component({
   selector: 'app-project',
@@ -21,18 +24,26 @@ export class ProjectComponent extends BaseComponent implements OnInit {
     end: new FormControl(''),
   });
   currentTimer: any = null;
+  timerNow: string = '00:00:00';
+  timerTimeout: any = null;
+
 
   constructor(public activatedRoute: ActivatedRoute, public projectsService: ProjectsService) {
     super();
+
   }
 
 
   addTask() {
     this.loading = true;
     const pack = {
-      ...this.form.value,
+      name: this.form.value.name,
+      total: 0,
       project: this.project._id
     };
+    if (this.form.value.start && this.form.value.end) {
+      pack.total = moment(this.form.value.end).diff(moment(this.form.value.start));
+    }
     const subDataAddTask = this.projectsService.addTaskToProject(pack).subscribe((task: any) => {
       task.owner = this.storageService.user;
       this.project.tasks.unshift(task);
@@ -45,67 +56,60 @@ export class ProjectComponent extends BaseComponent implements OnInit {
     const subData = this.activatedRoute.data.subscribe((project: { project: IProject }) => {
       this.project = project.project;
       this.loading = true;
-      const subDataTasks = this.projectsService.getTasksOfProject(this.project._id).subscribe((tasks: any) => {
-        this.project.tasks = tasks.reverse();
-        for(let i = 0; i < this.project.tasks.length; i++){
-          const task =  this.project.tasks[i];
-          const lastTimer = task.timers[task.timers.length - 1];
-          if (!lastTimer.end) {
-            const {start} = lastTimer;
-            this.currentTimer = {
-              start,
-              taskIndex: i,
-              index: task.timers.length - 1,
-              end: moment().format('YYYY-MM-DD HH:mm:ss')
-            };
-            break
-          }
-        }
-        this.loading = false;
-      });
-      this.someSubscriptions.add(subDataTasks);
+      this.getTasks();
     });
     this.someSubscriptions.add(subData);
   }
 
-
-  timer() {
+  getTasks() {
+    const subDataTasks = this.projectsService.getTasksOfProject(this.project._id).subscribe((tasks: any) => {
+      this.project.tasks = tasks.reverse();
+      for (let i = 0; i < this.project.tasks.length; i++) {
+        if (this.project.tasks[i].timerStarted) {
+          this.currentTimer = this.project.tasks[i].timerStarted;
+          this.timerTimeout = setInterval(() => this.updateTimer(), 1000);
+          break;
+        }
+      }
+      this.loading = false;
+    });
+    this.someSubscriptions.add(subDataTasks);
 
   }
 
-  startTimer(taskId,index) {
-    this.currentTimer = {
-      start: moment().format('YYYY-MM-DD HH:mm:ss'),
-      index: null,
-      taskIndex: index,
-      end: null
-    };
-    this.projectsService.startTimer(taskId, this.currentTimer).subscribe((task) => {
-      this.project.tasks[index] = task
+  updateTimer() {
+    this.timerNow = this.getTime(moment.duration(moment().diff(moment(this.currentTimer))));
+  }
+
+  getTime(time) {
+    // @ts-ignore
+    return moment.duration(time).format('HH:mm:ss', {trim: false});
+  }
+
+  startTimer(task, i) {
+    const time = moment().format();
+    this.projectsService.updateTask(task._id, {timerStarted: time}).subscribe((resTask) => {
+      this.currentTimer = time;
+      this.project.tasks[i] = resTask;
+      console.log(task);
+      this.timerTimeout = setInterval(() => this.updateTimer(), 1000);
     });
   }
 
-  stopTimer(taskId, index) {
-    const timers = this.project.tasks[index].timers;
-    if (!this.currentTimer) {
-      const lastTimer = timers[timers.length - 1];
-      if (!lastTimer.end) {
-        const {start} = lastTimer;
-        this.currentTimer = {
-          start,
-          taskIndex: index,
-          index: timers.length - 1,
-          end: moment().format('YYYY-MM-DD HH:mm:ss')
-        };
-      }
-    } else {
-      this.currentTimer.index = timers.length > 0 ? timers.length - 1 : 0;
-      this.currentTimer.end = moment().format('YYYY-MM-DD HH:mm:ss');
-    }
-    this.projectsService.stopTimer(taskId, this.currentTimer).subscribe((task) => {
+  deleteTask(task, i) {
+    this.projectsService.deleteTask(task._id).subscribe((res) => {
+      this.project.tasks.splice(i, 1);
+    });
+  }
+
+  stopTimer(task, i) {
+    const total = task.total + moment().diff(moment(task.timerStarted));
+    this.projectsService.updateTask(task._id, {timerStarted: '', total}).subscribe((resTask) => {
       console.log('this task with start and stop timer');
-      this.project.tasks[index] = task
-      this.currentTimer = null
+      clearInterval(this.timerTimeout);
+      this.timerNow = '00:00:00';
+      this.project.tasks[i] = resTask;
+      this.currentTimer = null;
     });
   }
 }

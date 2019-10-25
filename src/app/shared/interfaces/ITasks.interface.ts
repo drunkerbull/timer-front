@@ -6,7 +6,8 @@ export interface ITasks {
   name: string,
   project: string | IProject,
   owner: IUser,
-  timers: any[],
+  timerStarted:string,
+  total:number,
   createdAt: string,
   updatedAt: string
 }

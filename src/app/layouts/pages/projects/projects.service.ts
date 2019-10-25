@@ -36,13 +36,12 @@ export class ProjectsService {
       .pipe(map(resp => resp as any));
   }
 
-  startTimer(id, pack) {
-    return this.baseHttp.post('/tasks/' + id + '/timer', pack)
+  updateTask(id, pack) {
+    return this.baseHttp.put('/tasks/' + id , pack)
       .pipe(map(resp => resp as any));
   }
-
-  stopTimer(id, pack) {
-    return this.baseHttp.put('/tasks/' + id + '/timer', pack)
+ deleteTask(id) {
+    return this.baseHttp.delete('/tasks/' + id)
       .pipe(map(resp => resp as any));
   }
 }
