@@ -31,6 +31,12 @@
       <input type="text" placeholder="Name of task" formControlName="name">
       <app-datetimepicker [placeholder]="'start'" (changeEl)="changePicker('start',$event)"></app-datetimepicker>
       <app-datetimepicker [placeholder]="'end'" (changeEl)="changePicker('end',$event)"></app-datetimepicker>
+      <label>
+        Who work on task?
+        <select formControlName="worker">
+          <option *ngFor="let worker of project.workers; let i = index" [value]="i">{{worker.nickname}}</option>
+        </select>
+      </label>
       <div class="add-btn">
         <button (click)="openAddBox = false;form.reset()">Cancel</button>
         <button (click)="addTask()">Create task</button>
@@ -45,6 +51,7 @@
         <div>
           <h2>{{task.name}}</h2>
           <p>Created by: {{task.owner.nickname}}</p>
+          <p>Worker: {{task.worker.nickname}}</p>
         </div>
         <div>
           <button (click)="deleteTask(task,i)">Delete</button>
@@ -55,7 +62,7 @@
         <h4>Total:  {{getTime(task.total)}}</h4>
       </div>
     </div>
-    <div class="task-timer" *ngIf="task.timerStarted || !currentTimer">
+    <div class="task-timer" *ngIf="task.worker._id === storageService.user._id &&(task.timerStarted || !currentTimer)">
       <div class="time">
         {{timerNow}}
       </div>
