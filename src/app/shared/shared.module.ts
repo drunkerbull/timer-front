@@ -9,8 +9,18 @@ import {HeaderComponent} from '../layouts/components/header/header.component';
 import {ErrorHandlingService} from './services/error-handling.service';
 import {PageComponent} from '../layouts/components/page/page.component';
 import {APIInterceptor} from './services/APIInterceptor.service';
-import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {OWL_DATE_TIME_FORMATS, OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
+import {OwlMomentDateTimeModule} from 'ng-pick-datetime-moment';
+
+export const owlMomentFormat = {
+  parseInput: 'l LT',
+  fullPickerInput: 'DD-MM-YYYY HH:mm:ss',
+  datePickerInput: 'DD-MM-YYYY',
+  timePickerInput: 'HH:mm:ss',
+  monthYearLabel: 'MMM YYYY',
+  dateA11yLabel: 'LL',
+  monthYearA11yLabel: 'MMMM YYYY',
+};
 
 @NgModule({
   declarations: [
@@ -18,8 +28,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     PageComponent],
   exports: [
     HeaderComponent, PageComponent, ReactiveFormsModule, CommonModule,
-    RouterModule,  OwlDateTimeModule,
-    OwlNativeDateTimeModule,
+    RouterModule, OwlDateTimeModule,
+    OwlNativeDateTimeModule, FormsModule, OwlMomentDateTimeModule
   ],
   imports: [
     CommonModule,
@@ -29,6 +39,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    OwlMomentDateTimeModule
   ],
   providers: [
     {
@@ -36,6 +47,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
       useClass: APIInterceptor,
       multi: true
     },
+    {provide: OWL_DATE_TIME_FORMATS, useValue: owlMomentFormat},
     BaseHttpService,
     ErrorHandlingService,
     StorageService

@@ -24,9 +24,6 @@ export class ProjectsComponent extends BaseComponent implements OnInit {
     this.getProjects();
   }
 
-  projectOwner(id) {
-    return id === this.storageService.user._id
-  }
 
   createProject() {
     const pack = this.form.value;

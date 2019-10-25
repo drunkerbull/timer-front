@@ -13,7 +13,7 @@
 <div class="projects-box">
   <ul *ngIf="projects">
     <li *ngFor="let project of projects">
-      <a [routerLink]="'/projects/'+project._id" [ngClass]="{'owner': projectOwner(project.owner._id)}">
+      <a [routerLink]="'/projects/'+project._id" [ngClass]="{'owner': project.owner._id === storageService.user._id}">
         <h3>{{project.name}}</h3>
         <span>For {{project.owner.nickname}}</span>
       </a>
