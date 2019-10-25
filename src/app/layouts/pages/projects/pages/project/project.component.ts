@@ -27,10 +27,32 @@ export class ProjectComponent extends BaseComponent implements OnInit {
   timerNow: string = '00:00:00';
   timerTimeout: any = null;
   newWorker: string = '';
+  changeProjectMode: boolean = false;
 
   constructor(public activatedRoute: ActivatedRoute, public projectsService: ProjectsService) {
     super();
 
+  }
+
+  deleteProject() {
+    const subDeleteProject = this.projectsService.deleteProject(this.project._id).subscribe(res => {
+      this.router.navigate(['/projects']);
+    },(err) => this.errorHandlingService.showError(err));
+    this.someSubscriptions.add(subDeleteProject);
+  }
+
+  changeProject() {
+    this.changeProjectMode = !this.changeProjectMode;
+
+    if (!this.changeProjectMode) {
+      const pack = {
+        name: this.project.name
+      };
+      const subUpdateProject = this.projectsService.updateProject(this.project._id, pack).subscribe(res => {
+        this.project.name = res.name;
+      },(err) => this.errorHandlingService.showError(err));
+      this.someSubscriptions.add(subUpdateProject);
+    }
   }
 
   changePicker(name, event) {
@@ -68,6 +90,8 @@ export class ProjectComponent extends BaseComponent implements OnInit {
       task.owner = this.storageService.user;
       this.project.tasks.unshift(task);
       this.loading = false;
+      this.openAddBox = false
+      this.form.reset()
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subDataAddTask);
   }
