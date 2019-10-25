@@ -20,8 +20,8 @@
   <form [formGroup]="form" *ngIf="openAddBox">
     <div class="add-wrapper" >
       <input type="text" placeholder="Name of task" formControlName="name">
-      <app-datetimepicker (changeEl)="changePicker('start',$event)"></app-datetimepicker>
-      <app-datetimepicker (changeEl)="changePicker('end',$event)"></app-datetimepicker>
+      <app-datetimepicker [placeholder]="'start'" (changeEl)="changePicker('start',$event)"></app-datetimepicker>
+      <app-datetimepicker [placeholder]="'end'" (changeEl)="changePicker('end',$event)"></app-datetimepicker>
       <div class="add-btn">
         <button (click)="openAddBox = false">Cancel</button>
         <button (click)="addTask()">Create task</button>

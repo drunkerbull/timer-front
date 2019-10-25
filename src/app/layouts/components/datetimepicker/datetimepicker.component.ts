@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import flatpickr from 'flatpickr';
 
 @Component({
@@ -9,19 +9,20 @@ import flatpickr from 'flatpickr';
 export class DatetimepickerComponent implements OnInit {
   @ViewChild('inputDate', {static: true}) inputDate: ElementRef;
   @Output() changeEl: EventEmitter<any> = new EventEmitter();
+  @Input() placeholder: string = '';
 
   constructor() {
   }
 
   ngOnInit() {
-    const self = this
-    flatpickr(this.inputDate.nativeElement,{
+    const self = this;
+    flatpickr(this.inputDate.nativeElement, {
       enableTime: true,
-      dateFormat: "d-m-Y H:i",
-      onValueUpdate (selectedDates, dateStr, instance) {
-        self.changeEl.emit(dateStr)
+      dateFormat: 'd-m-Y H:i',
+      onValueUpdate(selectedDates, dateStr, instance) {
+        self.changeEl.emit(dateStr);
       }
-    })
+    });
   }
 
 }
