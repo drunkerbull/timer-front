@@ -10,15 +10,19 @@ import {ErrorHandlingService} from './services/error-handling.service';
 import {PageComponent} from '../layouts/components/page/page.component';
 import {APIInterceptor} from './services/APIInterceptor.service';
 import {DatetimepickerComponent} from '../layouts/components/datetimepicker/datetimepicker.component';
+import {ChartComponent} from '../layouts/components/chart/chart.component';
+import {ChartsModule} from 'ng2-charts';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     DatetimepickerComponent,
+    ChartComponent,
     PageComponent],
   exports: [
     HeaderComponent, PageComponent, ReactiveFormsModule, CommonModule,
-    RouterModule, FormsModule, DatetimepickerComponent
+    RouterModule, FormsModule, DatetimepickerComponent,
+    ChartComponent, ChartsModule
   ],
   imports: [
     CommonModule,
@@ -26,7 +30,7 @@ import {DatetimepickerComponent} from '../layouts/components/datetimepicker/date
     RouterModule,
     HttpClientModule,
     ReactiveFormsModule,
-
+    ChartsModule,
   ],
   providers: [
     {
