@@ -4,6 +4,7 @@ import {ITasks} from '../../../shared/interfaces/ITasks.interface';
 import * as moment from 'moment';
 import * as momentFormat from 'moment-duration-format';
 import {Label, MultiDataSet} from 'ng2-charts';
+import {BaseComponent} from '../../../shared/components/base.component';
 
 momentFormat(moment);
 
@@ -12,12 +13,13 @@ momentFormat(moment);
   templateUrl: './statistics.component.html',
   styleUrls: ['./statistics.component.scss']
 })
-export class StatisticsComponent implements OnInit {
+export class StatisticsComponent extends BaseComponent implements OnInit {
   tasks: ITasks[] = [];
   public chartData: MultiDataSet = [];
   public chartLabels: Label[] = [];
-
+  loading:boolean = true
   constructor(public statisticsService: StatisticsService) {
+    super();
   }
 
   ngOnInit() {
@@ -30,10 +32,39 @@ export class StatisticsComponent implements OnInit {
   }
 
   getStats() {
-    this.statisticsService.getStats().subscribe((res) => {
+    this.route.queryParamMap.subscribe(queries => {
+      // @ts-ignore
+      this.updateStatsWithParams(queries.params);
+    });
+
+  }
+
+  getStatsWithAverage(query = '') {
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.route,
+        queryParams: {average: query},
+        queryParamsHandling: 'merge'
+      });
+  }
+
+  updateStatsWithParams(params) {
+    this.loading = true
+    let queryLine = '?';
+    for (let query in params) {
+      if (params[query]) {
+        queryLine = queryLine + query + '=' + params[query];
+      }
+    }
+    if (queryLine.length === 1) {
+      queryLine = '';
+    }
+    this.statisticsService.getStats(queryLine).subscribe((res) => {
       this.tasks = res;
       this.chartLabels = this.tasks.map((task) => task.name);
       this.chartData = [this.tasks.map((task) => task.total)];
+      this.loading = false
     });
   }
 }

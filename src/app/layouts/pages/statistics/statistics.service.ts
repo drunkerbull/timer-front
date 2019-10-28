@@ -11,8 +11,8 @@ export class StatisticsService {
   constructor(public baseHttp: BaseHttpService) {
   }
 
-  getStats() {
-    return this.baseHttp.get('/statistics')
+  getStats(queries) {
+    return this.baseHttp.get('/statistics'+queries)
       .pipe(map(resp => resp as ITasks[]));
   }
 }
