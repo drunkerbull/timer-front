@@ -1,6 +1,10 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Label, MultiDataSet} from 'ng2-charts';
 import {ChartType} from 'chart.js';
+import * as moment from 'moment';
+import * as momentFormat from 'moment-duration-format';
+
+momentFormat(moment);
 
 @Component({
   selector: 'app-chart',
@@ -9,27 +13,27 @@ import {ChartType} from 'chart.js';
 })
 export class ChartComponent implements OnInit {
 
-  // Doughnut
-  public doughnutChartLabels: Label[] = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
-  public doughnutChartData: MultiDataSet = [
-    [350, 450, 100],
-    [50, 150, 120],
-    [250, 130, 70],
-  ];
+  @Input() chartLabels: Label[] = [];
+  @Input() chartData: MultiDataSet = [];
+  chartOptions = {
+    tooltips: {
+      callbacks: {
+        label(tooltipItem, data) {
+          const res = data.labels[tooltipItem.index] + ': ';
+          // @ts-ignore
+          const time = moment.duration(data.datasets[0].data[tooltipItem.index]).format('HH:mm:ss', {trim: false});
+          return res + time;
+        }
+      }
+    }
+  };
   public doughnutChartType: ChartType = 'doughnut';
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
 
-  // events
-  public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
-  }
-
-  public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
-  }
 
 }
