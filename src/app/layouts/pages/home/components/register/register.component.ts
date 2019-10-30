@@ -13,9 +13,9 @@ import {BaseComponent} from '../../../../../shared/components/base.component';
 })
 export class RegisterComponent extends BaseComponent implements OnInit {
   form: FormGroup = new FormGroup({
-    email: new FormControl(''),
-    nickname: new FormControl(''),
-    pass: new FormControl('')
+    email: new FormControl('test@test.com'),
+    nickname: new FormControl('testNickname'),
+    pass: new FormControl('122333Qwe')
   });
 
   constructor(public homeService: HomeService) {
