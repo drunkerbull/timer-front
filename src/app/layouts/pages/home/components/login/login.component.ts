@@ -12,8 +12,8 @@ import {HomeService} from '../../home.service';
 })
 export class LoginComponent extends BaseComponent implements OnInit {
   form: FormGroup = new FormGroup({
-    email: new FormControl(''),
-    pass: new FormControl('')
+    email: new FormControl('test@test.com'),
+    pass: new FormControl('122333Qwe')
   });
 
   constructor(public homeService: HomeService) {

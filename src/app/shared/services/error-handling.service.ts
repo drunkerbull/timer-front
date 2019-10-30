@@ -10,8 +10,8 @@ export class ErrorHandlingService  {
   }
 
   showError(error) {
-    this.toastr.error(error.error, 'Error request');
-    if (error.error === 'Error: Please authenticate. Not found User') {
+    this.toastr.error(error.body, 'Error request');
+    if (error.body === 'Error: Please authenticate. Not found User') {
       this.storageService.logout();
     }
   }
