@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import * as io from 'socket.io-client';
-import {Observable} from 'rxjs';
+import {fromEvent, Observable} from 'rxjs';
 import {StorageService} from './storage.service';
 
 @Injectable({
@@ -18,11 +18,7 @@ export class SocketService {
   }
 
   listen(eventName) {
-    return new Observable((subscriber) => {
-      this.socket.on(eventName, (data) => {
-        subscriber.next(data);
-      });
-    });
+    return fromEvent(this.socket,eventName)
   }
 
   emit(eventName, data = {}) {

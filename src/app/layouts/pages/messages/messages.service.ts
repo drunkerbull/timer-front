@@ -25,4 +25,16 @@ export class MessagesService {
   onRooms() {
     return this.socketService.listen('onRooms');
   }
+
+  getRoom() {
+    this.socketService.emit('room');
+  }
+
+  onRoom() {
+    return this.socketService.listen('onRoom');
+  }
+
+  selectOrCreateRoom(user) {
+    this.socketService.emit('selectOrCreateRoom', user);
+  }
 }

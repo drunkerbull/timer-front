@@ -25,6 +25,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.messagesService.onRooms().subscribe((rooms: any[]) => {
+      console.log(rooms)
       this.rooms = rooms;
     });
     this.messagesService.onSearchUsers().subscribe((users: any) => {
@@ -40,9 +41,13 @@ export class SidebarComponent implements OnInit {
         this.searchIsEmpty = true;
       }
     });
+    this.messagesService.onRoom().subscribe((room: any) => {
+      this.currentRoom = room;
+    });
   }
 
   selectUser(user) {
+    this.messagesService.selectOrCreateRoom(user)
   }
 
   selectRoom(room) {

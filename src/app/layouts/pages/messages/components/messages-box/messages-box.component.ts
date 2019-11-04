@@ -7,12 +7,15 @@ import {MessagesService} from '../../messages.service';
   styleUrls: ['./messages-box.component.scss']
 })
 export class MessagesBoxComponent implements OnInit {
+  currentRoom: any = null;
 
   constructor(public messagesService: MessagesService) {
   }
 
   ngOnInit() {
-
+    this.messagesService.onRoom().subscribe((room: any) => {
+      this.currentRoom = room;
+    });
   }
 
 }
