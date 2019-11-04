@@ -8,23 +8,10 @@ import {FormControl, FormGroup} from '@angular/forms';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-  rooms: any[] = [
-    {
-      name: 'Oleh',
-      id: 1
-    },
-    {
-      name: 'Oles',
-      id: 2
-    },
-    {
-      name: 'Bitch',
-      id: 3
-    }
-  ];
+  rooms: any[] = [];
   usersSearch: any[] = [
     {
-      name: 'Vasya'
+      nickname: 'Vasya'
     }
   ];
   currentRoom: any = null;
@@ -37,11 +24,11 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.messagesService.onRooms().subscribe(rooms => {
-      console.log('rooooms', rooms);
+    this.messagesService.onRooms().subscribe((rooms: any[]) => {
+      this.rooms = rooms;
     });
-    this.messagesService.onSearchUsers().subscribe(res => {
-      console.log('from socket for usersSearch list', res);
+    this.messagesService.onSearchUsers().subscribe((users: any) => {
+      this.usersSearch = users;
     });
     this.messagesService.getRooms();
     this.form.get('search').valueChanges.subscribe(val => {
@@ -53,6 +40,9 @@ export class SidebarComponent implements OnInit {
         this.searchIsEmpty = true;
       }
     });
+  }
+
+  selectUser(user) {
   }
 
   selectRoom(room) {
