@@ -26,9 +26,6 @@ export class MessagesService {
     return this.socketService.listen('onRooms');
   }
 
-  getRoom() {
-    this.socketService.emit('room');
-  }
 
   onRoom() {
     return this.socketService.listen('onRoom');
@@ -37,4 +34,15 @@ export class MessagesService {
   selectOrCreateRoom(user) {
     this.socketService.emit('selectOrCreateRoom', user);
   }
+
+
+  selectRoom(room) {
+    this.socketService.emit('selectRoom', room);
+  }
+
+  sendMessage(pack) {
+    this.socketService.emit('message',pack);
+  }
+
+
 }

@@ -4,6 +4,7 @@ import {StorageService} from '../../../../../shared/services/storage.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {BaseComponent} from '../../../../../shared/components/base.component';
 import {HomeService} from '../../home.service';
+import {SocketService} from '../../../../../shared/services/socket.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
     pass: new FormControl('122333Qwe')
   });
 
-  constructor(public homeService: HomeService) {
+  constructor(public homeService: HomeService, public socketService: SocketService) {
     super();
   }
 
@@ -28,6 +29,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
     const subLogin = this.homeService.login(pack).subscribe((res: IUserLogged) => {
       this.storageService.put(StorageService.USER_TOKEN, res.token);
       this.storageService.put(StorageService.USER_INFO, JSON.stringify(res.user));
+      this.socketService.initSocket();
       this.router.navigate(['/projects']);
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subLogin);

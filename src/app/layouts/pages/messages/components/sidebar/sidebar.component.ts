@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MessagesService} from '../../messages.service';
 import {FormControl, FormGroup} from '@angular/forms';
+import {StorageService} from '../../../../../shared/services/storage.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -20,20 +21,14 @@ export class SidebarComponent implements OnInit {
   });
   searchIsEmpty: boolean = true;
 
-  constructor(public messagesService: MessagesService) {
+  constructor(public messagesService: MessagesService, public storageService: StorageService) {
   }
 
   ngOnInit() {
-    this.messagesService.onRooms().subscribe((rooms: any[]) => {
-      console.log(rooms)
-      this.rooms = rooms;
-    });
-    this.messagesService.onSearchUsers().subscribe((users: any) => {
-      this.usersSearch = users;
-    });
+
     this.messagesService.getRooms();
     this.form.get('search').valueChanges.subscribe(val => {
-      if (val.length) {
+      if (val && val.length) {
         this.searchIsEmpty = false;
         this.messagesService.getSearchUsers(val);
       } else {
@@ -41,17 +36,39 @@ export class SidebarComponent implements OnInit {
         this.searchIsEmpty = true;
       }
     });
+
     this.messagesService.onRoom().subscribe((room: any) => {
       this.currentRoom = room;
+      const existRooms = this.rooms.filter(room => room._id === this.currentRoom._id);
+      if (!existRooms.length) {
+        this.rooms.push(this.currentRoom);
+      }
     });
+    this.messagesService.onRooms().subscribe((rooms: any[]) => {
+      this.rooms = rooms;
+    });
+    this.messagesService.onSearchUsers().subscribe((users: any) => {
+      this.usersSearch = users;
+    });
+
+
   }
 
   selectUser(user) {
-    this.messagesService.selectOrCreateRoom(user)
+    this.messagesService.selectOrCreateRoom(user);
+    this.form.reset();
   }
 
   selectRoom(room) {
-    this.currentRoom = room;
+    this.messagesService.selectRoom(room);
   }
 
+  getRoomName(room) {
+    console.log(room)
+    if (!room.name && room.group.length === 2) {
+      const name = room.group.find(el => el._id !== this.storageService.user._id);
+      return name.nickname;
+    }
+    return this.currentRoom.name;
+  }
 }

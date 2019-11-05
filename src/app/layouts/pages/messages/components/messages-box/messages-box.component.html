@@ -1,1 +1,26 @@
-{{currentRoom | json}}
+<div *ngIf="currentRoom" class="messages-box">
+  <div class="header">
+    Room name: {{ roomName}}
+    <br>
+    Group: [{{groupList}}]
+  </div>
+  <div class="messages">
+    <ul>
+      <li *ngFor="let message of currentRoom.messages"
+          [class.owner]="message.owner === storageService.user._id">
+        <div class="message-avatar">
+          <div class="avatar"></div>
+        </div>
+        <div class="message-text">
+          {{message.text}}
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="form">
+    <form [formGroup]="form" (ngSubmit)="sendMessage()">
+      <input type="text" formControlName="message">
+      <button type="submit">Send</button>
+    </form>
+  </div>
+</div>
