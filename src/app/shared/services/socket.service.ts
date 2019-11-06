@@ -3,6 +3,7 @@ import * as io from 'socket.io-client';
 import {fromEvent} from 'rxjs';
 import {StorageService} from './storage.service';
 import {environment} from '../../../environments/environment';
+import {ToastrService} from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class SocketService {
   socket: any;
   uri: string = environment.ws;
 
-  constructor(public storageService: StorageService) {
+  constructor(private toastr: ToastrService, public storageService: StorageService) {
     if (this.storageService.userLogged) {
       this.initSocket();
     }
@@ -21,6 +22,10 @@ export class SocketService {
     this.socket = io(this.uri, {
       query: {token: this.storageService.userLogged}
     });
+
+    this.listen('onNotiMessage').subscribe((res:any)=>{
+      this.toastr.info(res.text, 'SMS from '+ res.owner.nickname);
+    })
   }
 
   listen(eventName) {
