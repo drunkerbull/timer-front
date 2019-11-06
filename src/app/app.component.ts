@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {MessagesService} from './layouts/pages/messages/messages.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,11 @@ import {Component} from '@angular/core';
 })
 export class AppComponent {
   title = 'timer-front';
+
+  constructor(public messageService: MessagesService) {
+
+    this.messageService.onNotiMessage().subscribe(res => {
+      console.log(res);
+    });
+  }
 }

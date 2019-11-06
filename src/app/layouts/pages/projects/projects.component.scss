@@ -1,11 +1,17 @@
+:host {
+  padding-top: 16px;
+  display: block;
+}
+
 .add-project-box {
   display: flex;
   background: grey;
   min-height: 60px;
   position: relative;
-align-items: center;
+  align-items: center;
   justify-content: center;
   flex-flow: column;
+
   span {
     display: flex;
     cursor: pointer;
@@ -44,14 +50,17 @@ align-items: center;
     align-items: center;
     justify-content: center;
     padding: 0;
-.add-btn{
-  display: flex;
-  justify-content: space-between;
-  flex-flow: wrap;
-  button{
-    width: 45%;
-  }
-}
+
+    .add-btn {
+      display: flex;
+      justify-content: space-between;
+      flex-flow: wrap;
+
+      button {
+        width: 45%;
+      }
+    }
+
     input {
       padding: 8px;
       font-size: 16px;
@@ -93,9 +102,11 @@ align-items: center;
         text-decoration: none;
         flex-flow: column;
         color: #131313;
-        &.owner{
-          border:1px solid #ffd700
+
+        &.owner {
+          border: 1px solid #ffd700
         }
+
         &:hover {
           box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
         }

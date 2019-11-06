@@ -1,0 +1,64 @@
+:host {
+  display: block;
+  width: 75%;
+  height: calc(100vh - 76px);
+}
+
+.messages-box {
+  display: flex;
+  height: 100%;
+  flex-flow: column;
+  justify-content: space-between;
+}
+
+.header {
+  padding: 8px;
+
+}
+
+.messages {
+  padding: 8px;
+
+  ul {
+    height: calc(100vh - 225px);
+    overflow-y: auto;
+    li {
+      padding-top: 16px;
+      padding-bottom: 16px;
+      display: flex;
+      align-items: center;
+
+      .message-avatar {
+        width: 15%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .avatar {
+          height: 40px;
+          width: 40px;
+          background: grey;
+          border-radius: 100%;
+        }
+      }
+
+      .message-text {
+        width: 85%;
+        padding-right: 16px;
+      }
+
+      &.owner {
+        background: slategray;
+      }
+    }
+  }
+}
+
+.form {
+  padding: 8px;
+
+  height: 60px;
+  display: flex;
+  align-items: center;
+  background: silver;
+}

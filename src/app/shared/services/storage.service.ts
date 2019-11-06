@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {IUser} from '../interfaces/IUser.interface';
+import {SocketService} from './socket.service';
 
 @Injectable()
 export class StorageService {
