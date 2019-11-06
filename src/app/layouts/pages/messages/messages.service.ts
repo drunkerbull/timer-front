@@ -43,6 +43,8 @@ export class MessagesService {
   sendMessage(pack) {
     this.socketService.emit('message',pack);
   }
-
+  onNotiMessage() {
+    return this.socketService.listen('onNotiMessage');
+  }
 
 }

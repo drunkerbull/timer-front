@@ -10,11 +10,7 @@ import {StorageService} from '../../../../../shared/services/storage.service';
 })
 export class SidebarComponent implements OnInit {
   rooms: any[] = [];
-  usersSearch: any[] = [
-    {
-      nickname: 'Vasya'
-    }
-  ];
+  usersSearch: any[] = [];
   currentRoom: any = null;
   form: FormGroup = new FormGroup({
     search: new FormControl(''),
@@ -64,7 +60,6 @@ export class SidebarComponent implements OnInit {
   }
 
   getRoomName(room) {
-    console.log(room)
     if (!room.name && room.group.length === 2) {
       const name = room.group.find(el => el._id !== this.storageService.user._id);
       return name.nickname;
