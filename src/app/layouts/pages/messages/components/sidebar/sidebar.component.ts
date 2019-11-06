@@ -47,7 +47,13 @@ export class SidebarComponent implements OnInit {
       this.usersSearch = users;
     });
 
-
+    this.messagesService.onNotiMessage().subscribe((res:any)=>{
+      this.rooms.map(room=>{
+        if(room._id === res.room){
+          room.newMess = true
+        }
+      })
+    })
   }
 
   selectUser(user) {
@@ -56,6 +62,7 @@ export class SidebarComponent implements OnInit {
   }
 
   selectRoom(room) {
+    room.newMess = false
     this.messagesService.selectRoom(room);
   }
 

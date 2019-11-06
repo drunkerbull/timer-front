@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import * as io from 'socket.io-client';
 import {fromEvent} from 'rxjs';
 import {StorageService} from './storage.service';
@@ -8,7 +8,7 @@ import {ToastrService} from 'ngx-toastr';
 @Injectable({
   providedIn: 'root'
 })
-export class SocketService {
+export class SocketService{
   socket: any;
   uri: string = environment.ws;
 
@@ -22,10 +22,10 @@ export class SocketService {
     this.socket = io(this.uri, {
       query: {token: this.storageService.userLogged}
     });
-
     this.listen('onNotiMessage').subscribe((res:any)=>{
       this.toastr.info(res.text, 'SMS from '+ res.owner.nickname);
     })
+
   }
 
   listen(eventName) {

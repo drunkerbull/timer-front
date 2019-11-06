@@ -35,7 +35,9 @@ export class MessagesService {
     this.socketService.emit('selectOrCreateRoom', user);
   }
 
-
+  onNotiMessage(){
+    return this.socketService.listen('onNotiMessage');
+  }
   selectRoom(room) {
     this.socketService.emit('selectRoom', room);
   }
@@ -44,5 +46,8 @@ export class MessagesService {
     this.socketService.emit('message',pack);
   }
 
+  leaveAllRoom(){
+    this.socketService.emit('leaveAllRoom');
+  }
 
 }

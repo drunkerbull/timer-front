@@ -12,6 +12,7 @@ import {APIInterceptor} from './services/APIInterceptor.service';
 import {DatetimepickerComponent} from '../layouts/components/datetimepicker/datetimepicker.component';
 import {ChartComponent} from '../layouts/components/chart/chart.component';
 import {ChartsModule} from 'ng2-charts';
+import {SocketService} from './services/socket.service';
 
 @NgModule({
   declarations: [
