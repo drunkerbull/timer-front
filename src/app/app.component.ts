@@ -9,10 +9,8 @@ import {MessagesService} from './layouts/pages/messages/messages.service';
 export class AppComponent {
   title = 'timer-front';
 
-  constructor(public messageService: MessagesService) {
+  constructor() {
 
-    this.messageService.onNotiMessage().subscribe(res => {
-      console.log(res);
-    });
   }
 }
+
