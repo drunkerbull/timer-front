@@ -34,6 +34,7 @@ export class SidebarComponent implements OnInit {
     });
 
     this.messagesService.onRoom().subscribe((room: any) => {
+      console.log(room)
       this.currentRoom = room;
       const existRooms = this.rooms.filter(room => room._id === this.currentRoom._id);
       if (!existRooms.length) {
@@ -47,13 +48,13 @@ export class SidebarComponent implements OnInit {
       this.usersSearch = users;
     });
 
-    this.messagesService.onNotiMessage().subscribe((res:any)=>{
-      this.rooms.map(room=>{
-        if(room._id === res.room){
-          room.newMess = true
+    this.messagesService.onNotiMessage().subscribe((res: any) => {
+      this.rooms.map((room) => {
+        if (room._id === res.room) {
+          room.read = [res.owner._id];
         }
-      })
-    })
+      });
+    });
   }
 
   selectUser(user) {
@@ -62,7 +63,9 @@ export class SidebarComponent implements OnInit {
   }
 
   selectRoom(room) {
-    room.newMess = false
+    if(this.getNewMess(room)){
+      room.read.push(this.storageService.user._id)
+    }
     this.messagesService.selectRoom(room);
   }
 
@@ -72,5 +75,9 @@ export class SidebarComponent implements OnInit {
       return name.nickname;
     }
     return this.currentRoom.name;
+  }
+
+  getNewMess(room) {
+    return room.read && room.read.filter((res) => res === this.storageService.user._id).length === 0;
   }
 }

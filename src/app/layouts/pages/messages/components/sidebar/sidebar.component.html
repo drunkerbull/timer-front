@@ -5,8 +5,8 @@
 </div>
 <div class="list">
   <ul class="rooms-list" *ngIf="searchIsEmpty; else searchList">
-    <li *ngFor="let room of rooms" (click)="selectRoom(room)"
-        [class.selected]="room._id===currentRoom?._id" [class.newmess]="room.newMess">
+    <li *ngFor="let room of rooms" (click)="selectRoom(room)" [class.newMess]="getNewMess(room)"
+        [class.selected]="room._id===currentRoom?._id" >
       <div class="room-avatar">
         <span class="avatar"></span>
       </div>
