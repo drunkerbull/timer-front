@@ -5,6 +5,7 @@ import {IUser} from '../../../../../shared/interfaces/IUser.interface';
 import {IUserLogged} from '../../../../../shared/interfaces/IUserLogged.interface';
 import {StorageService} from '../../../../../shared/services/storage.service';
 import {BaseComponent} from '../../../../../shared/components/base.component';
+import {SocketService} from '../../../../../shared/services/socket.service';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,7 @@ export class RegisterComponent extends BaseComponent implements OnInit {
     pass: new FormControl('122333Qwe')
   });
 
-  constructor(public homeService: HomeService) {
+  constructor(public homeService: HomeService,public socketService: SocketService) {
     super();
   }
 
@@ -33,6 +34,7 @@ export class RegisterComponent extends BaseComponent implements OnInit {
         this.storageService.put(StorageService.USER_TOKEN, res.token);
         this.storageService.put(StorageService.USER_INFO, JSON.stringify(res.user));
         this.router.navigate(['/projects']);
+        this.socketService.initSocket();
       });
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subRegister);
