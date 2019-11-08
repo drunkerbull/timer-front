@@ -4,5 +4,6 @@ export interface IUser {
   email: string,
   nickname: string,
   tokens: any[],
-  updatedAt: string
+  updatedAt: string,
+  online: string
 }

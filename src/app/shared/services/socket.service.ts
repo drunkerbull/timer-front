@@ -1,9 +1,11 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import * as io from 'socket.io-client';
-import {fromEvent} from 'rxjs';
+import {fromEvent, Observable} from 'rxjs';
 import {StorageService} from './storage.service';
 import {environment} from '../../../environments/environment';
 import {ToastrService} from 'ngx-toastr';
+import {IRoom} from '../interfaces/IRoom.interface';
+import {IMessage} from '../interfaces/IMessage.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -22,13 +24,15 @@ export class SocketService{
     this.socket = io(this.uri, {
       query: {token: this.storageService.userLogged}
     });
-    this.listen('onNotiMessage').subscribe((res:any)=>{
-      this.toastr.info(res.text, 'SMS from '+ res.owner.nickname);
+    this.listen('onNotiMessage').subscribe((message: IMessage)=>{
+      if (typeof message.owner !== 'string') {
+        this.toastr.info(message.text, 'SMS from ' + message.owner.nickname);
+      }
     })
 
   }
 
-  listen(eventName) {
+  listen(eventName:string): Observable<any> {
     return fromEvent(this.socket, eventName);
   }
 

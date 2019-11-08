@@ -1,8 +1,8 @@
 <div *ngIf="currentRoom" class="messages-box">
   <div class="header">
-    Room name: {{ roomName}}
+    Room name: {{ currentRoom.roomName(storageService.user)}}
     <br>
-    Group: [{{groupList}}]
+    Group: [{{currentRoom.groupList}}]
   </div>
   <div class="messages">
     <ul>
@@ -12,7 +12,8 @@
           <div class="avatar"></div>
         </div>
         <div class="message-text">
-          {{message.text}}
+          <p class="message-name">{{message| json}}</p>
+          <p>{{message.text}}</p>
         </div>
       </li>
     </ul>
