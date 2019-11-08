@@ -5,12 +5,12 @@
 </div>
 <div class="list">
   <ul class="rooms-list" *ngIf="searchIsEmpty; else searchList">
-    <li *ngFor="let room of rooms" (click)="selectRoom(room)" [class.newMess]="getNewMess(room)"
+    <li *ngFor="let room of rooms" (click)="selectRoom(room)" [class.newMess]="room.haveNewMess(storageService.user)"
         [class.selected]="room._id===currentRoom?._id" >
       <div class="room-avatar">
         <span class="avatar"></span>
       </div>
-      <span class="room-name">{{getRoomName(room)}}</span>
+      <span class="room-name">{{room.roomName(storageService.user)}}</span>
     </li>
   </ul>
   <ng-template #searchList>

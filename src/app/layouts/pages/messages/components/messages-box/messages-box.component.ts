@@ -2,49 +2,43 @@ import {Component, OnInit} from '@angular/core';
 import {MessagesService} from '../../messages.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {StorageService} from '../../../../../shared/services/storage.service';
+import {Room} from '../../../../../shared/models/room.model';
+import {IRoom} from '../../../../../shared/interfaces/IRoom.interface';
+import {BaseComponent} from '../../../../../shared/components/base.component';
+import {IMessage} from '../../../../../shared/interfaces/IMessage.interface';
 
 @Component({
   selector: 'app-messages-box',
   templateUrl: './messages-box.component.html',
   styleUrls: ['./messages-box.component.scss']
 })
-export class MessagesBoxComponent implements OnInit {
-  currentRoom: any = null;
+export class MessagesBoxComponent extends BaseComponent implements OnInit {
+  currentRoom: IRoom = null;
   form: FormGroup = new FormGroup({
     message: new FormControl('')
   });
 
   constructor(public messagesService: MessagesService, public storageService: StorageService) {
+    super();
   }
 
   ngOnInit() {
-    this.messagesService.onRoom().subscribe((room: any) => {
-      this.currentRoom = room;
-    });
+    const subOnRoom = this.messagesService.onRoom().subscribe((room: IRoom) => {
+      this.currentRoom = new Room(room);
+    }, (err) => this.errorHandlingService.showError(err));
+    this.someSubscriptions.add(subOnRoom);
   }
 
-  get groupList() {
-    const group = this.currentRoom.group.map(el => el.nickname);
-    return group.join(', ');
-  }
-
-  get roomName() {
-    if (!this.currentRoom.name && this.currentRoom.group.length === 2) {
-      const name = this.currentRoom.group.filter(el => el._id !== this.storageService.user._id);
-      return name[0].nickname;
-    }
-    return this.currentRoom.name;
-  }
 
   sendMessage() {
-    const pack = {
+    const message: IMessage = {
       type: 'message',
       room: this.currentRoom._id,
       owner: this.storageService.user._id,
       text: this.form.get('message').value
     };
-    this.currentRoom.messages.push(pack);
-    this.messagesService.sendMessage(pack);
+    this.currentRoom.messages.push(message);
+    this.messagesService.sendMessage(message);
     this.form.reset();
   }
 }

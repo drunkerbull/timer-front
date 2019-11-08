@@ -1,9 +1,10 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import * as io from 'socket.io-client';
-import {fromEvent} from 'rxjs';
+import {fromEvent, Observable} from 'rxjs';
 import {StorageService} from './storage.service';
 import {environment} from '../../../environments/environment';
 import {ToastrService} from 'ngx-toastr';
+import {IRoom} from '../interfaces/IRoom.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class SocketService{
 
   }
 
-  listen(eventName) {
+  listen(eventName:string): Observable<any> {
     return fromEvent(this.socket, eventName);
   }
 

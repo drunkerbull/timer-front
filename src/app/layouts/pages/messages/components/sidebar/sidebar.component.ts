@@ -2,28 +2,34 @@ import {Component, OnInit} from '@angular/core';
 import {MessagesService} from '../../messages.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {StorageService} from '../../../../../shared/services/storage.service';
+import {IRoom} from '../../../../../shared/interfaces/IRoom.interface';
+import {IMessage} from '../../../../../shared/interfaces/IMessage.interface';
+import {IUser} from '../../../../../shared/interfaces/IUser.interface';
+import {Room} from '../../../../../shared/models/room.model';
+import {BaseComponent} from '../../../../../shared/components/base.component';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent implements OnInit {
-  rooms: any[] = [];
-  usersSearch: any[] = [];
-  currentRoom: any = null;
+export class SidebarComponent extends BaseComponent implements OnInit {
+  rooms: IRoom[] = [];
+  usersSearch: IUser[] = [];
+  currentRoom: IRoom = null;
   form: FormGroup = new FormGroup({
     search: new FormControl(''),
   });
   searchIsEmpty: boolean = true;
 
   constructor(public messagesService: MessagesService, public storageService: StorageService) {
+    super();
   }
 
   ngOnInit() {
 
     this.messagesService.getRooms();
-    this.form.get('search').valueChanges.subscribe(val => {
+    const subSearchValue = this.form.get('search').valueChanges.subscribe(val => {
       if (val && val.length) {
         this.searchIsEmpty = false;
         this.messagesService.getSearchUsers(val);
@@ -31,53 +37,47 @@ export class SidebarComponent implements OnInit {
         this.usersSearch = [];
         this.searchIsEmpty = true;
       }
-    });
+    }, (err) => this.errorHandlingService.showError(err));
+    this.someSubscriptions.add(subSearchValue);
 
-    this.messagesService.onRoom().subscribe((room: any) => {
-      console.log(room)
-      this.currentRoom = room;
+    const subOnRoom = this.messagesService.onRoom().subscribe((room: IRoom) => {
+      this.currentRoom = new Room(room);
       const existRooms = this.rooms.filter(room => room._id === this.currentRoom._id);
       if (!existRooms.length) {
         this.rooms.push(this.currentRoom);
       }
-    });
-    this.messagesService.onRooms().subscribe((rooms: any[]) => {
-      this.rooms = rooms;
-    });
-    this.messagesService.onSearchUsers().subscribe((users: any) => {
-      this.usersSearch = users;
-    });
+    }, (err) => this.errorHandlingService.showError(err));
+    this.someSubscriptions.add(subOnRoom);
 
-    this.messagesService.onNotiMessage().subscribe((res: any) => {
-      this.rooms.map((room) => {
-        if (room._id === res.room) {
-          room.read = [res.owner._id];
+    const subOnRooms = this.messagesService.onRooms().subscribe((rooms: IRoom[]) => {
+      this.rooms = rooms.map((room: IRoom) => new Room(room));
+    }, (err) => this.errorHandlingService.showError(err));
+    this.someSubscriptions.add(subOnRooms);
+
+    const subOnSearchUsers = this.messagesService.onSearchUsers().subscribe((users: IUser[]) => {
+      this.usersSearch = users;
+    }, (err) => this.errorHandlingService.showError(err));
+    this.someSubscriptions.add(subOnSearchUsers);
+
+    const subOnNotiMessage = this.messagesService.onNotiMessage().subscribe((message: IMessage) => {
+      this.rooms.map((room: IRoom) => {
+        if (typeof message.owner !== 'string' && room._id === message.room) {
+          room.read = [message.owner._id];
         }
       });
-    });
+    }, (err) => this.errorHandlingService.showError(err));
+    this.someSubscriptions.add(subOnNotiMessage);
   }
 
-  selectUser(user) {
+  selectUser(user: IUser) {
     this.messagesService.selectOrCreateRoom(user);
     this.form.reset();
   }
 
-  selectRoom(room) {
-    if(this.getNewMess(room)){
-      room.read.push(this.storageService.user._id)
+  selectRoom(room: IRoom) {
+    if (room.haveNewMess(this.storageService.user)) {
+      room.read.push(this.storageService.user._id);
     }
     this.messagesService.selectRoom(room);
-  }
-
-  getRoomName(room) {
-    if (!room.name && room.group.length === 2) {
-      const name = room.group.find(el => el._id !== this.storageService.user._id);
-      return name.nickname;
-    }
-    return this.currentRoom.name;
-  }
-
-  getNewMess(room) {
-    return room.read && room.read.filter((res) => res === this.storageService.user._id).length === 0;
   }
 }
