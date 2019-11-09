@@ -1,7 +1,12 @@
-<div class="main">
+<div class="main" [class.loading]="loading">
   <app-header></app-header>
-  <app-page>
-    <router-outlet></router-outlet>
-  </app-page>
+  <div *ngIf="!loading; else loader" class="main-content">
+    <app-page>
+      <router-outlet></router-outlet>
+    </app-page>
+  </div>
+  <ng-template #loader>
+    <app-loader class="main-loader"></app-loader>
+  </ng-template>
 </div>
 

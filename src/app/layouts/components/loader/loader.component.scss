@@ -6,7 +6,18 @@
   width: 100%;
   min-height: 100px;
   height: 100%;
+  opacity: 1;
+  animation-name: cubusOpacity;
+  animation-duration: 300ms;
 
+  @keyframes cubusOpacity {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
   .cube {
     position: absolute;
     width: 36px;
@@ -16,6 +27,7 @@
     transform: translate(-50%, -50%);
     transition: 300ms;
     border-radius: 4px;
+
 
     &_one {
       background: $darkgrey;

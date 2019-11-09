@@ -27,7 +27,8 @@
     height: 100%;
     min-height: 60px;
     align-items: center;
-z-index: 3;
+    z-index: 3;
+
     &:hover {
       color: $black;
       background: $gold;
@@ -80,7 +81,7 @@ z-index: 3;
 }
 
 .projects-box {
-
+  margin-top: 12px;
 
   ul {
     display: flex;
@@ -88,7 +89,7 @@ z-index: 3;
     flex-flow: wrap;
 
     li {
-      width: calc(50% - 30px);
+      width: calc(50% - 10px);
 
       a {
         margin: 8px 0;
@@ -97,15 +98,23 @@ z-index: 3;
         display: flex;
         justify-content: center;
         background: white;
-        border-radius: 4px;
+        border-radius: 2px;
         box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
         transition: 300ms;
         text-decoration: none;
         flex-flow: column;
         color: #131313;
+        position: relative;
 
-        &.owner {
-          border: 1px solid #ffd700
+        .owner {
+          position: absolute;
+          right: 16px;
+          top: 16px;
+          svg{
+            width: 20px;
+            height: 20px;
+            fill: #cfa700
+          }
         }
 
         &:hover {
