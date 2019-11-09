@@ -1,8 +1,44 @@
+@import "~src/assets/scss/variables";
+
+:host {
+  padding-top: 16px;
+  display: block;
+}
+
 .project-info {
   padding: 16px;
   box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
   margin-bottom: 8px;
   background: white;
+  position: relative;
+
+  .owner {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+
+    display: flex;
+    flex-flow: column;
+    justify-content: right;
+    align-items: flex-end;
+    svg {
+      width: 40px;
+      height: 40px;
+      fill: #cfa700
+    }
+    .owner-control{
+      display: flex;
+      flex-flow: column;
+      align-items: flex-end;
+      div{
+        margin-bottom: 8px;
+        display: flex;
+      }
+        button{
+          margin-left: 8px;
+        }
+    }
+  }
 
   &.owner {
     border: 1px solid gold;
@@ -14,78 +50,11 @@
   }
 }
 
-.add-project-box {
-  display: flex;
-  background: grey;
-  min-height: 60px;
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  flex-flow: column;
-
-  span {
-    display: flex;
-    cursor: pointer;
-    width: 100%;
-    z-index: 33;
-    height: 47px;
-    font-size: 40px;
-    text-align: center;
-    font-weight: 600;
-    color: #131313;
-    transition: 300ms;
-    align-items: center;
-    opacity: 1;
-    justify-content: center;
-  }
-
+.add-project-box.project-box {
   &.add-project-box--open {
-    span {
-      height: 0;
-      opacity: 0;
-    }
-
     .add-wrapper {
-      height: 240px;
+      height: 280px;
       opacity: 1;
-    }
-  }
-
-  .add-wrapper {
-    display: flex;
-    opacity: 0;
-    height: 0;
-    transition: 300ms;
-    width: 100%;
-    overflow: hidden;
-    flex-flow: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-
-    .add-btn {
-      display: flex;
-      justify-content: space-between;
-      flex-flow: wrap;
-
-      button {
-        width: 45%;
-      }
-    }
-
-    input {
-      padding: 8px;
-      font-size: 16px;
-      margin-bottom: 16px;
-      width: 200px;
-    }
-
-    button {
-      background: white;
-      font-size: 16px;
-      border-radius: 4px;
-      padding: 8px 16px;
-      border: 0;
     }
   }
 }
@@ -100,14 +69,92 @@
     flex-flow: column;
     padding: 8px;
     flex-flow: wrap;
-justify-content: space-between;
+    justify-content: space-between;
+
     .task-main {
-      .task-main__header{
+      .task-main__header {
         display: flex;
       }
     }
 
     .task-timer {
     }
+  }
+}
+.add-project-box {
+  display: flex;
+  background: $darkgrey;
+  min-height: 60px;
+  position: relative;
+  flex-flow: column;
+  border-radius: 2px;
+
+  h3 {
+    display: flex;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    padding-top: 0;
+    color: $white;
+    transition: 300ms;
+    opacity: 1;
+    justify-content: center;
+    letter-spacing: 2px;
+    height: 100%;
+    min-height: 60px;
+    align-items: center;
+    z-index: 3;
+
+    &:hover {
+      color: $black;
+      background: $gold;
+    }
+  }
+
+  &.add-project-box--open {
+    h3 {
+      color: $black;
+      cursor: auto;
+      background: $gold;
+      z-index: 3;
+    }
+
+    form {
+      z-index: 2;
+    }
+
+    .add-wrapper {
+      height: 120px;
+      opacity: 1;
+
+    }
+  }
+
+  .add-wrapper {
+    display: flex;
+    opacity: 0;
+    height: 0;
+    transition: 300ms;
+    width: 240px;
+    flex-flow: column;
+    margin-right: auto;
+    margin-left: auto;
+    justify-content: center;
+  label{
+    display: flex;
+    margin: 8px 0;
+  }
+    .add-btn {
+      display: flex;
+      justify-content: space-between;
+      flex-flow: wrap;
+      width: 100%;
+
+    }
+
+    input {
+      font-size: 20px;
+    }
+
   }
 }

@@ -1,0 +1,19 @@
+@import "~src/assets/scss/variables";
+:host{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 8px 0;
+}
+input {
+  border-radius: 2px;
+  border: 1px solid $grey;
+  outline: none;
+width: 100%;
+  &:focus, &:active {
+    outline: none;
+  }
+    padding: 10px 12px;
+    font-size: 15px;
+    margin-bottom: 0;
+}

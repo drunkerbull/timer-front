@@ -26,6 +26,24 @@
   &.btn--reverse{
 
   }
+  &.btn--outline-red{
+    background: transparent;
+    color: $red;
+    border:1px solid $red;
+    &:hover{
+      background: $red;
+      color: $white
+    }
+  }
+  &.btn--outline-blue{
+    background: transparent;
+    color: $blue;
+    border:1px solid $blue;
+    &:hover{
+      background: $blue;
+      color: $black
+    }
+  }
   &.btn--outline-gold{
     background: transparent;
     color: $gold;
