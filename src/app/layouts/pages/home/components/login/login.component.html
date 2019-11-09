@@ -1,6 +1,6 @@
 <form [formGroup]="form">
-  <h2>login</h2>
-  <input type="text" placeholder="email" formControlName="email">
-  <input type="password" placeholder="pass" formControlName="pass">
-  <button (click)="login()">Login</button>
+  <h3>Sign in</h3>
+  <input class="input" type="text" placeholder="Email..." formControlName="email">
+  <input class="input" type="password" placeholder="Password..." formControlName="pass">
+  <button class="btn btn--hover-blue" (click)="login()">Login</button>
 </form>

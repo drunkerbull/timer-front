@@ -1,6 +1,7 @@
 :host {
-  border: 1px solid black;
-  padding: 16px;
-  margin: 20px 0;
   display: block;
+}
+form{
+  display: flex;
+  flex-flow: column;
 }

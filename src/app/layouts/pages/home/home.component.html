@@ -1,3 +1,28 @@
-<h1>Home page</h1>
-<app-login></app-login>
-<app-register></app-register>
+<div class="home">
+  <div class="home_welcome">
+    <div class="welcome-text ">
+      <div>
+        <h1>Welcome to TimerApp</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam at eius eum ex excepturi expedita facilis
+          incidunt, ipsum, magnam nam necessitatibus velit voluptatum. Accusamus, cumque doloribus optio repellat sint
+          voluptas.</p>
+      </div>
+      <div>
+        <h2>Your abilities</h2>
+        <ul>
+          <li class="white-back">Create Projects and Tasks</li>
+          <li class="white-back">Use the timer to count the time of work on the task</li>
+          <li class="white-back">Send messages to your friends directly from TimerApp</li>
+        </ul>
+      </div>
+    </div>
+    <div class="welcome-auth" *ngIf="!storageService.userLogged">
+      <app-login class="white-back"></app-login>
+      <app-register class="white-back"></app-register>
+    </div>
+  </div>
+</div>
+<div class="abilities-slide">
+  <span class="back"></span>
+  <div class="content"></div>
+</div>

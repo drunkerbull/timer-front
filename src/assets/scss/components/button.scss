@@ -1,0 +1,42 @@
+@import "~src/assets/scss/variables";
+
+.btn {
+  border: 0;
+  font-family: $fontTeko;
+  font-size: 20px;
+  padding: 4px 12px;
+  background: $darkgrey;
+  cursor: pointer;
+  color: $white;
+  transition: 300ms;
+  border-radius: 2px;
+  &:hover {
+    color: $black;
+    background: $gold;
+  }
+  outline: none;
+  &:focus,&:active{
+    outline: none;
+  }
+  &.btn--hover-blue{
+    &:hover{
+      background: $blue;
+    }
+  }
+  &.btn--reverse{
+
+  }
+  &.btn--outline-gold{
+    background: transparent;
+    color: $gold;
+    border:1px solid $gold;
+    &:hover{
+      background: $gold;
+      color: $darkgrey
+    }
+  }
+  &.btn--white{
+    background: $white;
+    color:$darkgrey
+  }
+}
