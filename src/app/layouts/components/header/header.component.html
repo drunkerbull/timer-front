@@ -2,15 +2,17 @@
   <div class="container">
     <div class="header-box">
       <div class="logo">
-        <h2><a [routerLink]="['/']">LOGO</a></h2>
+       <a [routerLink]="['/']">TimerApp</a>
       </div>
-      <div *ngIf="storageService.userLogged">
-        <div>
+      <div *ngIf="storageService.userLogged" class="menu">
+        <div class="menu-links">
           <a [routerLink]="['/projects']">Projects</a>
           <a [routerLink]="['/messages']">Messages</a>
           <a [routerLink]="['/statistics']">Statistics</a>
         </div>
-        <button (click)="logout()">Logout</button>
+        <div class="user-settings">
+          <button  class="btn" (click)="logout()">Logout</button>
+        </div>
       </div>
     </div>
   </div>

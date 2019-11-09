@@ -1,5 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Hind:400,500,600|Teko:400,500&display=swap');
 @import '~ngx-toastr/toastr';
 @import '~flatpickr/dist/flatpickr.min.css';
+@import 'variables';
+@import 'components/button';
+@import 'components/input';
+
+
+body {
+  font-family: $fontHind;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $fontTeko;
+}
 
 img {
   max-width: 100%; /* This rule is very important, please do not ignore this! */
@@ -35,14 +48,34 @@ body {
   }
 }
 
-ul{
+ul {
   padding: 0;
   margin: 0;
-  li{
+
+  li {
     list-style: none;
   }
 }
-h1,h2,h3,h4,h5,h6,p{
+
+h1{
+  font-size: 40px;
+}
+h2{
+  font-size: 36px;
+}
+h3{
+  font-size: 32px;
+}
+h1, h2, h3, h4, h5, h6, p {
   margin: 0;
   padding: 0;
+}
+
+
+.white-back{
+  background: white;
+  box-shadow: $shadow;
+  border-radius: 4px;
+  padding: 16px;
+  margin: 20px 0;
 }
