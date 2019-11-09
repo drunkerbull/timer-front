@@ -1,4 +1,18 @@
-@import url('https://fonts.googleapis.com/css?family=Hind:400,500,600|Teko:400,500&display=swap');
+@font-face {
+  font-family: 'Hind';
+  src: url('~assets/fonts/Hind-Regular.eot');
+  src: url('~assets/fonts/Hind-Regular.eot?#iefix') format('embedded-opentype'),
+  url('~assets/fonts/Hind-Regular.woff') format('woff'),
+  url('~assets/fonts/Hind-Regular.ttf')  format('truetype');
+}
+@font-face {
+  font-family: 'Teko';
+  src: url('~assets/fonts/Teko-Regular.eot');
+  src: url('~assets/fonts/Teko-Regular.eot?#iefix') format('embedded-opentype'),
+  url('~assets/fonts/Teko-Regular.woff') format('woff'),
+  url('~assets/fonts/Teko-Regular.ttf')  format('truetype');
+}
+
 @import '~ngx-toastr/toastr';
 @import '~flatpickr/dist/flatpickr.min.css';
 @import 'variables';

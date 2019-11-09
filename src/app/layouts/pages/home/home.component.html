@@ -16,10 +16,13 @@
         </ul>
       </div>
     </div>
-    <div class="welcome-auth">
+    <div class="welcome-auth" *ngIf="!storageService.userLogged">
       <app-login class="white-back"></app-login>
       <app-register class="white-back"></app-register>
     </div>
   </div>
 </div>
-
+<div class="abilities-slide">
+  <span class="back"></span>
+  <div class="content"></div>
+</div>

@@ -10,7 +10,7 @@ import {BaseComponent} from '../../../shared/components/base.component';
   styleUrls: ['./projects.component.scss']
 })
 export class ProjectsComponent extends BaseComponent implements OnInit {
-  projects: IProject[];
+  projects: IProject[] = [];
   openAddBox: boolean = false;
   form: FormGroup = new FormGroup({
     name: new FormControl('')
@@ -27,7 +27,9 @@ export class ProjectsComponent extends BaseComponent implements OnInit {
 
   createProject() {
     const pack = this.form.value;
+    this.loading = true;
     const subCreateProject = this.projectsService.createProject(pack).subscribe(res => {
+      this.loading = false;
       this.projects.push(res);
       this.form.reset();
       this.openAddBox = false;
@@ -36,7 +38,9 @@ export class ProjectsComponent extends BaseComponent implements OnInit {
   }
 
   getProjects() {
+    this.loading = true;
     const subGetProjects = this.projectsService.projects().subscribe(res => {
+      this.loading = false;
       this.projects = res.reverse();
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subGetProjects);

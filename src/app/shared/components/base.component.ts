@@ -13,6 +13,7 @@ export class BaseComponent implements OnDestroy {
   someSubscriptions: Subscription = new Subscription();
   route: ActivatedRoute;
   errorHandlingService: ErrorHandlingService;
+  loading: boolean = false;
 
   constructor() {
     const injector = AppInjector.getInjector();

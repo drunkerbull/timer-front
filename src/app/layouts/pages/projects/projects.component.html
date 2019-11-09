@@ -1,22 +1,33 @@
 <div class="add-project-box" [ngClass]="{'add-project-box--open':openAddBox}">
-  <span (click)="openAddBox = true">+</span>
+  <h3 (click)="openAddBox = true">Add new project</h3>
   <form [formGroup]="form">
     <div class="add-wrapper">
-      <input type="text" placeholder="Name of project" formControlName="name">
+      <input class="input" type="text" placeholder="Name of project" formControlName="name">
       <div class="add-btn">
-        <button (click)="openAddBox = false">Cancel</button>
-        <button (click)="createProject()">Create project</button>
+        <button class="btn btn--outline-gold" (click)="openAddBox = false">Cancel</button>
+        <button class="btn btn--white btn--hover-blue" (click)="createProject()">Create project</button>
       </div>
     </div>
   </form>
 </div>
 <div class="projects-box">
-  <ul *ngIf="projects">
-    <li *ngFor="let project of projects">
-      <a [routerLink]="'/projects/'+project._id" [ngClass]="{'owner': project.owner._id === storageService.user._id}">
-        <h3>{{project.name}}</h3>
-        <span>For {{project.owner.nickname}}</span>
-      </a>
-    </li>
-  </ul>
+  <app-loader *ngIf="loading; else content"></app-loader>
+  <ng-template #content>
+    <ul *ngIf="projects.length; else emptyprojects">
+      <li *ngFor="let project of projects">
+        <a [routerLink]="'/projects/'+project._id" [ngClass]="{'owner': project.owner._id === storageService.user._id}">
+          <h3>{{project.name}}</h3>
+          <span>For {{project.owner.nickname}}</span>
+        </a>
+      </li>
+    </ul>
+    <ng-template #emptyprojects>
+      <div class="projects-empty white-back">
+        <h3>Create your first project!</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus alias aliquam architecto assumenda
+          atque
+          aut, corporis doloribus explicabo illo laborum libero nisi quo tempora tempore ut voluptatum! Esse, hic?</p>
+      </div>
+    </ng-template>
+  </ng-template>
 </div>

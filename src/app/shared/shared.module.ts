@@ -12,18 +12,19 @@ import {APIInterceptor} from './services/APIInterceptor.service';
 import {DatetimepickerComponent} from '../layouts/components/datetimepicker/datetimepicker.component';
 import {ChartComponent} from '../layouts/components/chart/chart.component';
 import {ChartsModule} from 'ng2-charts';
-import {SocketService} from './services/socket.service';
+import {LoaderComponent} from '../layouts/components/loader/loader.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     DatetimepickerComponent,
     ChartComponent,
+    LoaderComponent,
     PageComponent],
   exports: [
     HeaderComponent, PageComponent, ReactiveFormsModule, CommonModule,
     RouterModule, FormsModule, DatetimepickerComponent,
-    ChartComponent, ChartsModule
+    ChartComponent, ChartsModule, LoaderComponent
   ],
   imports: [
     CommonModule,

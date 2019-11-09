@@ -1,0 +1,82 @@
+@import "~src/assets/scss/variables";
+
+
+.loader {
+  position: relative;
+  width: 100%;
+  min-height: 100px;
+  height: 100%;
+
+  .cube {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    left: calc(50% + 20px);
+    top: calc(50% + 20px);
+    transform: translate(-50%, -50%);
+    transition: 300ms;
+    border-radius: 4px;
+
+    &_one {
+      background: $darkgrey;
+      top: calc(50% + 20px);
+      left: calc(50% - 20px);
+      animation: cube1 3s infinite;
+    }
+
+    &_two {
+      background: $blue;
+      left: calc(50% + 20px);
+      top: calc(50% - 20px);
+      animation: cube2 3s infinite;
+
+    }
+
+
+    @keyframes cube1 {
+      0% {
+        top: calc(50% + 20px);
+        left: calc(50% - 20px);
+      }
+      25% {
+        top: calc(50% - 20px);
+        left: calc(50% - 20px);
+      }
+      50% {
+        top: calc(50% - 20px);
+        left: calc(50% + 20px);
+      }
+      75% {
+        top: calc(50% + 20px);
+        left: calc(50% + 20px);
+      }
+      100% {
+        top: calc(50% + 20px);
+        left: calc(50% - 20px);
+      }
+    }
+    @keyframes cube2 {
+      0% {
+        left: calc(50% + 20px);
+        top: calc(50% - 20px);
+      }
+      25% {
+        left: calc(50% + 20px);
+        top: calc(50% + 20px);
+      }
+      50% {
+        left: calc(50% - 20px);
+        top: calc(50% + 20px);
+      }
+      75% {
+        left: calc(50% - 20px);
+        top: calc(50% - 20px);
+      }
+      100% {
+        left: calc(50% + 20px);
+        top: calc(50% - 20px);
+      }
+    }
+
+  }
+}

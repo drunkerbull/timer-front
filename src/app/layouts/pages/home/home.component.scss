@@ -1,5 +1,10 @@
+@import "~src/assets/scss/variables";
+
 .home {
   display: flex;
+  position: relative;
+  min-height: calc(100vh - 60px);
+
 
   .home_welcome {
     display: flex;
@@ -8,28 +13,56 @@
 }
 
 .welcome-auth {
-  width: 30%;
+  min-width: 30%;
+  display: flex;
+  margin-left: 60px;
+  flex-flow: column;
+  justify-content: center;
 }
 
 .welcome-text {
-  width: calc(70% - 50px);
+  width: 100%;
   display: flex;
   flex-flow: column;
   align-items: center;
   justify-content: center;
-text-align: center;
+  text-align: center;
 
   div:nth-child(2) {
     margin-top: 32px;
   }
-  ul{
+
+  ul {
     display: flex;
     justify-content: space-between;
   }
-  li{
-max-width: 25%;
+
+  li {
+    max-width: 25%;
+    min-width: 25%;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+}
+
+.abilities-slide {
+  position: relative;
+
+  .back {
+    position: absolute;
+    background: $superblack;
+    z-index: 0;
+    width: 100vw;
+    height: 100%;
+    left: -12%;
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    background: $superblack;
+    min-height: 100vh;
+
   }
 }

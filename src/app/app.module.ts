@@ -7,6 +7,7 @@ import {SharedModule} from './shared/shared.module';
 import {AppInjector} from './shared/services/app-injector.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
+import { LoaderComponent } from './layouts/components/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import {ToastrModule} from 'ngx-toastr';
     ToastrModule.forRoot()
   ],
   exports: [
+
   ],
   bootstrap: [AppComponent]
 })

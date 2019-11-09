@@ -23,4 +23,20 @@
       background: $blue;
     }
   }
+  &.btn--reverse{
+
+  }
+  &.btn--outline-gold{
+    background: transparent;
+    color: $gold;
+    border:1px solid $gold;
+    &:hover{
+      background: $gold;
+      color: $darkgrey
+    }
+  }
+  &.btn--white{
+    background: $white;
+    color:$darkgrey
+  }
 }
