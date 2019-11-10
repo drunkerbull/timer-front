@@ -1,0 +1,39 @@
+:host {
+  display: flex;
+}
+
+.left-side {
+  min-width: 220px;
+  margin-right: 20px;
+
+  .avatar-box {
+    min-height: 220px;
+    max-height: 220px;
+    display: flex;
+    background: yellowgreen;
+    margin-bottom: 20px;
+  }
+}
+
+.main-side {
+  width: calc(100% - 220px);
+
+  .main-inputs {
+    display: flex;
+    flex-flow: column;
+
+    label {
+      display: flex;
+
+      span {
+        min-width: 25%;
+        text-align: right;
+        margin-right: 16px;
+      }
+
+      input {
+        width: 75%;
+      }
+    }
+  }
+}

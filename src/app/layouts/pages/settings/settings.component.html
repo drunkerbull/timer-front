@@ -1,1 +1,47 @@
-<p>settings works!</p>
+<div class="left-side">
+  <div class="avatar-box white-back">
+
+  </div>
+  <div class="statistics-box white-back">
+    <p>Count of projects: 13</p>
+    <p>Count of my projects: 13</p>
+    <p>Count of tasks: 13</p>
+    <p>Count of my tasks: 13</p>
+  </div>
+</div>
+<div class="main-side">
+  <div class="main-inputs white-back">
+    <form [formGroup]="formMain" (ngSubmit)="updateMain()">
+      <label>
+        <span>Name:</span>
+        <input type="text" class="input" formControlName="name">
+      </label>
+      <label>
+        <span>Surname:</span>
+        <input type="text" class="input" formControlName="surname">
+      </label>
+      <label>
+        <span>Nickname:</span>
+        <input type="text" class="input" formControlName="nickname">
+      </label>
+      <button class="btn" type="submit">Save</button>
+    </form>
+  </div>
+  <div class="main-inputs white-back">
+    <form [formGroup]="formPass" (ngSubmit)="updatePass()">
+      <label>
+        <span>Current password:</span>
+        <input type="password" class="input" formControlName="currentPass">
+      </label>
+      <label>
+        <span>New password:</span>
+        <input type="password" class="input" formControlName="newPass">
+      </label>
+      <label>
+        <span>Repeat password:</span>
+        <input type="password" class="input" formControlName="repeatNewPass">
+      </label>
+      <button class="btn" type="submit">Save</button>
+    </form>
+  </div>
+</div>
