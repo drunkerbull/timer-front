@@ -13,6 +13,7 @@ import {DatetimepickerComponent} from '../layouts/components/datetimepicker/date
 import {ChartComponent} from '../layouts/components/chart/chart.component';
 import {ChartsModule} from 'ng2-charts';
 import {LoaderComponent} from '../layouts/components/loader/loader.component';
+import {CropperComponent} from '../layouts/components/cropper/cropper.component';
 
 @NgModule({
   declarations: [
@@ -20,11 +21,13 @@ import {LoaderComponent} from '../layouts/components/loader/loader.component';
     DatetimepickerComponent,
     ChartComponent,
     LoaderComponent,
-    PageComponent],
+    CropperComponent,
+    PageComponent
+  ],
   exports: [
     HeaderComponent, PageComponent, ReactiveFormsModule, CommonModule,
     RouterModule, FormsModule, DatetimepickerComponent,
-    ChartComponent, ChartsModule, LoaderComponent
+    ChartComponent, ChartsModule, LoaderComponent, CropperComponent
   ],
   imports: [
     CommonModule,

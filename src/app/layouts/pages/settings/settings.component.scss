@@ -12,6 +12,42 @@
     display: flex;
     background: yellowgreen;
     margin-bottom: 20px;
+    padding: 0;
+    position: relative;
+    cursor: pointer;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      transition: 300ms;
+      height: 100%;
+      background: rgba(0, 0, 0, 0);
+      border-radius: 4px;
+    }
+
+    span {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      cursor: pointer;
+      transition: 300ms;
+      opacity: 0;
+    }
+
+    &:hover {
+      span {
+        opacity: 1;
+      }
+
+      &:before {
+        background: rgba(0, 0, 0, 0.7);
+      }
+    }
   }
 }
 
@@ -35,5 +71,18 @@
         width: 75%;
       }
     }
+  }
+}
+
+.avatar-change {
+  padding: 0 16px;
+  height: 0;
+  overflow: hidden;
+  margin: 0;
+
+  &.avatar-change--open {
+    padding: 16px;
+    margin: 20px 0;
+    height: auto;
   }
 }

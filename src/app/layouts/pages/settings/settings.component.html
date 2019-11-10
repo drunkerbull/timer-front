@@ -1,6 +1,7 @@
 <div class="left-side">
-  <div class="avatar-box white-back">
-
+  <div class="avatar-box white-back" (click)="changeAvatar = !changeAvatar">
+    <img  [src]="avatar">
+    <span>Change</span>
   </div>
   <div class="statistics-box white-back">
     <p>Count of projects: 13</p>
@@ -10,6 +11,10 @@
   </div>
 </div>
 <div class="main-side">
+  <div class="avatar-change white-back" [ngClass]="{'avatar-change--open':changeAvatar}">
+    awdawdwad
+    <app-cropper (cropped)="changeAvatarImg($event)"></app-cropper>
+  </div>
   <div class="main-inputs white-back">
     <form [formGroup]="formMain" (ngSubmit)="updateMain()">
       <label>

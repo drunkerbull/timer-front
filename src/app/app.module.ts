@@ -1,13 +1,11 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {Injector, NgModule} from '@angular/core';
-
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {SharedModule} from './shared/shared.module';
 import {AppInjector} from './shared/services/app-injector.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
-import { LoaderComponent } from './layouts/components/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -20,9 +18,7 @@ import { LoaderComponent } from './layouts/components/loader/loader.component';
     SharedModule,
     ToastrModule.forRoot()
   ],
-  exports: [
-
-  ],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

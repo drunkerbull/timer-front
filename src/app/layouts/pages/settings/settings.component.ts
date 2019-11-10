@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {SettingsService} from './settings.service';
 import {IUser} from '../../../shared/interfaces/IUser.interface';
@@ -12,6 +12,7 @@ import {ToastrService} from 'ngx-toastr';
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent extends BaseComponent implements OnInit {
+
   formMain: FormGroup = new FormGroup({
     name: new FormControl(''),
     surname: new FormControl(''),
@@ -22,7 +23,8 @@ export class SettingsComponent extends BaseComponent implements OnInit {
     newPass: new FormControl(''),
     repeatNewPass: new FormControl('')
   });
-
+  avatar: string=''
+  changeAvatar: boolean = true
   constructor(private settingsService: SettingsService, private toastr: ToastrService) {
     super();
   }
@@ -31,7 +33,9 @@ export class SettingsComponent extends BaseComponent implements OnInit {
     this.formMain.patchValue(this.storageService.user);
   }
 
-
+  changeAvatarImg(img){
+    this.avatar = img
+  }
   updateMain() {
     const subUpdateMainData = this.settingsService.updateMainData(this.formMain.value)
       .subscribe((res: IUser) => {
