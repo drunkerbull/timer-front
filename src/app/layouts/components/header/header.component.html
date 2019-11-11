@@ -11,7 +11,9 @@
           <a [routerLink]="['/statistics']">Statistics</a>
         </div>
         <div class="user-settings">
-          <a [routerLink]="['/settings']" class="user-avatar"></a>
+          <a [routerLink]="['/settings']" class="user-avatar">
+            <img [src]="useravatar" alt="">
+          </a>
           <button  class="btn" (click)="logout()">Logout</button>
         </div>
       </div>

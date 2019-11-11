@@ -10,6 +10,7 @@ export class ErrorHandlingService  {
   }
 
   showError(error) {
+    console.log(error)
     this.toastr.error(error.body, 'Error request');
     if (error.body === 'Error: Please authenticate. Not found User') {
       this.storageService.logout();

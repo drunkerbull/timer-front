@@ -6,32 +6,35 @@ import Cropper from 'cropperjs';
   templateUrl: './cropper.component.html',
   styleUrls: ['./cropper.component.scss']
 })
-export class CropperComponent implements AfterViewInit {
+export class CropperComponent{
   @ViewChild('image', {static: false}) image: ElementRef;
   cropper: any = null;
   @Output() cropped: EventEmitter<any> = new EventEmitter();
+  currentImg: any = null;
 
   constructor() {
   }
 
-  ngAfterViewInit() {
-    console.log(this.image);
-    setTimeout(() => {
-      this.cropper = new Cropper(this.image.nativeElement, {
-        aspectRatio: 1 / 1,
-        viewMode: 1
-      });
-    }, 1000);
 
+  onFileChange(img) {
+    var reader = new FileReader();
+    reader.onload = ((e:any) => {
+      this.currentImg = e.target.result;
+      setTimeout(()=>{
+        this.cropper = new Cropper(this.image.nativeElement, {
+          aspectRatio: 1 / 1,
+          viewMode: 1
+        });
+      },100)
+    })
+    reader.readAsDataURL(img.target.files[0]);
   }
 
   cropImg() {
     const croppedCanvas = this.cropper.getCroppedCanvas();
     const base64 = croppedCanvas.toDataURL('image/jpeg', 0.7);
-    this.cropped.emit(base64);
-    // .toBlob((blob) => {
-    //   // const formData = new FormData();
-    //   // formData.append('croppedImage', blob/*, 'example.png' */);
-    // });
+    croppedCanvas.toBlob((blob) => {
+      this.cropped.emit({base64, blob});
+    });
   }
 }

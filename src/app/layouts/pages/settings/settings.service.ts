@@ -28,4 +28,9 @@ export class SettingsService {
     return this.baseHttp.delete('/users/me')
       .pipe(map(resp => resp as { message: string }));
   }
+  updateAvatarData(pack){
+    return this.baseHttp.post('/users/me/avatar', pack)
+      .pipe(map(resp => resp as any));
+  }
+
 }

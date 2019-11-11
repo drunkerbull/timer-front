@@ -1,4 +1,8 @@
 <div class="cropper">
-  <img #image src="assets/img/qwe.jpg">
-  <button (click)="cropImg()">Crop</button>
+  <input type="file" (change)="onFileChange($event)"
+         accept="image/x-png,image/png,image/gif,image/jpeg,image/jpg,image/tif,image/tiff">
+  <div *ngIf="currentImg">
+    <img #image [src]="currentImg">
+    <button (click)="cropImg()">Crop</button>
+  </div>
 </div>
