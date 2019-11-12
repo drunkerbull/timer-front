@@ -11,7 +11,6 @@
   </form>
 </div>
 <div class="projects-box">
-  <app-loader ></app-loader>
   <app-loader *ngIf="loading; else content"></app-loader>
   <ng-template #content>
     <ul *ngIf="projects.length; else emptyprojects">

@@ -3,7 +3,7 @@
 .home {
   display: flex;
   position: relative;
-  min-height: calc(100vh - 60px);
+  min-height: 60vh;
 
 
   .home_welcome {
@@ -27,7 +27,11 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-
+  h1{
+  font-size: 80px;
+    max-width: 740px;
+    line-height: 76px;
+  }
   div:nth-child(2) {
     margin-top: 32px;
   }
@@ -35,14 +39,19 @@
   ul {
     display: flex;
     justify-content: space-between;
+    margin-top: 70px;
   }
 
   li {
-    max-width: 25%;
-    min-width: 25%;
+    max-width: 30%;
+    min-width: 30%;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: $blue;
+    font-size: 36px;
+    font-family: $fontTeko;
+    line-height: 38px;
   }
 }
 
