@@ -9,7 +9,7 @@ import {environment} from '../../../../environments/environment';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent extends BaseComponent implements OnInit {
-  useravatar: string = environment.host + '/users/' + this.storageService.user._id + '/avatar';
+  useravatar: string =  this.storageService.user ? environment.host + '/users/' + this.storageService.user._id + '/avatar' : null;
 
   constructor(public socketService: SocketService) {
     super();
