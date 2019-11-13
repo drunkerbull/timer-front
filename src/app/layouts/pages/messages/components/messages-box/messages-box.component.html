@@ -1,19 +1,18 @@
 <div *ngIf="currentRoom" class="messages-box">
-  <div class="header">
-    Room name: {{ currentRoom.roomName(storageService.user)}}
-    <br>
-    Group: [{{currentRoom.groupList}}]
-  </div>
   <div class="messages">
     <ul>
       <li *ngFor="let message of currentRoom.messages"
           [class.owner]="message.owner === storageService.user._id">
         <div class="message-avatar">
-          <div class="avatar"></div>
+          <div class="avatar"><img [src]="currentRoom.objectGroup[message.owner].avatar" alt=""></div>
         </div>
         <div class="message-text">
-          <p class="message-name">{{message| json}}</p>
+          <b class="message-name">{{currentRoom.objectGroup[message.owner].nickname}}</b>
           <p>{{message.text}}</p>
+        </div>
+
+        <div class="message-time">
+          {{moment(message.createdAt).format('DD-MM-YYYY HH:mm')}}
         </div>
       </li>
     </ul>

@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {IUser} from '../interfaces/IUser.interface';
-import {SocketService} from './socket.service';
 
 @Injectable()
 export class StorageService {
@@ -39,7 +38,16 @@ export class StorageService {
   get userLogged() {
     return this.get(StorageService.USER_TOKEN);
   }
+
   get user(): IUser {
     return JSON.parse(this.get(StorageService.USER_INFO));
   }
+
+  saveUser(user:IUser, token?:string) {
+    this.put(StorageService.USER_INFO, JSON.stringify(user));
+    if (token) {
+      this.put(StorageService.USER_TOKEN, token);
+    }
+  }
 }
+

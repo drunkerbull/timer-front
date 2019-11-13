@@ -1,6 +1,6 @@
 <div class="left-side">
   <div class="avatar-box white-back" (click)="changeAvatar = !changeAvatar">
-    <img  [src]="avatar" *ngIf="avatar">
+    <img  [src]="storageService.user.avatar" *ngIf="storageService.user.avatar">
     <span>Change</span>
   </div>
   <div class="statistics-box white-back">

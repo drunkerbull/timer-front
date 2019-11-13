@@ -1,6 +1,7 @@
 import {IUser} from '../interfaces/IUser.interface';
 import {IMessage} from '../interfaces/IMessage.interface';
 import {IRoom} from '../interfaces/IRoom.interface';
+import {User} from './user.model';
 
 export class Room implements IRoom {
   _id: string;
@@ -11,23 +12,38 @@ export class Room implements IRoom {
   read: string[];
   group: IUser[];
   messages: IMessage[];
-  constructor(data?: IRoom) {
+
+  chatWith: IUser = null;
+  objectGroup:any = {};
+  constructor(data?: IRoom, currentUserLogged?:IUser) {
     Object.assign(this, data);
+
+    this.group = this.group.map((user: IUser) => {
+      const newUser = new User(user);
+      this.objectGroup[newUser._id] = newUser;
+      return newUser;
+    });
+
+    if(currentUserLogged && this.group.length>1){
+      this.chatWith = this.group.find((user:IUser)=>user._id !== currentUserLogged._id)
+    }
   }
 
-  roomName(loggedUser: IUser): string {
+
+  roomName(loggedUser):{nickname:string,avatar:string}|IUser {
     if (!this.name && this.group.length === 2) {
-      const user = this.group.find(el => el._id !== loggedUser._id);
-      return user.nickname;
+      const user:IUser = this.group.find(el => el._id !== loggedUser._id);
+      return user;
     }
-    return this.name;
+    return {nickname: this.name, avatar: ''};
   }
 
   get groupList(): string {
     const group = this.group.map(el => el.nickname);
     return group.join(', ');
   }
-  haveNewMess(loggedUser: IUser):boolean {
+
+  haveNewMess(loggedUser: IUser): boolean {
     return this.read.length && this.read.filter((res) => res === loggedUser._id).length === 0;
   }
 }

@@ -12,7 +12,7 @@
         </div>
         <div class="user-settings">
           <a [routerLink]="['/settings']" class="user-avatar">
-            <img [src]="useravatar" alt="">
+            <img [src]="storageService.user.avatar" alt="">
           </a>
           <button  class="btn" (click)="logout()">Logout</button>
         </div>

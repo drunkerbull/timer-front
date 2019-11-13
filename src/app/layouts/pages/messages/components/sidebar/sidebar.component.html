@@ -8,9 +8,9 @@
     <li *ngFor="let room of rooms" (click)="selectRoom(room)" [class.newMess]="room.haveNewMess(storageService.user)"
         [class.selected]="room._id===currentRoom?._id" >
       <div class="room-avatar">
-        <span class="avatar"></span>
+        <span class="avatar"><img [src]="room.chatWith.avatar" alt=""></span>
       </div>
-      <span class="room-name">{{room.roomName(storageService.user)}}</span>
+      <span class="room-name">{{room.chatWith.nickname}}</span>
     </li>
   </ul>
   <ng-template #searchList>

@@ -41,7 +41,7 @@ export class SidebarComponent extends BaseComponent implements OnInit {
     this.someSubscriptions.add(subSearchValue);
 
     const subOnRoom = this.messagesService.onRoom().subscribe((room: IRoom) => {
-      this.currentRoom = new Room(room);
+      this.currentRoom = new Room(room, this.storageService.user);
       const existRooms = this.rooms.filter(room => room._id === this.currentRoom._id);
       if (!existRooms.length) {
         this.rooms.push(this.currentRoom);
@@ -50,7 +50,7 @@ export class SidebarComponent extends BaseComponent implements OnInit {
     this.someSubscriptions.add(subOnRoom);
 
     const subOnRooms = this.messagesService.onRooms().subscribe((rooms: IRoom[]) => {
-      this.rooms = rooms.map((room: IRoom) => new Room(room));
+      this.rooms = rooms.map((room: IRoom) => new Room(room, this.storageService.user));
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subOnRooms);
 

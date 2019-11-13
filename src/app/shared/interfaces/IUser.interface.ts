@@ -3,7 +3,9 @@ export interface IUser {
   createdAt: string,
   email: string,
   nickname: string,
-  tokens: any[],
+  tokens: { token: string }[],
   updatedAt: string,
-  online: string
+  online: string,
+  avatar?:string,
+  haveAvatar: boolean
 }

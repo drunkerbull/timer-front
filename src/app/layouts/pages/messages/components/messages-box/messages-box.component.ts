@@ -6,6 +6,7 @@ import {Room} from '../../../../../shared/models/room.model';
 import {IRoom} from '../../../../../shared/interfaces/IRoom.interface';
 import {BaseComponent} from '../../../../../shared/components/base.component';
 import {IMessage} from '../../../../../shared/interfaces/IMessage.interface';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-messages-box',
@@ -14,6 +15,7 @@ import {IMessage} from '../../../../../shared/interfaces/IMessage.interface';
 })
 export class MessagesBoxComponent extends BaseComponent implements OnInit {
   currentRoom: IRoom = null;
+  moment = moment;
   form: FormGroup = new FormGroup({
     message: new FormControl('')
   });
@@ -41,4 +43,5 @@ export class MessagesBoxComponent extends BaseComponent implements OnInit {
     this.messagesService.sendMessage(message);
     this.form.reset();
   }
+
 }

@@ -1,13 +1,15 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {BaseHttpService} from '../../../shared/services/base-http.service';
 import {map} from 'rxjs/operators';
 import {IUser} from '../../../shared/interfaces/IUser.interface';
 import {IUserLogged} from '../../../shared/interfaces/IUserLogged.interface';
+import {BehaviorSubject, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HomeService {
+  public registeredUser =  new EventEmitter();
 
   constructor(public baseHttp: BaseHttpService) {
   }
