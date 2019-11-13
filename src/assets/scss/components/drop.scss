@@ -1,10 +1,32 @@
 .drop{
 z-index: 1001;
 }
+svg-icon{
+  display: flex;
+  align-items: center;
+}
 .drop-target.drop-enabled {
   .btn-add-project.btn {
-    background: $gold;
-    color: white;
     box-shadow: $shadowWithoutUp;
+    &.btn--outline-black{
+      background: $darkgrey;
+      color: white;
+      svg{
+        fill: white
+      }
+    }
+    &.btn--outline-gold{
+      background: $gold;
+      color: white;
+    }
+    &.btn--outline-blue{
+      background: $blue;
+      color: white;
+    }
+  }
+}
+.drop.drop-element{
+  .workers-list{
+    color:white
   }
 }

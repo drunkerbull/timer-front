@@ -7,11 +7,18 @@
   padding: 4px 12px;
   padding-top: 6px;
   background: $darkgrey;
+  white-space: nowrap;
   cursor: pointer;
   color: $white;
   transition: color 300ms, background 300ms;
   border-radius: 2px;
   outline: none;
+  min-height: 41px;
+
+  &--small {
+    padding: 0 8px;
+    min-height: 20px;
+  }
 
   &:hover {
     color: $grey;
@@ -21,18 +28,22 @@
   &:focus, &:active {
     outline: none;
   }
+
   &.btn--hover-blue {
     &:hover {
       background: $blue;
-      color: $white
+      color: $white;
+
     }
   }
+
   &.btn--hover-gold {
     &:hover {
       background: $gold;
       color: $white
     }
   }
+
   &.btn--outline-red {
     background: transparent;
     color: $red;
@@ -43,6 +54,23 @@
       color: $white
     }
   }
+
+  &.btn--outline-black {
+    background: transparent;
+    color: $darkgrey;
+    border: 1px solid $darkgrey;
+
+
+
+    &:hover {
+      background: $darkgrey;
+      color: $white;
+      svg {
+        fill: white
+      }
+    }
+  }
+
   &.btn--outline-blue {
     background: transparent;
     color: $blue;
@@ -50,9 +78,10 @@
 
     &:hover {
       background: $blue;
-      color: $black
+      color: $white
     }
   }
+
   &.btn--outline-gold {
     background: transparent;
     color: $gold;
@@ -63,20 +92,31 @@
       color: $white
     }
   }
+
   &.btn--white {
     background: $white;
     color: $darkgrey
   }
 
-  &.btn__link{
+  &.btn__link {
     background: transparent;
     border: 0;
     font-family: $fontHind;
-    &--blue{
+
+    &--blue {
       color: $black;
-     &:hover{
-       color: $blue
-     }
+
+      &:hover {
+        color: $blue
+      }
+    }
+
+    &--red {
+      color: $black;
+
+      &:hover {
+        color: $red
+      }
     }
   }
 }

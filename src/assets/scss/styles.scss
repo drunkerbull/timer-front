@@ -101,3 +101,21 @@ h1, h2, h3, h4, h5, h6, p {
   background: rgba(255,255,255,0.95);
   border-bottom: 1px solid $grey;
 }
+.some-back{
+  background: white;
+  border-radius: 2px;
+  padding: 16px;
+  color: $black;
+  &--gold{
+    color: white;
+    background: $gold;
+  }
+  &--blue{
+    color:white;
+    background: $blue;
+  }
+  &--black{
+    color:white;
+    background: $darkgrey;
+  }
+}

@@ -6,61 +6,67 @@
 }
 
 .project-info {
-  padding: 16px;
-  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
-  margin-bottom: 8px;
-  background: white;
   position: relative;
-display: flex;
-  justify-content: space-between;
-  .owner {
-    position: absolute;
-    right: 16px;
-    top: 16px;
-
-    display: flex;
-    flex-flow: column;
-    justify-content: right;
-    align-items: flex-end;
-
-
-  }
-
-  &.owner {
-    border: 1px solid gold;
-  }
-
-  h1 {
-    margin: 0;
-    margin-bottom: 8px;
-  }
-}
-.project-info-box{
-  h1{
-
-  }
-}
-.project-info-control{
+ min-height: 50px;
+  align-items: center;
   display: flex;
+  justify-content: space-between;
+
+}
+
+.workers-list {
+
+}
+
+.project-info-box {
+  display: flex;
+  align-items: center;
+  width: 80%;
+  justify-content: space-between;
+
+  h1{
+    line-height: 34px;
+    font-size: 34px;
+    margin-bottom: 0;
+    overflow: hidden;
+    max-width: 70%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .workers-list {
+    color: white
+  }
+}
+
+.project-info-control {
+  display: flex;
+
+  button {
+    margin-left: 8px;
+  }
+
   svg {
     width: 18px;
     height: 18px;
     fill: $gold
   }
 }
-.owner-control{
+
+.owner-control {
   display: flex;
   flex-flow: column;
   align-items: flex-end;
-  background: $gold;
-  div{
+
+  div {
     margin-bottom: 8px;
     display: flex;
   }
-  button{
+
+  button {
     margin-left: 8px;
   }
 }
+
 .add-project-box.project-box {
   &.add-project-box--open {
     .add-wrapper {
@@ -71,13 +77,9 @@ display: flex;
 }
 
 .task-list {
-  margin-top: 200px;
+  margin-top: 50px;
   li {
-    border-radius: 4px;
     display: flex;
-    background: white;
-    margin: 8px 0;
-    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
     flex-flow: column;
     padding: 8px;
     flex-flow: wrap;
@@ -92,6 +94,9 @@ display: flex;
     .task-timer {
     }
   }
+}
+.project-tasks-box{
+  margin-top: 50px;
 }
 .add-project-box {
   display: flex;
@@ -152,10 +157,12 @@ display: flex;
     margin-right: auto;
     margin-left: auto;
     justify-content: center;
-  label{
-    display: flex;
-    margin: 8px 0;
-  }
+
+    label {
+      display: flex;
+      margin: 8px 0;
+    }
+
     .add-btn {
       display: flex;
       justify-content: space-between;
