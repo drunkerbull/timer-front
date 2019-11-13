@@ -1,10 +1,26 @@
-<div class="project-info">
-  <div class="owner"
-       *ngIf="project.owner._id === storageService.user._id">
-    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-         viewBox="0 0 338.405 338.405"
-         style="enable-background:new 0 0 338.405 338.405;"
-         xml:space="preserve">
+<div class="under-header">
+  <div class="container">
+    <div class="project-info">
+      <div class="project-info-box">
+        <h1>{{project.name}}   <input type="text" [(ngModel)]="project.name" *ngIf="changeProjectMode"></h1>
+        <p>Owner: {{project.owner.nickname}}</p>
+        <div>
+          <h3>Workers:</h3>
+          <ul>
+            <li *ngFor="let worker of project.workers; let i = index">{{i + 1}}) {{worker.nickname}}
+              <button *ngIf="worker._id !== project.owner._id" (click)="deleteWorker(worker,i)">DeleteWorker</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="project-info-control">
+        <app-drop *ngIf="project.owner._id === storageService.user._id">
+          <div class="target">
+            <button class="btn btn--outline-gold btn-add-project">
+              <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                   viewBox="0 0 338.405 338.405"
+                   style="enable-background:new 0 0 338.405 338.405;"
+                   xml:space="preserve">
           <g>
             <g>
               <path d="M169.202,195.203c-15.991,0-29,13.01-29,29c0,15.991,13.009,29.001,29,29.001c15.99,0,29-13.01,29-29.001
@@ -31,83 +47,82 @@
                 c0,11.686,5.205,21.45,12.767,25.527v20.804L28.709,270.534L28.709,270.534z"/>
             </g>
           </g>
-      <g>
+                <g>
           </g>
-      <g>
+                <g>
           </g>
-      <g>
+                <g>
           </g>
-      <g>
+                <g>
           </g>
-      <g>
+                <g>
           </g>
-      <g>
+                <g>
           </g>
-      <g>
+                <g>
           </g>
-      <g>
+                <g>
           </g>
-      <g>
+                <g>
           </g>
-      <g>
+                <g>
           </g>
-      <g>
+                <g>
           </g>
-      <g>
+                <g>
           </g>
-      <g>
+                <g>
           </g>
-      <g>
+                <g>
           </g>
-      <g>
+                <g>
           </g>
           </svg>
-    <div class="owner-control">
-      <div>
-        <button class="btn btn--outline-blue" (click)="changeProject()">Change</button>
-        <button class="btn btn--outline-red" (click)="deleteProject()">Delete</button>
-      </div>
-      <div>
-        <input class="input input--big" type="text" placeholder="email" [(ngModel)]="newWorker">
-        <button class="btn btn--outline-blue" (click)="addWorker()">AddWorker</button>
+            </button>
+          </div>
+          <div class="content">
+            <div class="owner-control">
+              <div>
+                <button class="btn btn--outline-blue" (click)="changeProject()">Change</button>
+                <button class="btn btn--outline-red" (click)="deleteProject()">Delete</button>
+              </div>
+              <div>
+                <input class="input input--big" type="text" placeholder="email" [(ngModel)]="newWorker">
+                <button class="btn btn--outline-blue" (click)="addWorker()">AddWorker</button>
+              </div>
+            </div>
+          </div>
+        </app-drop>
+        <app-drop>
+          <div class="target">
+            <button class="btn btn--outline-gold btn-add-project"> add Task</button>
+          </div>
+          <div class="content">
+            <form [formGroup]="form">
+              <div class="add-wrapper">
+                <input class="input input--big" type="text" placeholder="Name of task" formControlName="name">
+                <app-datetimepicker [placeholder]="'start'"
+                                    (changeEl)="changePicker('start',$event)"></app-datetimepicker>
+                <app-datetimepicker [placeholder]="'end'" (changeEl)="changePicker('end',$event)"></app-datetimepicker>
+                <label>
+                  <span>Who work on task?</span>
+                  <select formControlName="worker">
+                    <option *ngFor="let worker of project.workers; let i = index"
+                            [value]="i">{{worker.nickname}}</option>
+                  </select>
+                </label>
+                <div class="add-btn">
+                  <button class="btn btn--outline-gold" (click)="openAddBox = false;form.reset()">Cancel</button>
+                  <button class="btn btn--white btn--hover-blue" (click)="addTask()">Create task</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </app-drop>
       </div>
     </div>
   </div>
-  <h1>{{project.name}}   <input type="text" [(ngModel)]="project.name" *ngIf="changeProjectMode"></h1>
-  <p>Owner: {{project.owner.nickname}}</p>
-  <div>
-    <h3>Workers:</h3>
-    <ul>
-      <li *ngFor="let worker of project.workers; let i = index">{{i + 1}}) {{worker.nickname}}
-        <button *ngIf="worker._id !== project.owner._id" (click)="deleteWorker(worker,i)">DeleteWorker</button>
-      </li>
-    </ul>
-  </div>
 </div>
-
-<div class="add-project-box project-box" [ngClass]="{'add-project-box--open':openAddBox}">
-  <h3 (click)="openAddBox = true">Add new task</h3>
-  <form [formGroup]="form">
-    <div class="add-wrapper">
-      <input class="input input--big" type="text" placeholder="Name of task" formControlName="name">
-      <app-datetimepicker [placeholder]="'start'" (changeEl)="changePicker('start',$event)"></app-datetimepicker>
-      <app-datetimepicker [placeholder]="'end'" (changeEl)="changePicker('end',$event)"></app-datetimepicker>
-      <label>
-        <span>Who work on task?</span>
-        <select formControlName="worker">
-          <option *ngFor="let worker of project.workers; let i = index" [value]="i">{{worker.nickname}}</option>
-        </select>
-      </label>
-      <div class="add-btn">
-        <button class="btn btn--outline-gold" (click)="openAddBox = false;form.reset()">Cancel</button>
-        <button class="btn btn--white btn--hover-blue" (click)="addTask()">Create task</button>
-      </div>
-    </div>
-  </form>
-</div>
-
-
-
 
 <ul *ngIf="!loading" class="task-list">
   <li *ngFor="let task of project.tasks; let i = index">

@@ -14,6 +14,7 @@ import {ChartComponent} from '../layouts/components/chart/chart.component';
 import {ChartsModule} from 'ng2-charts';
 import {LoaderComponent} from '../layouts/components/loader/loader.component';
 import {CropperComponent} from '../layouts/components/cropper/cropper.component';
+import {DropComponent} from '../layouts/components/drop/drop.component';
 
 @NgModule({
   declarations: [
@@ -22,12 +23,15 @@ import {CropperComponent} from '../layouts/components/cropper/cropper.component'
     ChartComponent,
     LoaderComponent,
     CropperComponent,
-    PageComponent
+    PageComponent,
+    DropComponent
+
   ],
   exports: [
     HeaderComponent, PageComponent, ReactiveFormsModule, CommonModule,
     RouterModule, FormsModule, DatetimepickerComponent,
-    ChartComponent, ChartsModule, LoaderComponent, CropperComponent
+    ChartComponent, ChartsModule, LoaderComponent, CropperComponent,    DropComponent
+
   ],
   imports: [
     CommonModule,

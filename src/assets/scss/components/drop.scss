@@ -1,0 +1,10 @@
+.drop{
+z-index: 1001;
+}
+.drop-target.drop-enabled {
+  .btn-add-project.btn {
+    background: $gold;
+    color: white;
+    box-shadow: $shadowWithoutUp;
+  }
+}

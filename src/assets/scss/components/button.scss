@@ -9,20 +9,18 @@
   background: $darkgrey;
   cursor: pointer;
   color: $white;
-  transition: 300ms;
+  transition: color 300ms, background 300ms;
   border-radius: 2px;
+  outline: none;
 
   &:hover {
-    color: $white;
-    background: $gold;
-  }
+    color: $grey;
 
-  outline: none;
+  }
 
   &:focus, &:active {
     outline: none;
   }
-
   &.btn--hover-blue {
     &:hover {
       background: $blue;
@@ -35,10 +33,6 @@
       color: $white
     }
   }
-  &.btn--reverse {
-
-  }
-
   &.btn--outline-red {
     background: transparent;
     color: $red;
@@ -49,7 +43,6 @@
       color: $white
     }
   }
-
   &.btn--outline-blue {
     background: transparent;
     color: $blue;
@@ -60,7 +53,6 @@
       color: $black
     }
   }
-
   &.btn--outline-gold {
     background: transparent;
     color: $gold;
@@ -71,9 +63,20 @@
       color: $white
     }
   }
-
   &.btn--white {
     background: $white;
     color: $darkgrey
+  }
+
+  &.btn__link{
+    background: transparent;
+    border: 0;
+    font-family: $fontHind;
+    &--blue{
+      color: $black;
+     &:hover{
+       color: $blue
+     }
+    }
   }
 }

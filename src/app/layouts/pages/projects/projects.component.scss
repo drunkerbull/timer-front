@@ -5,13 +5,12 @@
   display: block;
 }
 
-.add-project-box {
+.add-project-header {
   display: flex;
-  background: $darkgrey;
-  min-height: 60px;
+  min-height: 50px;
+  align-items: center;
+  justify-content: space-between;
   position: relative;
-  flex-flow: column;
-  border-radius: 2px;
 
   h3 {
     display: flex;
@@ -35,24 +34,6 @@
     }
   }
 
-  &.add-project-box--open {
-    h3 {
-      color: $black;
-      cursor: auto;
-      background: $gold;
-      z-index: 3;
-    }
-
-    form {
-      z-index: 2;
-    }
-
-    .add-wrapper {
-      height: 120px;
-      opacity: 1;
-
-    }
-  }
 
   .add-wrapper {
     display: flex;
@@ -78,10 +59,12 @@
     }
 
   }
+
+
 }
 
 .projects-box {
-  margin-top: 12px;
+  margin-top: 42px;
 
   ul {
     display: flex;
@@ -92,7 +75,7 @@
       width: calc(50% - 10px);
 
       a {
-        margin: 8px 0;
+        margin: 10px 0;
         padding: 16px;
         min-height: 80px;
         display: flex;
@@ -110,22 +93,24 @@
           position: absolute;
           right: 16px;
           top: 16px;
-          svg{
+
+          svg {
             width: 20px;
             height: 20px;
-            fill: #cfa700
+            fill: $gold
           }
         }
 
         &:hover {
-         h3{
-           color: $blue
-         }
+          h3 {
+            color: $blue
+          }
         }
 
         h3 {
           font-size: 26px;
           margin: 0;
+          font-family: $fontHind;
           margin-bottom: 8px;
           transition: 300ms;
         }
@@ -134,4 +119,7 @@
   }
 }
 
-
+.add-project-form {
+  background: $gold;
+  padding: 16px;
+}

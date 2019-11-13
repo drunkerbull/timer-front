@@ -11,7 +11,8 @@
   margin-bottom: 8px;
   background: white;
   position: relative;
-
+display: flex;
+  justify-content: space-between;
   .owner {
     position: absolute;
     right: 16px;
@@ -21,23 +22,8 @@
     flex-flow: column;
     justify-content: right;
     align-items: flex-end;
-    svg {
-      width: 40px;
-      height: 40px;
-      fill: #cfa700
-    }
-    .owner-control{
-      display: flex;
-      flex-flow: column;
-      align-items: flex-end;
-      div{
-        margin-bottom: 8px;
-        display: flex;
-      }
-        button{
-          margin-left: 8px;
-        }
-    }
+
+
   }
 
   &.owner {
@@ -49,7 +35,32 @@
     margin-bottom: 8px;
   }
 }
+.project-info-box{
+  h1{
 
+  }
+}
+.project-info-control{
+  display: flex;
+  svg {
+    width: 18px;
+    height: 18px;
+    fill: $gold
+  }
+}
+.owner-control{
+  display: flex;
+  flex-flow: column;
+  align-items: flex-end;
+  background: $gold;
+  div{
+    margin-bottom: 8px;
+    display: flex;
+  }
+  button{
+    margin-left: 8px;
+  }
+}
 .add-project-box.project-box {
   &.add-project-box--open {
     .add-wrapper {
@@ -60,6 +71,7 @@
 }
 
 .task-list {
+  margin-top: 200px;
   li {
     border-radius: 4px;
     display: flex;

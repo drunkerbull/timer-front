@@ -1,14 +1,29 @@
-<div class="add-project-box" [ngClass]="{'add-project-box--open':openAddBox}">
-  <h3 (click)="openAddBox = true">Add new project</h3>
-  <form [formGroup]="form">
-    <div class="add-wrapper">
-      <input class="input" type="text" placeholder="Name of project" formControlName="name">
-      <div class="add-btn">
-        <button class="btn btn--outline-gold" (click)="openAddBox = false">Cancel</button>
-        <button class="btn btn--white btn--hover-blue" (click)="createProject()">Create project</button>
+<div class="under-header">
+  <div class="container">
+    <div class="add-project-header">
+      <div>
+        <button class="btn btn__link btn__link--blue">Projects: {{countProjects}}</button>
+        <button class="btn btn__link btn__link--blue">Owner: {{countOwner}}</button>
+      </div>
+      <div>
+        <app-drop>
+          <div class="target">
+            <button class="btn btn--outline-gold btn-add-project">Add Project</button>
+          </div>
+          <div class="content">
+            <form [formGroup]="form" class="add-project-form">
+              <div class="add-wrapper">
+                <input class="input" type="text" placeholder="Name of project" formControlName="name">
+                <div class="add-btn">
+                  <button class="btn" (click)="createProject()">Create project</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </app-drop>
       </div>
     </div>
-  </form>
+  </div>
 </div>
 <div class="projects-box">
   <app-loader *ngIf="loading; else content"></app-loader>
@@ -17,11 +32,11 @@
       <li *ngFor="let project of projects">
         <a [routerLink]="'/projects/'+project._id" class="white-back">
           <div class="owner"
-                *ngIf="project.owner._id === storageService.user._id">
-          <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-               viewBox="0 0 338.405 338.405"
-               style="enable-background:new 0 0 338.405 338.405;"
-               xml:space="preserve">
+               *ngIf="project.owner._id === storageService.user._id">
+            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                 viewBox="0 0 338.405 338.405"
+                 style="enable-background:new 0 0 338.405 338.405;"
+                 xml:space="preserve">
           <g>
             <g>
               <path d="M169.202,195.203c-15.991,0-29,13.01-29,29c0,15.991,13.009,29.001,29,29.001c15.99,0,29-13.01,29-29.001
@@ -48,35 +63,35 @@
                 c0,11.686,5.205,21.45,12.767,25.527v20.804L28.709,270.534L28.709,270.534z"/>
             </g>
           </g>
-          <g>
+              <g>
           </g>
-          <g>
+              <g>
           </g>
-          <g>
+              <g>
           </g>
-          <g>
+              <g>
           </g>
-          <g>
+              <g>
           </g>
-          <g>
+              <g>
           </g>
-          <g>
+              <g>
           </g>
-          <g>
+              <g>
           </g>
-          <g>
+              <g>
           </g>
-          <g>
+              <g>
           </g>
-          <g>
+              <g>
           </g>
-          <g>
+              <g>
           </g>
-          <g>
+              <g>
           </g>
-          <g>
+              <g>
           </g>
-          <g>
+              <g>
           </g>
           </svg>
           </div>
