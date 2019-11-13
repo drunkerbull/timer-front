@@ -5,56 +5,75 @@
   font-family: $fontTeko;
   font-size: 20px;
   padding: 4px 12px;
+  padding-top: 6px;
   background: $darkgrey;
   cursor: pointer;
   color: $white;
   transition: 300ms;
   border-radius: 2px;
+
   &:hover {
-    color: $black;
+    color: $white;
     background: $gold;
   }
+
   outline: none;
-  &:focus,&:active{
+
+  &:focus, &:active {
     outline: none;
   }
-  &.btn--hover-blue{
-    &:hover{
+
+  &.btn--hover-blue {
+    &:hover {
       background: $blue;
+      color: $white
     }
   }
-  &.btn--reverse{
+  &.btn--hover-gold {
+    &:hover {
+      background: $gold;
+      color: $white
+    }
+  }
+  &.btn--reverse {
 
   }
-  &.btn--outline-red{
+
+  &.btn--outline-red {
     background: transparent;
     color: $red;
-    border:1px solid $red;
-    &:hover{
+    border: 1px solid $red;
+
+    &:hover {
       background: $red;
       color: $white
     }
   }
-  &.btn--outline-blue{
+
+  &.btn--outline-blue {
     background: transparent;
     color: $blue;
-    border:1px solid $blue;
-    &:hover{
+    border: 1px solid $blue;
+
+    &:hover {
       background: $blue;
       color: $black
     }
   }
-  &.btn--outline-gold{
+
+  &.btn--outline-gold {
     background: transparent;
     color: $gold;
-    border:1px solid $gold;
-    &:hover{
+    border: 1px solid $gold;
+
+    &:hover {
       background: $gold;
-      color: $darkgrey
+      color: $white
     }
   }
-  &.btn--white{
+
+  &.btn--white {
     background: $white;
-    color:$darkgrey
+    color: $darkgrey
   }
 }

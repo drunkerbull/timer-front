@@ -15,7 +15,7 @@
   <ng-template #content>
     <ul *ngIf="projects.length; else emptyprojects">
       <li *ngFor="let project of projects">
-        <a [routerLink]="'/projects/'+project._id">
+        <a [routerLink]="'/projects/'+project._id" class="white-back">
           <div class="owner"
                 *ngIf="project.owner._id === storageService.user._id">
           <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"

@@ -48,10 +48,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: $blue;
+
     font-size: 36px;
     font-family: $fontTeko;
     line-height: 38px;
+    &:nth-child(1){
+      color: $blue;
+    }
+    &:nth-child(2){
+      color: $darkgrey;
+    }
+    &:nth-child(3){
+      color: $gold;
+    }
   }
 }
 
@@ -60,7 +69,7 @@
 
   .back {
     position: absolute;
-    background: $superblack;
+    //background: $superblack;
     z-index: 0;
     width: 200vw;
     height: 100%;
@@ -70,7 +79,7 @@
   .content {
     position: relative;
     z-index: 1;
-    background: $superblack;
+    //background: $superblack;
     min-height: 100vh;
 
   }
