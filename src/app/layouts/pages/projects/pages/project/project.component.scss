@@ -7,7 +7,7 @@
 
 .project-info {
   position: relative;
- min-height: 50px;
+  min-height: 50px;
   align-items: center;
   display: flex;
   justify-content: space-between;
@@ -24,7 +24,7 @@
   width: 80%;
   justify-content: space-between;
 
-  h1{
+  h1 {
     line-height: 34px;
     font-size: 34px;
     margin-bottom: 0;
@@ -33,6 +33,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
   }
+
   .workers-list {
     color: white
   }
@@ -78,6 +79,7 @@
 
 .task-list {
   margin-top: 50px;
+
   li {
     display: flex;
     flex-flow: column;
@@ -95,9 +97,11 @@
     }
   }
 }
-.project-tasks-box{
+
+.project-tasks-box {
   margin-top: 50px;
 }
+
 .add-project-box {
   display: flex;
   background: $darkgrey;

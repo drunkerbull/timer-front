@@ -15,6 +15,6 @@ export class MessagesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.messagesService.leaveAllRoom()
+    this.messagesService.leaveAllRoom();
   }
 }

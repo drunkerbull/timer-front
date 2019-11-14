@@ -17,7 +17,8 @@ export class StatisticsComponent extends BaseComponent implements OnInit {
   tasks: ITasks[] = [];
   public chartData: MultiDataSet = [];
   public chartLabels: Label[] = [];
-  loading:boolean = true
+  loading: boolean = true;
+
   constructor(public statisticsService: StatisticsService) {
     super();
   }
@@ -50,7 +51,7 @@ export class StatisticsComponent extends BaseComponent implements OnInit {
   }
 
   updateStatsWithParams(params) {
-    this.loading = true
+    this.loading = true;
     let queryLine = '?';
     for (let query in params) {
       if (params[query]) {
@@ -64,7 +65,7 @@ export class StatisticsComponent extends BaseComponent implements OnInit {
       this.tasks = res;
       this.chartLabels = this.tasks.map((task) => task.name);
       this.chartData = [this.tasks.map((task) => task.total)];
-      this.loading = false
+      this.loading = false;
     });
   }
 }

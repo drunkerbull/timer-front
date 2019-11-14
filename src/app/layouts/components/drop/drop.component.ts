@@ -1,5 +1,6 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import * as Drop from 'tether-drop';
+
 @Component({
   selector: 'app-drop',
   templateUrl: './drop.component.html',
@@ -11,7 +12,9 @@ export class DropComponent implements OnInit {
   @ViewChild('dropContent', {static: true}) dropContent: ElementRef;
   @Input() position: string = 'top right';
   @Input() classes: string = '';
-  constructor() { }
+
+  constructor() {
+  }
 
   ngOnInit() {
     this.dropInstance = new Drop({
@@ -24,6 +27,7 @@ export class DropComponent implements OnInit {
       constrainToWindow: true
     });
   }
+
   close() {
     this.dropInstance.close();
   }

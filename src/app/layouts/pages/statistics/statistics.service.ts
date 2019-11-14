@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BaseHttpService} from '../../../shared/services/base-http.service';
 import {map} from 'rxjs/operators';
-import {IProject} from '../../../shared/interfaces/IProject.interface';
 import {ITasks} from '../../../shared/interfaces/ITasks.interface';
 
 @Injectable({
@@ -12,7 +11,7 @@ export class StatisticsService {
   }
 
   getStats(queries) {
-    return this.baseHttp.get('/statistics'+queries)
+    return this.baseHttp.get('/statistics' + queries)
       .pipe(map(resp => resp as ITasks[]));
   }
 }

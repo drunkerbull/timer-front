@@ -6,6 +6,6 @@ export interface IUser {
   tokens: { token: string }[],
   updatedAt: string,
   online: string,
-  avatar?:string,
+  avatar?: string,
   haveAvatar: boolean
 }

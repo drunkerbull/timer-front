@@ -7,6 +7,8 @@ import {IMessage} from '../../../../../shared/interfaces/IMessage.interface';
 import {IUser} from '../../../../../shared/interfaces/IUser.interface';
 import {Room} from '../../../../../shared/models/room.model';
 import {BaseComponent} from '../../../../../shared/components/base.component';
+import {ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-sidebar',
@@ -22,51 +24,44 @@ export class SidebarComponent extends BaseComponent implements OnInit {
   });
   searchIsEmpty: boolean = true;
 
-  constructor(public messagesService: MessagesService, public storageService: StorageService) {
+  constructor(public messagesService: MessagesService, public storageService: StorageService, public activatedRoute: ActivatedRoute,
+              private location: Location) {
     super();
   }
 
   ngOnInit() {
 
     this.messagesService.getRooms();
-    const subSearchValue = this.form.get('search').valueChanges.subscribe(val => {
-      if (val && val.length) {
-        this.searchIsEmpty = false;
-        this.messagesService.getSearchUsers(val);
-      } else {
-        this.usersSearch = [];
-        this.searchIsEmpty = true;
-      }
-    }, (err) => this.errorHandlingService.showError(err));
+
+    const subSearchValue = this.form.get('search').valueChanges
+      .subscribe(val => this.searchValue(val), (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subSearchValue);
 
-    const subOnRoom = this.messagesService.onRoom().subscribe((room: IRoom) => {
-      this.currentRoom = new Room(room, this.storageService.user);
-      const existRooms = this.rooms.filter(room => room._id === this.currentRoom._id);
-      if (!existRooms.length) {
-        this.rooms.push(this.currentRoom);
-      }
-    }, (err) => this.errorHandlingService.showError(err));
+    const subOnRoom = this.messagesService.onRoom()
+      .subscribe((room: IRoom) => this.onRoom(room), (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subOnRoom);
 
-    const subOnRooms = this.messagesService.onRooms().subscribe((rooms: IRoom[]) => {
-      this.rooms = rooms.map((room: IRoom) => new Room(room, this.storageService.user));
-    }, (err) => this.errorHandlingService.showError(err));
+    const subOnRooms = this.messagesService.onRooms()
+      .subscribe((rooms: IRoom[]) => this.onRooms(rooms), (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subOnRooms);
 
-    const subOnSearchUsers = this.messagesService.onSearchUsers().subscribe((users: IUser[]) => {
-      this.usersSearch = users;
-    }, (err) => this.errorHandlingService.showError(err));
+    const subOnSearchUsers = this.messagesService.onSearchUsers()
+      .subscribe((users: IUser[]) => this.usersSearch = users, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subOnSearchUsers);
 
-    const subOnNotiMessage = this.messagesService.onNotiMessage().subscribe((message: IMessage) => {
-      this.rooms.map((room: IRoom) => {
-        if (typeof message.owner !== 'string' && room._id === message.room) {
-          room.read = [message.owner._id];
-        }
-      });
-    }, (err) => this.errorHandlingService.showError(err));
+    const subOnNotiMessage = this.messagesService.onNotiMessage()
+      .subscribe((message: IMessage) => this.onNotiMessage(message), (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subOnNotiMessage);
+  }
+
+  searchValue(val) {
+    if (val && val.length) {
+      this.searchIsEmpty = false;
+      this.messagesService.getSearchUsers(val);
+    } else {
+      this.usersSearch = [];
+      this.searchIsEmpty = true;
+    }
   }
 
   selectUser(user: IUser) {
@@ -74,10 +69,45 @@ export class SidebarComponent extends BaseComponent implements OnInit {
     this.form.reset();
   }
 
+  onRooms(rooms: IRoom[]) {
+    this.rooms = rooms.map((room: IRoom) => new Room(room, this.storageService.user));
+    this.checkLink();
+  }
+
+  onRoom(room: IRoom) {
+    this.currentRoom = new Room(room, this.storageService.user);
+    const existRooms = this.rooms.filter(room => room._id === this.currentRoom._id);
+    if (!existRooms.length) {
+      this.rooms.push(this.currentRoom);
+    }
+    this.location.replaceState('/messages/' + this.currentRoom._id);
+  }
+
+  onNotiMessage(message: IMessage) {
+    this.rooms.map((room: IRoom) => {
+      if (typeof message.owner !== 'string' && room._id === message.room) {
+        room.read = [message.owner._id];
+      }
+    });
+  }
+
+  checkLink() {
+    const subData = this.activatedRoute.data.subscribe((id: any) => {
+      if (id.room) {
+        const room = this.rooms.find((room) => room.chatWith._id === id.room);
+        if (room) {
+          this.selectRoom(room);
+        }
+      }
+    }, (err) => this.errorHandlingService.showError(err));
+    this.someSubscriptions.add(subData);
+  }
+
   selectRoom(room: IRoom) {
     if (room.haveNewMess(this.storageService.user)) {
       room.read.push(this.storageService.user._id);
     }
+
     this.messagesService.selectRoom(room);
   }
 }

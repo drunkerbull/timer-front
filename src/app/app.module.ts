@@ -6,7 +6,6 @@ import {SharedModule} from './shared/shared.module';
 import {AppInjector} from './shared/services/app-injector.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
-import { DropComponent } from './layouts/components/drop/drop.component';
 
 @NgModule({
   declarations: [
@@ -20,8 +19,7 @@ import { DropComponent } from './layouts/components/drop/drop.component';
     SharedModule,
     ToastrModule.forRoot()
   ],
-  exports: [
-  ],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {MessagesService} from './layouts/pages/messages/messages.service';
 import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from '@angular/router';
 
 @Component({
@@ -10,6 +9,7 @@ import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Route
 export class AppComponent {
   title = 'timer-front';
   loading = false;
+
   constructor(private router: Router) {
     this.router.events.subscribe((event: any) => {
       switch (true) {

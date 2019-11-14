@@ -36,6 +36,7 @@ export class ProjectsComponent extends BaseComponent implements OnInit {
       this.projects.push(res);
       this.form.reset();
       this.openAddBox = false;
+      this.toastr.info('Project  created');
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subCreateProject);
   }

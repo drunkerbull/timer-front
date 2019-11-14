@@ -38,7 +38,8 @@ export class ProjectComponent extends BaseComponent implements OnInit {
   deleteProject() {
     const subDeleteProject = this.projectsService.deleteProject(this.project._id).subscribe(res => {
       this.router.navigate(['/projects']);
-    },(err) => this.errorHandlingService.showError(err));
+      this.toastr.info('Project has been deleted');
+    }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subDeleteProject);
   }
 
@@ -51,7 +52,8 @@ export class ProjectComponent extends BaseComponent implements OnInit {
       };
       const subUpdateProject = this.projectsService.updateProject(this.project._id, pack).subscribe(res => {
         this.project.name = res.name;
-      },(err) => this.errorHandlingService.showError(err));
+        this.toastr.info('Project has been updated');
+      }, (err) => this.errorHandlingService.showError(err));
       this.someSubscriptions.add(subUpdateProject);
     }
   }
@@ -63,6 +65,7 @@ export class ProjectComponent extends BaseComponent implements OnInit {
   deleteWorker(worker, i) {
     const subDeleteWorker = this.projectsService.deleteWorker(this.project._id, worker).subscribe(res => {
       this.project.workers.splice(i, 1);
+      this.toastr.info('Worker deleted from project');
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subDeleteWorker);
   }
@@ -73,6 +76,7 @@ export class ProjectComponent extends BaseComponent implements OnInit {
     };
     const subAddWorker = this.projectsService.addWorker(this.project._id, pack).subscribe(res => {
       this.project.workers.push(res);
+      this.toastr.info(pack.email, 'Invite to project');
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subAddWorker);
   }
@@ -93,8 +97,9 @@ export class ProjectComponent extends BaseComponent implements OnInit {
       task.worker = this.project.workers[this.form.value.worker];
       this.project.tasks.unshift(task);
       this.loading = false;
-      this.openAddBox = false
-      this.form.reset()
+      this.openAddBox = false;
+      this.form.reset();
+      this.toastr.info('Task created');
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subDataAddTask);
   }
@@ -139,6 +144,7 @@ export class ProjectComponent extends BaseComponent implements OnInit {
       this.currentTimer = time;
       this.project.tasks[i].timerStarted = time;
       this.timerTimeout = setInterval(() => this.updateTimer(), 1000);
+      this.toastr.info('Timer started');
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(updateTimerStart);
   }
@@ -146,6 +152,7 @@ export class ProjectComponent extends BaseComponent implements OnInit {
   deleteTask(task, i) {
     const updateTaskDelete = this.projectsService.deleteTask(task._id).subscribe((res) => {
       this.project.tasks.splice(i, 1);
+      this.toastr.info('Task deleted');
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(updateTaskDelete);
   }
@@ -161,6 +168,7 @@ export class ProjectComponent extends BaseComponent implements OnInit {
       this.project.tasks[i].timerStarted = resTask.timerStarted;
       this.project.tasks[i].total = resTask.total;
       this.currentTimer = null;
+      this.toastr.info('Timer stop');
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(updateTimerStop);
   }

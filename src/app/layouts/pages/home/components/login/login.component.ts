@@ -20,7 +20,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
   constructor(public homeService: HomeService, public socketService: SocketService) {
     super();
     const subRegisteredUser = this.homeService.registeredUser
-      .subscribe((data)=>this.login(data))
+      .subscribe((data) => this.login(data));
     this.someSubscriptions.add(subRegisteredUser);
   }
 

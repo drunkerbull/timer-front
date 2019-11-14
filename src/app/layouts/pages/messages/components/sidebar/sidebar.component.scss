@@ -1,45 +1,55 @@
-:host{
+:host {
   display: block;
   width: 25%;
   border-right: 1px solid black;
   height: calc(100vh - 76px);
 }
-.users-search{
+
+.users-search {
   padding: 16px;
   display: flex;
   border-bottom: 1px solid grey;
-  input{
+
+  input {
     width: 100%;
     padding: 4px;
   }
 }
-.search-list{
+
+.search-list {
   background: silver;
 }
-.rooms-list,.search-list{
-  li{
+
+.rooms-list, .search-list {
+  li {
     height: 40px;
     display: flex;
     padding: 8px;
     cursor: pointer;
-    &.newMess{
-      border:1px solid red
+
+    &.newMess {
+      border: 1px solid red
     }
-    &.selected{
+
+    &.selected {
       background: slategray;
-      &:hover{
+
+      &:hover {
         background: slategray;
       }
     }
-    &:hover{
+
+    &:hover {
       background: lightgray;
     }
-    .room-avatar{
+
+    .room-avatar {
       display: flex;
       align-items: center;
       justify-content: center;
       width: 20%;
-      .avatar{
+
+      .avatar {
         overflow: hidden;
         width: 40px;
         border-radius: 100%;

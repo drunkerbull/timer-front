@@ -15,7 +15,7 @@ import {ChartsModule} from 'ng2-charts';
 import {LoaderComponent} from '../layouts/components/loader/loader.component';
 import {CropperComponent} from '../layouts/components/cropper/cropper.component';
 import {DropComponent} from '../layouts/components/drop/drop.component';
-import { AngularSvgIconModule } from 'angular-svg-icon';
+import {AngularSvgIconModule} from 'angular-svg-icon';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
   exports: [
     HeaderComponent, PageComponent, ReactiveFormsModule, CommonModule,
     RouterModule, FormsModule, DatetimepickerComponent,
-    ChartComponent, ChartsModule, LoaderComponent, CropperComponent,    DropComponent, AngularSvgIconModule
+    ChartComponent, ChartsModule, LoaderComponent, CropperComponent, DropComponent, AngularSvgIconModule
 
   ],
   imports: [

@@ -8,7 +8,7 @@
   height: 60px;
   display: block;
   z-index: 1000;
-  background: rgba(41,41,41,0.95);
+  background: rgba(41, 41, 41, 0.95);
 }
 
 .header {
@@ -23,7 +23,8 @@
 
   .logo {
     margin-right: 24px;
-    a{
+
+    a {
       color: $blue;
       font-family: $fontTeko;
       text-decoration: none;
@@ -48,16 +49,18 @@
     color: $white;
     text-decoration: none;
     transition: 300ms;
-    &:hover{
-      color:$gold
+
+    &:hover {
+      color: $gold
     }
   }
 }
 
 .user-settings {
-display: flex;
+  display: flex;
   align-items: center;
-  .user-avatar{
+
+  .user-avatar {
     overflow: hidden;
     height: 40px;
     width: 40px;

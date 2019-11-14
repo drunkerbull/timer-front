@@ -14,8 +14,9 @@ export class Room implements IRoom {
   messages: IMessage[];
 
   chatWith: IUser = null;
-  objectGroup:any = {};
-  constructor(data?: IRoom, currentUserLogged?:IUser) {
+  objectGroup: any = {};
+
+  constructor(data?: IRoom, currentUserLogged?: IUser) {
     Object.assign(this, data);
 
     this.group = this.group.map((user: IUser) => {
@@ -24,15 +25,15 @@ export class Room implements IRoom {
       return newUser;
     });
 
-    if(currentUserLogged && this.group.length>1){
-      this.chatWith = this.group.find((user:IUser)=>user._id !== currentUserLogged._id)
+    if (currentUserLogged && this.group.length > 1) {
+      this.chatWith = this.group.find((user: IUser) => user._id !== currentUserLogged._id);
     }
   }
 
 
-  roomName(loggedUser):{nickname:string,avatar:string}|IUser {
+  roomName(loggedUser): { nickname: string, avatar: string } | IUser {
     if (!this.name && this.group.length === 2) {
-      const user:IUser = this.group.find(el => el._id !== loggedUser._id);
+      const user: IUser = this.group.find(el => el._id !== loggedUser._id);
       return user;
     }
     return {nickname: this.name, avatar: ''};

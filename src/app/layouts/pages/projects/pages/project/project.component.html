@@ -3,7 +3,8 @@
     <div class="project-info">
       <div class="project-info-box">
         <h1>{{project.name}}   <input type="text" [(ngModel)]="project.name" *ngIf="changeProjectMode"></h1>
-        <p>Owner: {{project.owner.nickname}}</p>
+        <p>Owner: <a class="btn btn__link btn__link--blue"
+                     [routerLink]="'/messages/'+project.owner._id">{{project.owner.nickname}}</a></p>
 
       </div>
       <div class="project-info-control">
@@ -61,7 +62,8 @@
             <div class="workers-list some-back some-back--gold">
               <ul>
                 <li *ngFor="let worker of project.workers; let i = index">{{i + 1}}) {{worker.nickname}}
-                  <button class="btn btn--small btn--outline-red" *ngIf="worker._id !== project.owner._id" (click)="deleteWorker(worker,i)">x
+                  <button class="btn btn--small btn--outline-red" *ngIf="worker._id !== project.owner._id"
+                          (click)="deleteWorker(worker,i)">x
                   </button>
                 </li>
               </ul>
@@ -74,44 +76,46 @@
 </div>
 
 <div class="project-tasks-box">
-<app-loader *ngIf="loading; else content"></app-loader>
-<ng-template #content>
-  <ul *ngIf="project.tasks.length; else emptytasks" class="task-list">
-    <li *ngFor="let task of project.tasks; let i = index" class="white-back">
-      <div class="task-main">
-        <div class="task-main__header">
-          <div>
-            <h2>{{task.name}}</h2>
-            <p>Created by: {{task.owner.nickname}}</p>
-            <p>Worker: {{task.worker.nickname}}</p>
+  <app-loader *ngIf="loading; else content"></app-loader>
+  <ng-template #content>
+    <ul *ngIf="project.tasks.length; else emptytasks" class="task-list">
+      <li *ngFor="let task of project.tasks; let i = index" class="white-back">
+        <div class="task-main">
+          <div class="task-main__header">
+            <div>
+              <h2>{{task.name}}</h2>
+              <p>Created by: {{task.owner.nickname}}</p>
+              <p>Worker: {{task.worker.nickname}}</p>
+            </div>
+            <div>
+              <button (click)="deleteTask(task,i)">Delete</button>
+            </div>
           </div>
-          <div>
-            <button (click)="deleteTask(task,i)">Delete</button>
+          <br>
+          <div *ngIf="task.total">
+            <h4>Total:  {{getTime(task.total)}}</h4>
           </div>
         </div>
-        <br>
-        <div *ngIf="task.total">
-          <h4>Total:  {{getTime(task.total)}}</h4>
+        <div class="task-timer"
+             *ngIf="task.worker._id === storageService.user._id &&(task.timerStarted || !currentTimer)">
+          <div class="time">
+            {{timerNow}}
+          </div>
+          <div class="control">
+            <button *ngIf="!task.timerStarted" (click)="startTimer(task,i)">start</button>
+            <button *ngIf="task.timerStarted" (click)="stopTimer(task,i)">stop</button>
+          </div>
         </div>
+      </li>
+    </ul>
+    <ng-template #emptytasks>
+      <div class="projects-empty white-back">
+        <h3>Create your first task!</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus alias aliquam architecto assumenda
+          atque</p>
       </div>
-      <div class="task-timer" *ngIf="task.worker._id === storageService.user._id &&(task.timerStarted || !currentTimer)">
-        <div class="time">
-          {{timerNow}}
-        </div>
-        <div class="control">
-          <button *ngIf="!task.timerStarted" (click)="startTimer(task,i)">start</button>
-          <button *ngIf="task.timerStarted" (click)="stopTimer(task,i)">stop</button>
-        </div>
-      </div>
-    </li>
-  </ul>
-  <ng-template #emptytasks>
-    <div class="projects-empty white-back">
-      <h3>Create your first task!</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus alias aliquam architecto assumenda atque</p>
-    </div>
-  </ng-template>
+    </ng-template>
 
-</ng-template>
+  </ng-template>
 
 </div>

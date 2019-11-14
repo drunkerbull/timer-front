@@ -20,15 +20,18 @@ export class SettingsService {
     return this.baseHttp.put('/users/me', pack)
       .pipe(map(resp => resp as IUser));
   }
+
   updatePassData(pack) {
     return this.baseHttp.put('/users/me/pass', pack)
       .pipe(map(resp => resp as IUser));
   }
+
   deleteMainData() {
     return this.baseHttp.delete('/users/me')
       .pipe(map(resp => resp as { message: string }));
   }
-  updateAvatarData(pack){
+
+  updateAvatarData(pack) {
     return this.baseHttp.post('/users/me/avatar', pack)
       .pipe(map(resp => resp as any));
   }

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header-box">
       <div class="logo">
-       <a [routerLink]="['/']">TimerApp</a>
+        <a [routerLink]="['/']">TimerApp</a>
       </div>
       <div *ngIf="storageService.userLogged" class="menu">
         <div class="menu-links">
@@ -14,7 +14,7 @@
           <a [routerLink]="['/settings']" class="user-avatar">
             <img [src]="storageService.user.avatar" alt="">
           </a>
-          <button  class="btn" (click)="logout()">Logout</button>
+          <button class="btn" (click)="logout()">Logout</button>
         </div>
       </div>
     </div>

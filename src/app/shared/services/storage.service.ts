@@ -43,7 +43,7 @@ export class StorageService {
     return JSON.parse(this.get(StorageService.USER_INFO));
   }
 
-  saveUser(user:IUser, token?:string) {
+  saveUser(user: IUser, token?: string) {
     this.put(StorageService.USER_INFO, JSON.stringify(user));
     if (token) {
       this.put(StorageService.USER_TOKEN, token);

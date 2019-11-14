@@ -7,5 +7,5 @@ export interface IMessage {
   owner: string | IUser,
   room: string,
   text: string,
-  type:string
+  type: string
 }

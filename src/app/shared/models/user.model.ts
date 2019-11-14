@@ -12,12 +12,13 @@ export class User implements IUser {
 
   avatar: string = null;
   haveAvatar: boolean = false;
+
   constructor(data: IUser, token?: string) {
     Object.assign(this, data);
     if (token) {
       this.tokens.push({token});
     }
-    this.avatar = this.haveAvatar ?  environment.host + '/users/' + this._id + '/avatar' :  '/assets/img/defaultAvatar.png' ;
+    this.avatar = this.haveAvatar ? environment.host + '/users/' + this._id + '/avatar' : '/assets/img/defaultAvatar.png';
   }
 
 

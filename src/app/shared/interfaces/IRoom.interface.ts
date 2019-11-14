@@ -11,8 +11,10 @@ export interface IRoom {
   group: IUser[];
   messages: IMessage[];
 
-  objectGroup?:any;
-  roomName?(IUser): {nickname:string,avatar:string}|IUser ;
+  objectGroup?: any;
+
+  roomName?(IUser): { nickname: string, avatar: string } | IUser;
+
   haveNewMess?(IUser): boolean;
 
   groupList: string;

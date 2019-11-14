@@ -5,6 +5,7 @@ import {Subscription} from 'rxjs';
 import {StorageService} from '../services/storage.service';
 import {AppInjector} from '../services/app-injector.service';
 import {ErrorHandlingService} from '../services/error-handling.service';
+import {ToastrService} from 'ngx-toastr';
 
 export class BaseComponent implements OnDestroy {
   router: Router;
@@ -12,6 +13,7 @@ export class BaseComponent implements OnDestroy {
   baseHttp: BaseHttpService;
   someSubscriptions: Subscription = new Subscription();
   route: ActivatedRoute;
+  toastr: ToastrService;
   errorHandlingService: ErrorHandlingService;
   loading: boolean = false;
 
@@ -21,6 +23,7 @@ export class BaseComponent implements OnDestroy {
     this.storageService = injector.get(StorageService);
     this.baseHttp = injector.get(BaseHttpService);
     this.route = injector.get(ActivatedRoute);
+    this.toastr = injector.get(ToastrService);
     this.errorHandlingService = injector.get(ErrorHandlingService);
   }
 

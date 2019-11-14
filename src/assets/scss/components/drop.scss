@@ -1,32 +1,39 @@
-.drop{
-z-index: 1001;
+.drop {
+  z-index: 1001;
 }
-svg-icon{
+
+svg-icon {
   display: flex;
   align-items: center;
 }
+
 .drop-target.drop-enabled {
   .btn-add-project.btn {
     box-shadow: $shadowWithoutUp;
-    &.btn--outline-black{
+
+    &.btn--outline-black {
       background: $darkgrey;
       color: white;
-      svg{
+
+      svg {
         fill: white
       }
     }
-    &.btn--outline-gold{
+
+    &.btn--outline-gold {
       background: $gold;
       color: white;
     }
-    &.btn--outline-blue{
+
+    &.btn--outline-blue {
       background: $blue;
       color: white;
     }
   }
 }
-.drop.drop-element{
-  .workers-list{
-    color:white
+
+.drop.drop-element {
+  .workers-list {
+    color: white
   }
 }

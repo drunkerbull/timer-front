@@ -3,7 +3,6 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {SettingsService} from './settings.service';
 import {IUser} from '../../../shared/interfaces/IUser.interface';
 import {BaseComponent} from '../../../shared/components/base.component';
-import {ToastrService} from 'ngx-toastr';
 import {User} from '../../../shared/models/user.model';
 
 @Component({
@@ -25,7 +24,7 @@ export class SettingsComponent extends BaseComponent implements OnInit {
   });
   changeAvatar: boolean = false;
 
-  constructor(private settingsService: SettingsService, private toastr: ToastrService) {
+  constructor(private settingsService: SettingsService) {
     super();
   }
 
@@ -39,11 +38,11 @@ export class SettingsComponent extends BaseComponent implements OnInit {
     formData.append('avatar', blob);
 
     const subAvatar = this.settingsService.updateAvatarData(formData).subscribe((res) => {
-      this.toastr.success('Image saved');
       if (!this.storageService.user.haveAvatar) {
         this.updateMain({haveAvatar: true});
       }
       this.changeAvatar = false;
+      this.toastr.success('Image saved');
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subAvatar);
   }

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Output, ViewChild} from '@angular/core';
 import Cropper from 'cropperjs';
 
 @Component({
@@ -6,7 +6,7 @@ import Cropper from 'cropperjs';
   templateUrl: './cropper.component.html',
   styleUrls: ['./cropper.component.scss']
 })
-export class CropperComponent{
+export class CropperComponent {
   @ViewChild('image', {static: false}) image: ElementRef;
   cropper: any = null;
   @Output() cropped: EventEmitter<any> = new EventEmitter();
@@ -18,15 +18,15 @@ export class CropperComponent{
 
   onFileChange(img) {
     var reader = new FileReader();
-    reader.onload = ((e:any) => {
+    reader.onload = ((e: any) => {
       this.currentImg = e.target.result;
-      setTimeout(()=>{
+      setTimeout(() => {
         this.cropper = new Cropper(this.image.nativeElement, {
           aspectRatio: 1 / 1,
           viewMode: 1
         });
-      },100)
-    })
+      }, 100);
+    });
     reader.readAsDataURL(img.target.files[0]);
   }
 

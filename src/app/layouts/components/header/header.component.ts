@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {BaseComponent} from '../../../shared/components/base.component';
 import {SocketService} from '../../../shared/services/socket.service';
-import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-header',

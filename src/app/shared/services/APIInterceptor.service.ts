@@ -27,7 +27,7 @@ export class APIInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(catchError((err: HttpErrorResponse) => {
       switch (err.error.message) {
         case 'unauthorized': {
-         console.log('unauthorized!!!!!!!!!!!!!!!!!!!!!!!!!')
+          console.log('unauthorized!!!!!!!!!!!!!!!!!!!!!!!!!');
           break;
         }
         case 'expired_jwt_token': {
@@ -47,7 +47,7 @@ export class APIInterceptor implements HttpInterceptor {
     return this.http.post(environment.host + '/token/refresh', {
       refresh_token: this.storageService.get(StorageService.USER_REFRESH_TOKEN)
     })
-      .pipe(switchMap((data:any) => {
+      .pipe(switchMap((data: any) => {
         this.storageService.setToken(data);
         this.refreshInProgress = false;
         this.tokenTurnSubject.next(data.token);

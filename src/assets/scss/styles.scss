@@ -3,14 +3,15 @@
   src: url('~assets/fonts/Hind-Regular.eot');
   src: url('~assets/fonts/Hind-Regular.eot?#iefix') format('embedded-opentype'),
   url('~assets/fonts/Hind-Regular.woff') format('woff'),
-  url('~assets/fonts/Hind-Regular.ttf')  format('truetype');
+  url('~assets/fonts/Hind-Regular.ttf') format('truetype');
 }
+
 @font-face {
   font-family: 'Teko';
   src: url('~assets/fonts/Teko-Regular.eot');
   src: url('~assets/fonts/Teko-Regular.eot?#iefix') format('embedded-opentype'),
   url('~assets/fonts/Teko-Regular.woff') format('woff'),
-  url('~assets/fonts/Teko-Regular.ttf')  format('truetype');
+  url('~assets/fonts/Teko-Regular.ttf') format('truetype');
 }
 
 @import '~cropperjs/dist/cropper.min.css';
@@ -70,52 +71,60 @@ ul {
   }
 }
 
-h1{
+h1 {
   font-size: 40px;
 }
-h2{
+
+h2 {
   font-size: 36px;
 }
-h3{
+
+h3 {
   font-size: 32px;
 }
+
 h1, h2, h3, h4, h5, h6, p {
   margin: 0;
   padding: 0;
 }
 
 
-.white-back{
+.white-back {
   background: white;
   box-shadow: $shadow;
   border-radius: 2px;
   padding: 16px;
   margin: 20px 0;
 }
-.under-header{
+
+.under-header {
   position: fixed !important;
   top: 60px;
   z-index: 100;
   width: 100%;
   left: 0;
-  background: rgba(255,255,255,0.95);
+  background: rgba(255, 255, 255, 0.95);
   border-bottom: 1px solid $grey;
 }
-.some-back{
+
+.some-back {
   background: white;
   border-radius: 2px;
   padding: 16px;
   color: $black;
-  &--gold{
+
+  &--gold {
     color: white;
     background: $gold;
   }
-  &--blue{
-    color:white;
+
+  &--blue {
+    color: white;
     background: $blue;
   }
-  &--black{
-    color:white;
+
+  &--black {
+    color: white;
     background: $darkgrey;
   }
 }
