@@ -6,10 +6,12 @@ import {SharedModule} from './shared/shared.module';
 import {AppInjector} from './shared/services/app-injector.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
+import { TimerComponent } from './layouts/components/header/components/timer/timer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+
 
   ],
   imports: [

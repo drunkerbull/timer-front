@@ -1,5 +1,6 @@
 import {IUser} from '../interfaces/IUser.interface';
 import {environment} from '../../../environments/environment';
+import {ITasks} from '../interfaces/ITasks.interface';
 
 export class User implements IUser {
   _id: string;
@@ -12,6 +13,7 @@ export class User implements IUser {
 
   avatar: string = null;
   haveAvatar: boolean = false;
+  currentTimer: ITasks | null = null;
 
   constructor(data: IUser, token?: string) {
     Object.assign(this, data);

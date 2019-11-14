@@ -1,13 +1,14 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {BaseHttpService} from '../../../shared/services/base-http.service';
 import {map} from 'rxjs/operators';
 import {IProject} from '../../../shared/interfaces/IProject.interface';
+import {interval} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectsService {
-
+  timerTimeout = interval(1000);
   constructor(public baseHttp: BaseHttpService) {
   }
 
@@ -64,5 +65,11 @@ export class ProjectsService {
   deleteWorker(id, pack) {
     return this.baseHttp.delete('/projects/' + id + '/worker/' + pack._id)
       .pipe(map(resp => resp as any));
+  }
+
+  toggleUserTimer(task){
+    return this.baseHttp.post('/users/me/timer', task)
+      .pipe(map(resp => resp as any));
+
   }
 }

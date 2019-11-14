@@ -1,3 +1,5 @@
+import {ITasks} from './ITasks.interface';
+
 export interface IUser {
   _id: string,
   createdAt: string,
@@ -7,5 +9,6 @@ export interface IUser {
   updatedAt: string,
   online: string,
   avatar?: string,
-  haveAvatar: boolean
+  haveAvatar: boolean,
+  currentTimer: ITasks|null
 }

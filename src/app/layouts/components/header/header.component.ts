@@ -20,4 +20,5 @@ export class HeaderComponent extends BaseComponent implements OnInit {
     this.storageService.logout();
     this.socketService.disconnect();
   }
+
 }

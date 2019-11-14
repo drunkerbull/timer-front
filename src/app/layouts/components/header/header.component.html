@@ -11,6 +11,7 @@
           <a [routerLink]="['/statistics']">Statistics</a>
         </div>
         <div class="user-settings">
+          <app-timer></app-timer>
           <a [routerLink]="['/settings']" class="user-avatar">
             <img [src]="storageService.user.avatar" alt="">
           </a>

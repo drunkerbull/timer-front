@@ -16,6 +16,7 @@ import {LoaderComponent} from '../layouts/components/loader/loader.component';
 import {CropperComponent} from '../layouts/components/cropper/cropper.component';
 import {DropComponent} from '../layouts/components/drop/drop.component';
 import {AngularSvgIconModule} from 'angular-svg-icon';
+import {TimerComponent} from '../layouts/components/header/components/timer/timer.component';
 
 @NgModule({
   declarations: [
@@ -25,13 +26,13 @@ import {AngularSvgIconModule} from 'angular-svg-icon';
     LoaderComponent,
     CropperComponent,
     PageComponent,
-    DropComponent
-
+    DropComponent,
+    TimerComponent,
   ],
   exports: [
     HeaderComponent, PageComponent, ReactiveFormsModule, CommonModule,
     RouterModule, FormsModule, DatetimepickerComponent,
-    ChartComponent, ChartsModule, LoaderComponent, CropperComponent, DropComponent, AngularSvgIconModule
+    ChartComponent, ChartsModule, LoaderComponent, CropperComponent, DropComponent, AngularSvgIconModule, TimerComponent,
 
   ],
   imports: [

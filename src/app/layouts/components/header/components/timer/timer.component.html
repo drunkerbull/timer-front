@@ -1,0 +1,6 @@
+<div *ngIf="storageService.user.currentTimer">
+  <p>{{timerNow}}</p>
+  <button (click)="stopTimer()">
+    STOP
+  </button>
+</div>

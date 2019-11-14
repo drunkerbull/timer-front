@@ -6,6 +6,7 @@ import {ProjectsService} from '../../projects.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import * as moment from 'moment';
 import * as momentFormat from 'moment-duration-format';
+import {interval} from 'rxjs';
 
 momentFormat(moment);
 
@@ -24,15 +25,12 @@ export class ProjectComponent extends BaseComponent implements OnInit {
     end: new FormControl(''),
     worker: new FormControl('')
   });
-  currentTimer: any = null;
   timerNow: string = '00:00:00';
-  timerTimeout: any = null;
   newWorker: string = '';
   changeProjectMode: boolean = false;
 
   constructor(public activatedRoute: ActivatedRoute, public projectsService: ProjectsService) {
     super();
-
   }
 
   deleteProject() {
@@ -111,18 +109,15 @@ export class ProjectComponent extends BaseComponent implements OnInit {
       this.getTasks();
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subData);
+
+
+    const subscribeTimerInterval = this.projectsService.timerTimeout.subscribe(el => this.updateTimer());
+    this.someSubscriptions.add(subscribeTimerInterval);
   }
 
   getTasks() {
     const subDataTasks = this.projectsService.getTasksOfProject(this.project._id).subscribe((tasks: any) => {
       this.project.tasks = tasks.reverse();
-      for (let i = 0; i < this.project.tasks.length; i++) {
-        if (this.project.tasks[i].timerStarted) {
-          this.currentTimer = this.project.tasks[i].timerStarted;
-          this.timerTimeout = setInterval(() => this.updateTimer(), 1000);
-          break;
-        }
-      }
       this.loading = false;
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subDataTasks);
@@ -130,7 +125,9 @@ export class ProjectComponent extends BaseComponent implements OnInit {
   }
 
   updateTimer() {
-    this.timerNow = this.getTime(moment.duration(moment().diff(moment(this.currentTimer))));
+    this.timerNow = this.storageService.user && this.storageService.user.currentTimer
+      ? this.getTime(moment.duration(moment().diff(moment(this.storageService.user.currentTimer.timerStarted))))
+      : '00:00:00';
   }
 
   getTime(time) {
@@ -138,13 +135,12 @@ export class ProjectComponent extends BaseComponent implements OnInit {
     return moment.duration(time).format('HH:mm:ss', {trim: false});
   }
 
-  startTimer(task, i) {
+  startTimer(task) {
     const time = moment().format();
     const updateTimerStart = this.projectsService.updateTask(task._id, {timerStarted: time}).subscribe((resTask) => {
-      this.currentTimer = time;
-      this.project.tasks[i].timerStarted = time;
-      this.timerTimeout = setInterval(() => this.updateTimer(), 1000);
+      task.timerStarted = time;
       this.toastr.info('Timer started');
+      this.projectsService.toggleUserTimer(task).subscribe(user => this.storageService.saveUser(user));
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(updateTimerStart);
   }
@@ -157,18 +153,15 @@ export class ProjectComponent extends BaseComponent implements OnInit {
     this.someSubscriptions.add(updateTaskDelete);
   }
 
-  stopTimer(task, i) {
+  stopTimer(task) {
     const total = task.total + moment().diff(moment(task.timerStarted));
-    const updateTimerStop = this.projectsService.updateTask(task._id, {
-      timerStarted: '',
-      total
-    }).subscribe((resTask) => {
-      clearInterval(this.timerTimeout);
-      this.timerNow = '00:00:00';
-      this.project.tasks[i].timerStarted = resTask.timerStarted;
-      this.project.tasks[i].total = resTask.total;
-      this.currentTimer = null;
-      this.toastr.info('Timer stop');
+    const pack = {timerStarted: '', total};
+    const updateTimerStop = this.projectsService.updateTask(task._id, pack).subscribe((resTask) => {
+      task.timerStarted = null;
+      task.total = total;
+      this.toastr.info('Timer stop', task.name);
+      this.projectsService.toggleUserTimer(task).subscribe(user => this.storageService.saveUser(user));
+
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(updateTimerStop);
   }

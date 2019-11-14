@@ -97,13 +97,13 @@
           </div>
         </div>
         <div class="task-timer"
-             *ngIf="task.worker._id === storageService.user._id &&(task.timerStarted || !currentTimer)">
+             *ngIf="task.worker._id === storageService.user._id &&(task.timerStarted || (storageService.user && !storageService.user.currentTimer))">
           <div class="time">
             {{timerNow}}
           </div>
           <div class="control">
-            <button *ngIf="!task.timerStarted" (click)="startTimer(task,i)">start</button>
-            <button *ngIf="task.timerStarted" (click)="stopTimer(task,i)">stop</button>
+            <button *ngIf="!storageService.user.currentTimer" (click)="startTimer(task)">start</button>
+            <button *ngIf="storageService.user.currentTimer && task._id === storageService.user.currentTimer._id " (click)="stopTimer(task)">stop</button>
           </div>
         </div>
       </li>
