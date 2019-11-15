@@ -19,6 +19,7 @@ import {AngularSvgIconModule} from 'angular-svg-icon';
 import {TimerComponent} from '../layouts/components/header/components/timer/timer.component';
 import {TabsetComponent} from '../layouts/components/tabset/tabset.component';
 import {TabComponent} from '../layouts/components/tabset/components/tab/tab.component';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -29,13 +30,13 @@ import {TabComponent} from '../layouts/components/tabset/components/tab/tab.comp
   exports: [
     HeaderComponent, PageComponent, ReactiveFormsModule, CommonModule,
     RouterModule, FormsModule, DatetimepickerComponent,
-    ChartComponent, ChartsModule, LoaderComponent, CropperComponent,
+    ChartComponent, ChartsModule, LoaderComponent, CropperComponent,InfiniteScrollModule,
     DropComponent, AngularSvgIconModule, TimerComponent, TabsetComponent, TabComponent
   ],
   imports: [
     CommonModule, FormsModule, RouterModule,
     HttpClientModule, ReactiveFormsModule, ChartsModule,
-    AngularSvgIconModule
+    AngularSvgIconModule,InfiniteScrollModule
   ],
   providers: [
     {

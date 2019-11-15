@@ -12,8 +12,7 @@ import {BaseComponent} from '../../../shared/components/base.component';
 export class ProjectsComponent extends BaseComponent implements OnInit {
   projects: IProject[] = [];
   openAddBox: boolean = false;
-  countProjects: number = 0;
-  countOwner: number = 0;
+  options: any = {skip: 0, type: 'all'};
 
   form: FormGroup = new FormGroup({
     name: new FormControl('')
@@ -27,6 +26,11 @@ export class ProjectsComponent extends BaseComponent implements OnInit {
     this.getProjects();
   }
 
+  changeType(type) {
+    this.options = {...this.options, skip:0, type};
+    this.projects = [];
+    this.getProjects();
+  }
 
   createProject() {
     const pack = this.form.value;
@@ -37,22 +41,21 @@ export class ProjectsComponent extends BaseComponent implements OnInit {
       this.form.reset();
       this.openAddBox = false;
       this.toastr.info('Project  created');
-    }, (err) => this.errorHandlingService.showError(err));
+    }, (err) => {
+      this.loading = false;
+      this.errorHandlingService.showError(err);
+    });
     this.someSubscriptions.add(subCreateProject);
   }
 
   getProjects() {
     this.loading = true;
-    const subGetProjects = this.projectsService.projects().subscribe(res => {
+    const subGetProjects = this.projectsService.projects(this.options).subscribe(res => {
       this.loading = false;
-      this.countProjects = res.length;
-      res.map((project) => {
-        if (project.owner._id === this.storageService.user._id) {
-          this.countOwner++;
-        }
-      });
-      this.projects = res.reverse();
+      this.options.skip = this.options.skip + res.length;
+      this.projects = [...this.projects, ...res];
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subGetProjects);
   }
+
 }

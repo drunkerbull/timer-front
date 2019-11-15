@@ -1,4 +1,4 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BaseHttpService} from '../../../shared/services/base-http.service';
 import {map} from 'rxjs/operators';
 import {IProject} from '../../../shared/interfaces/IProject.interface';
@@ -9,11 +9,19 @@ import {interval} from 'rxjs';
 })
 export class ProjectsService {
   timerTimeout = interval(1000);
+
   constructor(public baseHttp: BaseHttpService) {
   }
 
-  projects() {
-    return this.baseHttp.get('/projects')
+  projects(options) {
+    let query = '';
+    if (options) {
+      query = '?';
+      for (let item in options) {
+        query = query + item + '=' + options[item] + '&';
+      }
+    }
+    return this.baseHttp.get('/projects' + query)
       .pipe(map(resp => resp as IProject[]));
   }
 
@@ -67,7 +75,7 @@ export class ProjectsService {
       .pipe(map(resp => resp as any));
   }
 
-  toggleUserTimer(task){
+  toggleUserTimer(task) {
     return this.baseHttp.post('/users/me/timer', task)
       .pipe(map(resp => resp as any));
 
