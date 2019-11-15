@@ -17,31 +17,24 @@ import {CropperComponent} from '../layouts/components/cropper/cropper.component'
 import {DropComponent} from '../layouts/components/drop/drop.component';
 import {AngularSvgIconModule} from 'angular-svg-icon';
 import {TimerComponent} from '../layouts/components/header/components/timer/timer.component';
+import {TabsetComponent} from '../layouts/components/tabset/tabset.component';
+import {TabComponent} from '../layouts/components/tabset/components/tab/tab.component';
 
 @NgModule({
   declarations: [
-    HeaderComponent,
-    DatetimepickerComponent,
-    ChartComponent,
-    LoaderComponent,
-    CropperComponent,
-    PageComponent,
-    DropComponent,
-    TimerComponent,
+    HeaderComponent, DatetimepickerComponent, ChartComponent,
+    LoaderComponent, CropperComponent, PageComponent,
+    DropComponent, TimerComponent, TabsetComponent, TabComponent
   ],
   exports: [
     HeaderComponent, PageComponent, ReactiveFormsModule, CommonModule,
     RouterModule, FormsModule, DatetimepickerComponent,
-    ChartComponent, ChartsModule, LoaderComponent, CropperComponent, DropComponent, AngularSvgIconModule, TimerComponent,
-
+    ChartComponent, ChartsModule, LoaderComponent, CropperComponent,
+    DropComponent, AngularSvgIconModule, TimerComponent, TabsetComponent, TabComponent
   ],
   imports: [
-    CommonModule,
-    FormsModule,
-    RouterModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    ChartsModule,
+    CommonModule, FormsModule, RouterModule,
+    HttpClientModule, ReactiveFormsModule, ChartsModule,
     AngularSvgIconModule
   ],
   providers: [

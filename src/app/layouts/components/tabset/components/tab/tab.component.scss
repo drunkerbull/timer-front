@@ -1,0 +1,13 @@
+.tabs {
+  &__pane {
+    padding: 30px 54px 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .tabs {
+    &__pane {
+      padding: 20px 0;
+    }
+  }
+}

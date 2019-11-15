@@ -1,18 +1,11 @@
-<div>
-  <button (click)="getStatsWithAverage('day')">Day</button>
-  <button (click)="getStatsWithAverage('week')">Week</button>
-  <button (click)="getStatsWithAverage('months')">Months</button>
-  <button (click)="getStatsWithAverage()">All time</button>
-</div>
-<div *ngIf="!loading;else loadingData">
-  <app-chart [chartData]="chartData" [chartLabels]="chartLabels"></app-chart>
-  <h3>All task where you Worker</h3>
-  <ul>
-    <li *ngFor="let task of tasks">
-      <!--    {{task|json}}-->
-      {{task.name}} : {{this.getTime(task.total)}}
-      <span *ngIf="task.timerStarted" style="color:red">The timer is on!</span>
-    </li>
-  </ul>
-</div>
-<ng-template #loadingData>Loading data</ng-template>
+<app-tabset #transactionPanel>
+  <app-tab [title]="'I am worker'" [active]="true" name="worker">
+    <app-worker></app-worker>
+  </app-tab>
+  <app-tab [title]="'I am owner of task'" name="owner">
+    <app-owner></app-owner>
+  </app-tab>
+  <app-tab [title]="'I am owner of project'" name="ownerproject">
+    <app-owner-project></app-owner-project>
+  </app-tab>
+</app-tabset>
