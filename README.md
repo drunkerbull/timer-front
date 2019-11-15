@@ -8,7 +8,7 @@ Demo on heroku [https://mtapp-timer.herokuapp.com](https://mtapp-timer.herokuapp
 
 Author [**Maksym Tsymbal**](https://github.com/drunkerbull)
 
-~~**WARNING**~~
+**WARNING**
 
 **The project is at the stage - alpha. Not all items/page/functions work correctly.**
 
