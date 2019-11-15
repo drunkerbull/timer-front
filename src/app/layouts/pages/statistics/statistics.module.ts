@@ -4,7 +4,7 @@ import {StatisticsComponent} from './statistics.component';
 
 @NgModule({
   declarations: [
-    StatisticsComponent
+    StatisticsComponent,
   ],
   imports: [
     SharedModule
@@ -12,3 +12,4 @@ import {StatisticsComponent} from './statistics.component';
 })
 export class StatisticsModule {
 }
+

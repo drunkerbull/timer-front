@@ -1,0 +1,12 @@
+<div class="tabs">
+  <ul class="tabs__nav">
+    <li class="tabs__nav-item"
+        *ngFor="let tab of tabs"
+        (click)="selectTab(tab)"
+        [hidden]="tab.hideTab"
+        [class.active]="tab.active">
+      {{tab.title}} {{tab.number ? '(' + tab.number + ')' : ''}}
+    </li>
+  </ul>
+  <ng-content></ng-content>
+</div>

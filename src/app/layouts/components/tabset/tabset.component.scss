@@ -1,0 +1,25 @@
+@import "~src/assets/scss/variables";
+
+
+.tabs {
+  &__nav {
+    display: flex;
+    border-bottom: 1px solid black;
+  }
+
+  &__nav-item {
+    cursor: pointer;
+    font-size: 24px;
+    color: black;
+    font-family: $fontTeko;
+    padding: 0 40px 8px;
+    border-bottom: 4px solid transparent;
+    margin-bottom: -1px;
+    margin-top: 16px;
+
+    &.active {
+      color: $blue;
+      border-color: $blue;
+    }
+  }
+}

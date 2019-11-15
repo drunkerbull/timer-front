@@ -1,12 +1,9 @@
 import {Component, OnInit} from '@angular/core';
+import {BaseComponent} from '../../../shared/components/base.component';
 import {StatisticsService} from './statistics.service';
 import {ITasks} from '../../../shared/interfaces/ITasks.interface';
-import * as moment from 'moment';
-import * as momentFormat from 'moment-duration-format';
 import {Label, MultiDataSet} from 'ng2-charts';
-import {BaseComponent} from '../../../shared/components/base.component';
-
-momentFormat(moment);
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-statistics',
@@ -14,43 +11,66 @@ momentFormat(moment);
   styleUrls: ['./statistics.component.scss']
 })
 export class StatisticsComponent extends BaseComponent implements OnInit {
-  tasks: ITasks[] = [];
+  data: ITasks[] = [];
   public chartData: MultiDataSet = [];
   public chartLabels: Label[] = [];
   loading: boolean = true;
+  queryLine: string = '';
+  currentType: string = 'worker';
+  currentAverageParams: { average: string } = null;
+  btnTypes: any[] = [
+    {
+      name: 'worker',
+      text: 'I am worker'
+    },
+    {
+      name: 'owner',
+      text: 'I am owner of task'
+    },
+    {
+      name: 'owner-project',
+      text: 'I am owner of project'
+    },
+  ];
+  btnAverage: any[] = [
+    {
+      name: 'day',
+      text: 'Day'
+    },
+    {
+      name: 'week',
+      text: 'Week'
+    },
+    {
+      name: 'months',
+      text: 'Months'
+    },
+    {
+      name: '',
+      text: 'All time'
+    }
+  ];
 
   constructor(public statisticsService: StatisticsService) {
     super();
   }
 
-  ngOnInit() {
-    this.getStats();
-  }
-
-  getTime(time) {
-    // @ts-ignore
-    return moment.duration(time).format('HH:mm:ss', {trim: false});
-  }
-
-  getStats() {
+  ngOnInit(): void {
     this.route.queryParamMap.subscribe(queries => {
       // @ts-ignore
-      this.updateStatsWithParams(queries.params);
+      this.currentAverageParams = queries.params;
+      this.updateStatsWithParams();
     });
-
   }
 
-  getStatsWithAverage(query = '') {
-    this.router.navigate(
-      [],
-      {
-        relativeTo: this.route,
-        queryParams: {average: query},
-        queryParamsHandling: 'merge'
-      });
+  changeAndUpdateData(type) {
+    this.loading = true;
+    this.currentType = type;
+    this.getStatistics();
   }
 
-  updateStatsWithParams(params) {
+  updateStatsWithParams() {
+    const params = this.currentAverageParams;
     this.loading = true;
     let queryLine = '?';
     for (let query in params) {
@@ -61,11 +81,36 @@ export class StatisticsComponent extends BaseComponent implements OnInit {
     if (queryLine.length === 1) {
       queryLine = '';
     }
-    this.statisticsService.getStats(queryLine).subscribe((res) => {
-      this.tasks = res;
-      this.chartLabels = this.tasks.map((task) => task.name);
-      this.chartData = [this.tasks.map((task) => task.total)];
-      this.loading = false;
+    this.queryLine = queryLine;
+    this.changeAndUpdateData(this.currentType);
+  }
+
+  getTime(time) {
+    // @ts-ignore
+    return moment.duration(time).format('HH:mm:ss', {trim: false});
+  }
+
+  getStatistics() {
+    this.data = [];
+    this.statisticsService.getStats(this.currentType, this.queryLine).subscribe((res) => {
+      this.data = res;
+      this.createChart();
     });
+  }
+
+  createChart() {
+    this.chartLabels = this.data.map((task) => task.name);
+    this.chartData = [this.data.map((task) => task.total)];
+    this.loading = false;
+  }
+
+  getStatsWithAverage(query = '') {
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.route,
+        queryParams: {average: query},
+        queryParamsHandling: 'merge'
+      });
   }
 }
