@@ -1,8 +1,8 @@
 # MtApp-Timer
 
-Here backend [https://github.com/drunkerbull/timer-back](https://github.com/drunkerbull/timer-back)
+Here backend [https://github.com/drunkerbull/timer-back](https://github.com/drunkerbull/timer-back). Work on Express with MongoDB
 
-Here frontend [https://github.com/drunkerbull/timerfront](https://github.com/drunkerbull/timer-front)
+Here frontend [https://github.com/drunkerbull/timer-front](https://github.com/drunkerbull/timer-front). Work on Angular2+
 
 Demo on heroku [https://mtapp-timer.herokuapp.com](https://mtapp-timer.herokuapp.com). The site is located on a free hosting, so the page loading speed is not very fast
 
