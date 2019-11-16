@@ -103,6 +103,17 @@
     border: 0;
     font-family: $fontHind;
 
+    &--white{
+      color: white;
+
+      &__active {
+        color: $blue
+      }
+
+      &:hover {
+        color: $blue
+      }
+    }
     &--blue {
       color: $black;
 

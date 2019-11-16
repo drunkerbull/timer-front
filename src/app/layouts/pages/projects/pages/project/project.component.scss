@@ -21,15 +21,19 @@
 .project-info-box {
   display: flex;
   align-items: center;
-  width: 80%;
   justify-content: space-between;
-
+  max-width: 50%;
+  width: 50%;
+  app-drop{
+    display: block;
+    width: 100%;
+  }
   h1 {
     line-height: 34px;
     font-size: 34px;
     margin-bottom: 0;
     overflow: hidden;
-    max-width: 70%;
+    max-width: 85%;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
@@ -41,7 +45,10 @@
 
 .project-info-control {
   display: flex;
-
+  max-width: 50%;
+  width: 50%;
+  justify-content: flex-end;
+  align-items: center;
   button {
     margin-left: 8px;
   }

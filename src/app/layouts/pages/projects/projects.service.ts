@@ -35,8 +35,15 @@ export class ProjectsService {
       .pipe(map(resp => resp as IProject));
   }
 
-  getTasksOfProject(id) {
-    return this.baseHttp.get('/projects/' + id + '/tasks')
+  getTasksOfProject(id, options) {
+    let query = '';
+    if (options) {
+      query = '?';
+      for (let item in options) {
+        query = query + item + '=' + options[item] + '&';
+      }
+    }
+    return this.baseHttp.get('/projects/' + id + '/tasks' + query)
       .pipe(map(resp => resp as any));
   }
 

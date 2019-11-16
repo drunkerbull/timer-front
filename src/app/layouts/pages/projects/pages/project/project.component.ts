@@ -6,7 +6,7 @@ import {ProjectsService} from '../../projects.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import * as moment from 'moment';
 import * as momentFormat from 'moment-duration-format';
-import {interval} from 'rxjs';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 
 momentFormat(moment);
 
@@ -28,6 +28,8 @@ export class ProjectComponent extends BaseComponent implements OnInit {
   timerNow: string = '00:00:00';
   newWorker: string = '';
   changeProjectMode: boolean = false;
+  options: any = {skip: 0, type: 'all'};
+  searchTasks: FormControl = new FormControl('');
 
   constructor(public activatedRoute: ActivatedRoute, public projectsService: ProjectsService) {
     super();
@@ -105,23 +107,39 @@ export class ProjectComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     const subData = this.activatedRoute.data.subscribe((project: { project: IProject }) => {
       this.project = project.project;
-      this.loading = true;
+      this.project.tasks = [];
       this.getTasks();
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subData);
-
-
     const subscribeTimerInterval = this.projectsService.timerTimeout.subscribe(el => this.updateTimer());
     this.someSubscriptions.add(subscribeTimerInterval);
+
+    const subSearch = this.searchTasks.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe((value) => {
+      this.options = {...this.options, skip: 0, search: value};
+      this.project.tasks = [];
+      this.getTasks();
+    });
+    this.someSubscriptions.add(subSearch);
   }
 
+  changeType(type) {
+    if (this.options.type !== 'all') {
+      type = 'all';
+    }
+    this.options = {...this.options, skip: 0, type};
+    this.project.tasks = [];
+    this.getTasks();
+  }
+
+
   getTasks() {
-    const subDataTasks = this.projectsService.getTasksOfProject(this.project._id).subscribe((tasks: any) => {
-      this.project.tasks = tasks.reverse();
+    this.loading = true;
+    const subDataTasks = this.projectsService.getTasksOfProject(this.project._id, this.options).subscribe((tasks: any) => {
+      this.project.tasks = [...this.project.tasks, ...tasks];
+      this.options.skip = this.options.skip + tasks.length;
       this.loading = false;
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subDataTasks);
-
   }
 
   updateTimer() {

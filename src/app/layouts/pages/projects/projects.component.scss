@@ -77,9 +77,9 @@
       a {
         margin: 10px 0;
         padding: 16px;
-        min-height: 80px;
+        min-height: 108px;
         display: flex;
-        justify-content: center;
+        justify-content: space-evenly;
         background: white;
         //border-radius: 2px;
         //box-shadow: $shadow;
@@ -112,6 +112,8 @@
           margin: 0;
           font-family: $fontHind;
           margin-bottom: 8px;
+          padding-right: 36px;
+          line-height: 36px;
           transition: 300ms;
         }
       }

@@ -36,4 +36,17 @@ svg-icon {
   .workers-list {
     color: white
   }
+
+  &.drop-tip {
+    .content {
+      color: white;
+      background: $darkgrey;
+      padding: 16px;
+
+      b {
+        font-family: $fontTeko;
+        font-size: 34px;
+      }
+    }
+  }
 }

@@ -3,7 +3,7 @@
     <div class="add-project-header">
       <div>
         <button class="btn btn__link btn__link--blue" [ngClass]="{ 'btn__link--blue__active':options.type ==='all'}" (click)="changeType('all')">All projects</button>
-        <button class="btn btn__link btn__link--blue" [ngClass]="{ 'btn__link--blue__active':options.type ==='owner'}"  (click)="changeType('owner')">Owner</button>
+        <button class="btn btn__link btn__link--blue" [ngClass]="{ 'btn__link--blue__active':options.type ==='owner'}"  (click)="changeType('owner')">My projects</button>
       </div>
       <div>
         <app-drop>

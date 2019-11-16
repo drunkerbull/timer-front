@@ -12,6 +12,7 @@ export class DropComponent implements OnInit {
   @ViewChild('dropContent', {static: true}) dropContent: ElementRef;
   @Input() position: string = 'top right';
   @Input() classes: string = '';
+  @Input() openOn: string = 'click';
 
   constructor() {
   }
@@ -23,6 +24,7 @@ export class DropComponent implements OnInit {
       position: this.position,
       classes: this.classes,
       remove: true,
+      openOn: this.openOn,
       constrainToScrollParent: true,
       constrainToWindow: true
     });
