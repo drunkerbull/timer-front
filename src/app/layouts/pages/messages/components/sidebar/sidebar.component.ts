@@ -9,6 +9,7 @@ import {Room} from '../../../../../shared/models/room.model';
 import {BaseComponent} from '../../../../../shared/components/base.component';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-sidebar',
@@ -70,8 +71,14 @@ export class SidebarComponent extends BaseComponent implements OnInit {
   }
 
   onRooms(rooms: IRoom[]) {
-    this.rooms = rooms.map((room: IRoom) => new Room(room, this.storageService.user));
+    this.createAndSortingRooms(rooms);
     this.checkLink();
+  }
+
+  createAndSortingRooms(rooms = this.rooms) {
+    this.rooms = rooms
+      .map((room: IRoom) => new Room(room, this.storageService.user))
+      .sort((a: IRoom, b: IRoom) => moment(b.updatedAt).diff(moment(a.updatedAt)));
   }
 
   onRoom(room: IRoom) {
@@ -87,9 +94,12 @@ export class SidebarComponent extends BaseComponent implements OnInit {
     this.rooms.map((room: IRoom) => {
       if (typeof message.owner !== 'string' && room._id === message.room) {
         room.read = [message.owner._id];
+        room.updatedAt = message.updatedAt;
+        this.createAndSortingRooms();
       }
     });
   }
+
 
   checkLink() {
     const subData = this.activatedRoute.data.subscribe((id: any) => {

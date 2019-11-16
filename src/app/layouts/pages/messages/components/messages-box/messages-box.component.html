@@ -1,13 +1,13 @@
 <div *ngIf="currentRoom" class="messages-box">
   <div class="messages">
-    <ul>
-      <li *ngFor="let message of currentRoom.messages"
+    <ul infiniteScroll #messagebox
+        [infiniteScrollDistance]="2"
+        [infiniteScrollThrottle]="50"
+        [scrollWindow]="false"
+        (scrolledUp)="loadMoreMessages()">
+      <li *ngFor="let message of currentRoom.messages.reverse()"
           [class.owner]="message.owner === storageService.user._id">
-        <div class="message-avatar">
-          <div class="avatar"><img [src]="currentRoom.objectGroup[message.owner].avatar" alt=""></div>
-        </div>
         <div class="message-text">
-          <b class="message-name">{{currentRoom.objectGroup[message.owner].nickname}}</b>
           <p>{{message.text}}</p>
         </div>
 

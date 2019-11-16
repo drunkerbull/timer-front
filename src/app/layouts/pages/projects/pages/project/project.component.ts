@@ -176,10 +176,13 @@ export class ProjectComponent extends BaseComponent implements OnInit {
     const pack = {timerStarted: '', total};
     const updateTimerStop = this.projectsService.updateTask(task._id, pack).subscribe((resTask) => {
       task.timerStarted = null;
-      task.total = total;
-      this.toastr.info('Timer stop', task.name);
+      if (total - task.total > 10000) {
+        task.total = total;
+        this.toastr.info('Timer stop', task.name);
+      } else {
+        this.toastr.info('Timer stopped, but not saved. You can save time if it is more than 10 seconds', task.name);
+      }
       this.projectsService.toggleUserTimer(task).subscribe(user => this.storageService.saveUser(user));
-
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(updateTimerStop);
   }

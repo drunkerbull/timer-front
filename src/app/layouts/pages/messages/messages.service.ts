@@ -26,6 +26,14 @@ export class MessagesService {
     return this.socketService.listen('onRoom');
   }
 
+  onLoadMoreMessages(): Observable<any> {
+    return this.socketService.listen('onLoadMoreMessages');
+  }
+
+  loadMoreMessages(room, options) {
+    this.socketService.emit('loadMoreMessages', {room, options});
+  }
+
   onNotiMessage(): Observable<IMessage> {
     return this.socketService.listen('onNotiMessage');
   }

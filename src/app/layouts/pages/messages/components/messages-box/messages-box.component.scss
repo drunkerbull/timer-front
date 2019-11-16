@@ -1,3 +1,5 @@
+@import "~src/assets/scss/variables";
+
 :host {
   display: block;
   width: 75%;
@@ -24,32 +26,32 @@
     overflow-y: auto;
 
     li {
-      padding-top: 16px;
-      padding-bottom: 16px;
+      padding: 16px;
       display: flex;
-      align-items: center;
-
-      .message-avatar {
-        width: 15%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        .avatar {
-          height: 40px;
-          overflow: hidden;
-          width: 40px;
-          border-radius: 100%;
-        }
-      }
+      flex-flow: column;
+      min-height: 60px;
+      box-shadow: $shadow;
+      border-radius: 2px;
+      align-items: flex-start;
+      justify-content: space-between;
+      max-width: 50%;
+      background: $black;
+      margin: 16px;
+      color: white;
 
       .message-text {
         width: 85%;
         padding-right: 16px;
       }
 
+      .message-time {
+        font-size: 10px;
+        font-style: italic;
+      }
+
       &.owner {
-        background: slategray;
+        margin-left: auto;
+        background: $blue;
       }
     }
   }

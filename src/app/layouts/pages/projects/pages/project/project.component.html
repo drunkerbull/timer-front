@@ -101,7 +101,7 @@
             <p>Worker: {{task.worker.nickname}}</p>
           </div>
           <div>
-            <button (click)="deleteTask(task,i)">Delete</button>
+            <button *ngIf="task.worker._id === storageService.user._id || task.owner._id === storageService.user._id" (click)="deleteTask(task,i)">Delete</button>
           </div>
         </div>
         <br>
