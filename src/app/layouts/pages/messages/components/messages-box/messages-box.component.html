@@ -5,7 +5,7 @@
         [infiniteScrollThrottle]="50"
         [scrollWindow]="false"
         (scrolledUp)="loadMoreMessages()">
-      <li *ngFor="let message of currentRoom.messages.reverse()"
+      <li *ngFor="let message of currentRoom.messages"
           [class.owner]="message.owner === storageService.user._id">
         <div class="message-text">
           <p>{{message.text}}</p>

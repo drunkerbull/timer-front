@@ -29,6 +29,7 @@ export class MessagesBoxComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     const subOnRoom = this.messagesService.onRoom().subscribe((room: IRoom) => {
       this.currentRoom = new Room(room);
+      this.currentRoom.messages = this.currentRoom.messages.reverse()
       this.options.skip = this.currentRoom.messages.length;
       this.boxScrollDown();
     }, (err) => this.errorHandlingService.showError(err));
@@ -36,14 +37,14 @@ export class MessagesBoxComponent extends BaseComponent implements OnInit {
 
     this.messagesService.onLoadMoreMessages().subscribe((room: IRoom) => {
       this.options.skip = this.options.skip + room.messages.length;
-      this.currentRoom.messages = [...this.currentRoom.messages, ...room.messages];
+      this.currentRoom.messages = [ ...room.messages.reverse(),...this.currentRoom.messages];
     });
   }
 
   boxScrollDown() {
-    setTimeout(() => {
-      this.messagebox.nativeElement.scrollTo(0, this.messagebox.nativeElement.scrollHeight);
-    });
+      setTimeout(() => {
+        this.messagebox.nativeElement.scrollTo(0, this.messagebox.nativeElement.scrollHeight);
+      });
   }
 
   loadMoreMessages() {
@@ -51,7 +52,7 @@ export class MessagesBoxComponent extends BaseComponent implements OnInit {
   }
 
   sendMessage() {
-    if(this.form.get('message').value.trim().length===0){
+    if (this.form.get('message').value.trim().length === 0) {
       this.toastr.error('You cant send empty message');
       return;
     }
@@ -61,7 +62,7 @@ export class MessagesBoxComponent extends BaseComponent implements OnInit {
       owner: this.storageService.user._id,
       text: this.form.get('message').value
     };
-    this.currentRoom.messages.unshift(message);
+    this.currentRoom.messages.push(message);
     this.messagesService.sendMessage(message);
     this.form.reset();
     this.boxScrollDown();
