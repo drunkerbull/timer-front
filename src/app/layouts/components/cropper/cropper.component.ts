@@ -17,7 +17,10 @@ export class CropperComponent {
 
 
   onFileChange(img) {
-    var reader = new FileReader();
+    this.currentImg = null;
+    this.cropper = null;
+    let reader = new FileReader();
+
     reader.onload = ((e: any) => {
       this.currentImg = e.target.result;
       setTimeout(() => {
@@ -27,7 +30,7 @@ export class CropperComponent {
         });
       }, 100);
     });
-    reader.readAsDataURL(img.target.files[0]);
+      reader.readAsDataURL(img.target.files[0]);
   }
 
   cropImg() {

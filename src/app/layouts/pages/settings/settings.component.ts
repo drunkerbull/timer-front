@@ -15,7 +15,10 @@ export class SettingsComponent extends BaseComponent implements OnInit {
   formMain: FormGroup = new FormGroup({
     name: new FormControl(''),
     surname: new FormControl(''),
-    nickname: new FormControl('')
+    nickname: new FormControl(''),
+    allCanAddMeToProject: new FormControl(''),
+    allCanWriteMe: new FormControl(''),
+    disableNotifications: new FormControl(''),
   });
   formPass: FormGroup = new FormGroup({
     currentPass: new FormControl(''),
@@ -23,6 +26,7 @@ export class SettingsComponent extends BaseComponent implements OnInit {
     repeatNewPass: new FormControl('')
   });
   changeAvatar: boolean = false;
+  loadedAvatar: boolean = false;
 
   constructor(private settingsService: SettingsService) {
     super();
@@ -30,17 +34,16 @@ export class SettingsComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.formMain.patchValue(this.storageService.user);
-
   }
 
   changeAvatarImg({base64, blob}) {
     const formData = new FormData();
     formData.append('avatar', blob);
-
+    this.loadedAvatar = true;
     const subAvatar = this.settingsService.updateAvatarData(formData).subscribe((res) => {
-      if (!this.storageService.user.haveAvatar) {
-        this.updateMain({haveAvatar: true});
-      }
+      if (!this.storageService.user.haveAvatar) this.updateMain({haveAvatar: true});
+      this.storageService.user.avatar = blob;
+      this.loadedAvatar = false;
       this.changeAvatar = false;
       this.toastr.success('Image saved');
     }, (err) => this.errorHandlingService.showError(err));

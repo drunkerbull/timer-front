@@ -10,5 +10,8 @@ export interface IUser {
   online: string,
   avatar?: string,
   haveAvatar: boolean,
-  currentTimer: ITasks|null
+  currentTimer: ITasks | null,
+  disableNotifications: boolean,
+  allCanWriteMe: boolean,
+  allCanAddMeToProject: boolean
 }

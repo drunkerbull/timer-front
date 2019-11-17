@@ -1,13 +1,13 @@
 <div class="left-side">
   <div class="avatar-box white-back" (click)="changeAvatar = !changeAvatar">
-    <img [src]="storageService.user.avatar" *ngIf="storageService.user.avatar">
+    <img [src]="storageService.user.avatar" *ngIf="storageService.user.avatar && !loadedAvatar">
     <span>Change</span>
   </div>
   <div class="statistics-box white-back">
-    <p>Count of projects: 13</p>
-    <p>Count of my projects: 13</p>
-    <p>Count of tasks: 13</p>
-    <p>Count of my tasks: 13</p>
+    <p>Count of projects: ?</p>
+    <p>Count of my projects: ?</p>
+    <p>Count of tasks: ?</p>
+    <p>Count of my tasks: ?</p>
   </div>
 </div>
 <div class="main-side">
@@ -27,6 +27,20 @@
       <label>
         <span>Nickname:</span>
         <input type="text" class="input" formControlName="nickname">
+      </label>
+      <label>
+        <span>Anyone can add me to some project</span>
+        <input type="checkbox" formControlName="allCanAddMeToProject">
+      </label>
+      <br>
+      <label>
+        <span>Anyone can write me</span>
+        <input type="checkbox" formControlName="allCanWriteMe">
+      </label>
+      <br>
+      <label>
+        <span>Disable notifications</span>
+        <input type="checkbox" formControlName="disableNotifications">
       </label>
       <button class="btn" type="submit">Save</button>
     </form>

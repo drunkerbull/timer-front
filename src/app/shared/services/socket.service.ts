@@ -24,7 +24,7 @@ export class SocketService {
       query: {token: this.storageService.userLogged}
     });
     this.listen('onNotiMessage').subscribe((message: IMessage) => {
-      if (typeof message.owner !== 'string') {
+      if (typeof message.owner !== 'string' && !this.storageService.user.disableNotifications) {
         this.toastr.info(message.text, 'SMS from ' + message.owner.nickname);
       }
     });
