@@ -35,8 +35,8 @@ export class SocketService {
     return fromEvent(this.socket, eventName);
   }
 
-  emit(eventName, data = {}) {
-    this.socket.emit(eventName, data);
+  emit(eventName, data = {}, cb?) {
+    this.socket.emit(eventName, data, cb);
   }
 
   disconnect() {

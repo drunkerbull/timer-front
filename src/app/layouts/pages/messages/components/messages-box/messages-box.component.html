@@ -5,12 +5,15 @@
         [infiniteScrollThrottle]="50"
         [scrollWindow]="false"
         (scrolledUp)="loadMoreMessages()">
-      <li *ngFor="let message of currentRoom.messages"
+      <li *ngFor="let message of currentRoom.messages; let i = index"
           [class.owner]="message.owner === storageService.user._id">
+        <div class="message-control" *ngIf="message.owner === storageService.user._id && !selectedChangeMessage">
+          <button class="btn btn--small btn--outline-gold" (click)="selectMessToChange(message)">C</button>
+          <button class="btn btn--small btn--outline-red" (click)="deleteMessage(message,i)">D</button>
+        </div>
         <div class="message-text">
           <p>{{message.text}}</p>
         </div>
-
         <div class="message-time">
           {{moment(message.createdAt).format('DD-MM-YYYY HH:mm')}}
         </div>
@@ -18,9 +21,14 @@
     </ul>
   </div>
   <div class="form">
-    <form [formGroup]="form" (ngSubmit)="sendMessage()">
+    <form [formGroup]="form" (ngSubmit)="sendMessage()" *ngIf="!selectedChangeMessage">
       <input type="text" formControlName="message">
       <button type="submit">Send</button>
+    </form>
+    <form [formGroup]="formChange" (ngSubmit)="changeMessage()" *ngIf="selectedChangeMessage">
+      <input type="text" formControlName="messageChange">
+      <button (click)="cancelChangeMessage()">Cancel</button>
+      <button type="submit">Change message</button>
     </form>
   </div>
 </div>

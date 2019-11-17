@@ -38,6 +38,14 @@
       background: $black;
       margin: 16px;
       color: white;
+      position: relative;
+
+      .message-control {
+        position: absolute;
+        display: flex;
+        right: 8px;
+        top: 8px;
+      }
 
       .message-text {
         width: 85%;

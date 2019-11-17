@@ -19,7 +19,11 @@ export class MessagesBoxComponent extends BaseComponent implements OnInit {
   form: FormGroup = new FormGroup({
     message: new FormControl('')
   });
+  formChange: FormGroup = new FormGroup({
+    messageChange: new FormControl('')
+  });
   options: any = {skip: 0};
+  selectedChangeMessage: IMessage = null;
   @ViewChild('messagebox', {static: false}) messagebox: ElementRef;
 
   constructor(public messagesService: MessagesService, public storageService: StorageService) {
@@ -29,7 +33,8 @@ export class MessagesBoxComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     const subOnRoom = this.messagesService.onRoom().subscribe((room: IRoom) => {
       this.currentRoom = new Room(room);
-      this.currentRoom.messages = this.currentRoom.messages.reverse()
+      console.log(this.currentRoom);
+      this.currentRoom.messages = this.currentRoom.messages.reverse();
       this.options.skip = this.currentRoom.messages.length;
       this.boxScrollDown();
     }, (err) => this.errorHandlingService.showError(err));
@@ -37,14 +42,36 @@ export class MessagesBoxComponent extends BaseComponent implements OnInit {
 
     this.messagesService.onLoadMoreMessages().subscribe((room: IRoom) => {
       this.options.skip = this.options.skip + room.messages.length;
-      this.currentRoom.messages = [ ...room.messages.reverse(),...this.currentRoom.messages];
+      this.currentRoom.messages = [...room.messages.reverse(), ...this.currentRoom.messages];
     });
   }
 
+  selectMessToChange(message) {
+    this.selectedChangeMessage = message;
+    this.formChange.get('messageChange').setValue(message.text);
+  }
+
+  changeMessage() {
+    this.selectedChangeMessage.text = this.formChange.get('messageChange').value;
+    this.messagesService.changeMessage(this.selectedChangeMessage);
+    this.formChange.reset();
+    this.selectedChangeMessage = null;
+  }
+
+  deleteMessage(message, i) {
+    this.messagesService.deleteMessage(message);
+    this.currentRoom.messages.splice(i, 1);
+  }
+
   boxScrollDown() {
-      setTimeout(() => {
-        this.messagebox.nativeElement.scrollTo(0, this.messagebox.nativeElement.scrollHeight);
-      });
+    setTimeout(() => {
+      this.messagebox.nativeElement.scrollTo(0, this.messagebox.nativeElement.scrollHeight);
+    });
+  }
+
+  cancelChangeMessage() {
+    this.selectedChangeMessage = null;
+    this.formChange.reset();
   }
 
   loadMoreMessages() {
@@ -56,16 +83,19 @@ export class MessagesBoxComponent extends BaseComponent implements OnInit {
       this.toastr.error('You cant send empty message');
       return;
     }
-    const message: IMessage = {
+    let message: IMessage = {
       type: 'message',
       room: this.currentRoom._id,
       owner: this.storageService.user._id,
       text: this.form.get('message').value
     };
-    this.currentRoom.messages.push(message);
-    this.messagesService.sendMessage(message);
-    this.form.reset();
-    this.boxScrollDown();
+
+    this.messagesService.sendMessage(message, (newMessage) => {
+      message._id = newMessage._id;
+      this.currentRoom.messages.push(message);
+      this.form.reset();
+      this.boxScrollDown();
+    });
   }
 
 }

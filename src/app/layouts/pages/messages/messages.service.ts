@@ -45,7 +45,12 @@ export class MessagesService {
   getRooms() {
     this.socketService.emit('rooms');
   }
-
+  changeMessage(message) {
+    this.socketService.emit('changeMessage',message);
+  }
+  deleteMessage(message) {
+    this.socketService.emit('deleteMessage',message);
+  }
   selectOrCreateRoom(user: IUser) {
     this.socketService.emit('selectOrCreateRoom', user);
   }
@@ -54,8 +59,8 @@ export class MessagesService {
     this.socketService.emit('selectRoom', room);
   }
 
-  sendMessage(message: IMessage) {
-    this.socketService.emit('message', message);
+  sendMessage(message: IMessage, cb?) {
+    this.socketService.emit('message', message,cb);
   }
 
   leaveAllRoom() {
