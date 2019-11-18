@@ -72,11 +72,11 @@ export class ProjectComponent extends BaseComponent implements OnInit {
 
   addWorker() {
     const pack = {
-      email: this.newWorker
+      nickname: this.newWorker
     };
     const subAddWorker = this.projectsService.addWorker(this.project._id, pack).subscribe(res => {
       this.project.workers.push(res);
-      this.toastr.info(pack.email, 'Invite to project');
+      this.toastr.info(pack.nickname, 'Invite to project');
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subAddWorker);
   }

@@ -1,6 +1,6 @@
 <div class="users-search">
   <form [formGroup]="form">
-    <input type="text" placeholder="search" formControlName="search">
+    <input type="text" placeholder="Write nickname..." formControlName="search">
   </form>
 </div>
 <div class="list">
@@ -22,8 +22,6 @@
         </div>
         <span class="room-name">
           {{user.nickname}}
-          <br>
-          {{user.email}}
         </span>
       </li>
     </ul>

@@ -12,6 +12,7 @@ export interface IUser {
   haveAvatar: boolean,
   currentTimer: ITasks | null,
   disableNotifications: boolean,
-  allCanWriteMe: boolean,
-  allCanAddMeToProject: boolean
+  blockEveryoneWhoWantWriteMe: boolean,
+  blockEveryoneWhoWantAddMeToProject: boolean,
+  blackList:string[]
 }

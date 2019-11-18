@@ -33,7 +33,6 @@ export class MessagesBoxComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     const subOnRoom = this.messagesService.onRoom().subscribe((room: IRoom) => {
       this.currentRoom = new Room(room);
-      console.log(this.currentRoom);
       this.currentRoom.messages = this.currentRoom.messages.reverse();
       this.options.skip = this.currentRoom.messages.length;
       this.boxScrollDown();

@@ -14,9 +14,11 @@ export class User implements IUser {
   avatar: string = null;
   haveAvatar: boolean = false;
   currentTimer: ITasks | null = null;
-  allCanAddMeToProject: boolean = false;
-  allCanWriteMe: boolean = false;
+  blockEveryoneWhoWantAddMeToProject: boolean = false;
+  blockEveryoneWhoWantWriteMe: boolean = false;
   disableNotifications: boolean = false;
+  blackList: string[] = [];
+
   constructor(data: IUser, token?: string) {
     Object.assign(this, data);
     if (token) {

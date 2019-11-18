@@ -16,8 +16,8 @@ export class SettingsComponent extends BaseComponent implements OnInit {
     name: new FormControl(''),
     surname: new FormControl(''),
     nickname: new FormControl(''),
-    allCanAddMeToProject: new FormControl(''),
-    allCanWriteMe: new FormControl(''),
+    blockEveryoneWhoWantAddMeToProject: new FormControl(''),
+    blockEveryoneWhoWantWriteMe: new FormControl(''),
     disableNotifications: new FormControl(''),
   });
   formPass: FormGroup = new FormGroup({

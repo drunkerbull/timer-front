@@ -29,13 +29,13 @@
         <input type="text" class="input" formControlName="nickname">
       </label>
       <label>
-        <span>Anyone can add me to some project</span>
-        <input type="checkbox" formControlName="allCanAddMeToProject">
+        <span>Block everyone who want add me to project</span>
+        <input type="checkbox" formControlName="blockEveryoneWhoWantAddMeToProject">
       </label>
       <br>
       <label>
-        <span>Anyone can write me</span>
-        <input type="checkbox" formControlName="allCanWriteMe">
+        <span>Block everyone who want write me</span>
+        <input type="checkbox" formControlName="blockEveryoneWhoWantWriteMe">
       </label>
       <br>
       <label>
@@ -61,5 +61,18 @@
       </label>
       <button class="btn" type="submit">Save</button>
     </form>
+  </div>
+  <div class="white-back">
+    <h4>Black list:</h4>
+    <ul *ngIf="storageService.user.blackList.length; else blacklistempty">
+      <li></li>
+    </ul>
+    <ng-template #blacklistempty>
+      <p>Yea, black list is empty! Hmm...</p>
+    </ng-template>
+    <label>
+      <span>Add:</span>
+      <input type="password" class="input" placeholder="Write nickname..." formControlName="repeatNewPass">
+    </label>
   </div>
 </div>

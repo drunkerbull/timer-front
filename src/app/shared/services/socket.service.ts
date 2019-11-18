@@ -28,7 +28,9 @@ export class SocketService {
         this.toastr.info(message.text, 'SMS from ' + message.owner.nickname);
       }
     });
-
+    this.listen('catchError').subscribe((error: any) => {
+        this.toastr.error(error);
+    });
   }
 
   listen(eventName: string): Observable<any> {
