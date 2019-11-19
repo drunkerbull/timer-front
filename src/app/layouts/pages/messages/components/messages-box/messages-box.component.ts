@@ -78,7 +78,7 @@ export class MessagesBoxComponent extends BaseComponent implements OnInit {
   }
 
   sendMessage() {
-    if (this.form.get('message').value.trim().length === 0) {
+    if (!this.form.get('message').value || this.form.get('message').value.trim().length === 0) {
       this.toastr.error('You cant send empty message');
       return;
     }
@@ -88,13 +88,14 @@ export class MessagesBoxComponent extends BaseComponent implements OnInit {
       owner: this.storageService.user._id,
       text: this.form.get('message').value
     };
+    this.form.reset();
 
     this.messagesService.sendMessage(message, (newMessage) => {
       message._id = newMessage._id;
       this.currentRoom.messages.push(message);
-      this.form.reset();
       this.boxScrollDown();
     });
+
   }
 
 }

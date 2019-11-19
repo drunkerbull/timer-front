@@ -64,15 +64,22 @@
   </div>
   <div class="white-back">
     <h4>Black list:</h4>
-    <ul *ngIf="storageService.user.blackList.length; else blacklistempty">
-      <li></li>
+    <ul *ngIf="blackList.length; else blacklistempty">
+      <li *ngFor="let user of blackList;let i = index">
+        {{user.nickname}}
+        <button (click)="deleteBlackList(user, i)">Delete</button>
+      </li>
     </ul>
     <ng-template #blacklistempty>
-      <p>Yea, black list is empty! Hmm...</p>
+      <p>Yea, black list is empty! Hmm... Where Zinka Shamana?</p>
     </ng-template>
-    <label>
-      <span>Add:</span>
-      <input type="password" class="input" placeholder="Write nickname..." formControlName="repeatNewPass">
-    </label>
+      <label>
+        <span>Add:</span>
+        <input type="text" class="input" placeholder="Write nickname..." [(ngModel)]="newBlackListUser">
+      </label>
+      <button (click)="addBlackList()">Add User</button>
+    <form [formGroup]="formMain" (ngSubmit)="updateMain()">
+      <button class="btn" type="submit">Save</button>
+    </form>
   </div>
 </div>

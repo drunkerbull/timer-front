@@ -14,5 +14,5 @@ export interface IUser {
   disableNotifications: boolean,
   blockEveryoneWhoWantWriteMe: boolean,
   blockEveryoneWhoWantAddMeToProject: boolean,
-  blackList:string[]
+  blackList:IUser[]
 }

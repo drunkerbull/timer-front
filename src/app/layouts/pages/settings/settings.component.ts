@@ -27,6 +27,8 @@ export class SettingsComponent extends BaseComponent implements OnInit {
   });
   changeAvatar: boolean = false;
   loadedAvatar: boolean = false;
+  newBlackListUser: string = '';
+  blackList: IUser[] = [];
 
   constructor(private settingsService: SettingsService) {
     super();
@@ -34,6 +36,7 @@ export class SettingsComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.formMain.patchValue(this.storageService.user);
+    this.getBlackList();
   }
 
   changeAvatarImg({base64, blob}) {
@@ -74,5 +77,34 @@ export class SettingsComponent extends BaseComponent implements OnInit {
         this.toastr.success('User deleted');
       }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subDelete);
+  }
+
+
+  getBlackList() {
+    const subGetUserBlackList = this.settingsService.getBlackList().subscribe((user: IUser) => {
+      this.blackList = user.blackList;
+      if (!user.blackList) this.blackList = [];
+    }, (err) => this.errorHandlingService.showError(err));
+    this.someSubscriptions.add(subGetUserBlackList);
+  }
+
+  addBlackList() {
+    if (!this.newBlackListUser.trim().length) {
+      this.toastr.error('You cant send empty value');
+      return;
+    }
+    const subAddUserBlackList = this.settingsService.addBlackList(this.newBlackListUser).subscribe((user: IUser) => {
+      this.blackList.push(user);
+      this.toastr.info('User added to black list', 'Black List');
+    }, (err) => this.errorHandlingService.showError(err));
+    this.someSubscriptions.add(subAddUserBlackList);
+  }
+
+  deleteBlackList(user, index) {
+    const subDeleteUserBlackList = this.settingsService.deleteBlackList(user._id).subscribe((res: { message: string }) => {
+      this.toastr.info(res.message, 'Black List');
+      this.blackList.splice(index, 1);
+    }, (err) => this.errorHandlingService.showError(err));
+    this.someSubscriptions.add(subDeleteUserBlackList);
   }
 }

@@ -17,7 +17,7 @@ export class User implements IUser {
   blockEveryoneWhoWantAddMeToProject: boolean = false;
   blockEveryoneWhoWantWriteMe: boolean = false;
   disableNotifications: boolean = false;
-  blackList: string[] = [];
+  blackList: IUser[] = [];
 
   constructor(data: IUser, token?: string) {
     Object.assign(this, data);

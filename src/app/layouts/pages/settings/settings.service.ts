@@ -36,4 +36,18 @@ export class SettingsService {
       .pipe(map(resp => resp as any));
   }
 
+  getBlackList() {
+    return this.baseHttp.get('/blacklist')
+      .pipe(map(resp => resp as IUser));
+  }
+
+  addBlackList(nickname: string) {
+    return this.baseHttp.post('/blacklist', {nickname})
+      .pipe(map(resp => resp as IUser));
+  }
+
+  deleteBlackList(id: string) {
+    return this.baseHttp.delete('/blacklist/' + id)
+      .pipe(map(resp => resp as { message: string }));
+  }
 }
