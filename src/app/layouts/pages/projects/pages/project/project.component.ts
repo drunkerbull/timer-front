@@ -7,6 +7,8 @@ import {FormControl, FormGroup} from '@angular/forms';
 import * as moment from 'moment';
 import * as momentFormat from 'moment-duration-format';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {ITime} from '../../../../../shared/interfaces/ITime.interface';
+import {ITasks} from '../../../../../shared/interfaces/ITasks.interface';
 
 momentFormat(moment);
 
@@ -30,6 +32,7 @@ export class ProjectComponent extends BaseComponent implements OnInit {
   changeProjectMode: boolean = false;
   options: any = {skip: 0, type: 'all'};
   searchTasks: FormControl = new FormControl('');
+  moment = moment;
 
   constructor(public activatedRoute: ActivatedRoute, public projectsService: ProjectsService) {
     super();
@@ -92,7 +95,7 @@ export class ProjectComponent extends BaseComponent implements OnInit {
       total: 0,
       project: this.project._id
     };
-    if(!pack.name || !pack.worker){
+    if (!pack.name || !pack.worker) {
       this.toastr.error('Nickname and Worker are required');
       return;
     }
@@ -155,23 +158,13 @@ export class ProjectComponent extends BaseComponent implements OnInit {
 
   updateTimer() {
     this.timerNow = this.storageService.user && this.storageService.user.currentTimer
-      ? this.getTime(moment.duration(moment().diff(moment(this.storageService.user.currentTimer.timerStarted))))
+      ? this.getTime(moment.duration(moment().diff(moment(this.storageService.user.currentTimer.start))))
       : '00:00:00';
   }
 
   getTime(time) {
     // @ts-ignore
     return moment.duration(time).format('HH:mm:ss', {trim: false});
-  }
-
-  startTimer(task) {
-    const time = moment().format();
-    const updateTimerStart = this.projectsService.updateTask(task._id, {timerStarted: time}).subscribe((resTask) => {
-      task.timerStarted = time;
-      this.toastr.info('Timer started');
-      this.projectsService.toggleUserTimer(task).subscribe(user => this.storageService.saveUser(user));
-    }, (err) => this.errorHandlingService.showError(err));
-    this.someSubscriptions.add(updateTimerStart);
   }
 
   deleteTask(task, i) {
@@ -182,19 +175,37 @@ export class ProjectComponent extends BaseComponent implements OnInit {
     this.someSubscriptions.add(updateTaskDelete);
   }
 
-  stopTimer(task) {
-    const total = task.total + moment().diff(moment(task.timerStarted));
-    const pack = {timerStarted: '', total};
-    const updateTimerStop = this.projectsService.updateTask(task._id, pack).subscribe((resTask) => {
-      task.timerStarted = null;
-      if (total - task.total > 10000) {
-        task.total = total;
-        this.toastr.info('Timer stop', task.name);
-      } else {
-        this.toastr.info('Timer stopped, but not saved. You can save time if it is more than 10 seconds', task.name);
-      }
-      this.projectsService.toggleUserTimer(task).subscribe(user => this.storageService.saveUser(user));
+
+  startTimer(task) {
+    const pack: ITime = {task: task._id, start: moment().format()};
+    const subCreateTimer = this.projectsService.createTime(pack).subscribe((time: ITime) => {
+      this.toastr.info('Timer started');
+      const user = this.storageService.user;
+      user.currentTimer = time;
+      this.storageService.saveUser(user);
     }, (err) => this.errorHandlingService.showError(err));
-    this.someSubscriptions.add(updateTimerStop);
+    this.someSubscriptions.add(subCreateTimer);
+  }
+
+  changeTime(currentTime) {
+    const pack: ITime = {start: '', end: ''};
+    const subCreateTimer = this.projectsService.changeTime(this.storageService.user.currentTimer._id, pack).subscribe((time: ITime) => {
+      currentTime = time;
+    }, (err) => this.errorHandlingService.showError(err));
+    this.someSubscriptions.add(subCreateTimer);
+  }
+
+
+  stopTimer() {
+    const pack: ITime = {end: moment().format()};
+    const subStopTimer = this.projectsService.changeTime(this.storageService.user.currentTimer._id, pack).subscribe((time: ITime) => {
+      this.toastr.info('Timer stopped');
+      const currentTask = this.project.tasks.find((task: ITasks) => task._id === time.task);
+      currentTask.times.push(time);
+      const user = this.storageService.user;
+      user.currentTimer = null;
+      this.storageService.saveUser(user);
+    }, (err) => this.errorHandlingService.showError(err));
+    this.someSubscriptions.add(subStopTimer);
   }
 }

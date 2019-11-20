@@ -17,7 +17,9 @@
       </div>
       <div class="project-info-control">
         <input type="text" placeholder="Write name of task" [formControl]="searchTasks">
-        <button class="btn btn__link btn__link--blue"  [ngClass]="{ 'btn__link--blue__active':options.type ==='owner'}"  (click)="changeType('owner')">Show Only My Tasks</button>
+        <button class="btn btn__link btn__link--blue" [ngClass]="{ 'btn__link--blue__active':options.type ==='owner'}"
+                (click)="changeType('owner')">Show Only My Tasks
+        </button>
         <app-drop>
           <div class="target">
             <button class="btn btn--outline-blue btn-add-project"> add Task</button>
@@ -100,8 +102,21 @@
             <p>Worker: {{task.worker.nickname}}</p>
           </div>
           <div>
-            <button *ngIf="task.worker._id === storageService.user._id || task.owner._id === storageService.user._id" (click)="deleteTask(task,i)">Delete</button>
+            <button *ngIf="task.worker._id === storageService.user._id || task.owner._id === storageService.user._id"
+                    (click)="deleteTask(task,i)">Delete
+            </button>
           </div>
+        </div>
+        <br>
+        <div>
+          Times:
+          <ul>
+            <li *ngFor="let time of task.times">
+              START: {{moment(time.start).format('DD-MM-YYYY HH:mm:ss')}} ||
+              END:  {{moment(time.end).format('DD-MM-YYYY HH:mm:ss')}} ||
+              TOTAL: {{getTime(time.total)}}
+            </li>
+          </ul>
         </div>
         <br>
         <div *ngIf="task.total">
@@ -109,14 +124,14 @@
         </div>
       </div>
       <div class="task-timer"
-           *ngIf="task.worker._id === storageService.user._id &&(task.timerStarted || (storageService.user && !storageService.user.currentTimer))">
+           *ngIf="task.worker._id === storageService.user._id">
         <div class="time">
           {{timerNow}}
         </div>
         <div class="control">
           <button *ngIf="!storageService.user.currentTimer" (click)="startTimer(task)">start</button>
-          <button *ngIf="storageService.user.currentTimer && task._id === storageService.user.currentTimer._id "
-                  (click)="stopTimer(task)">stop
+          <button *ngIf="storageService.user.currentTimer && task._id === storageService.user.currentTimer.task "
+                  (click)="stopTimer()">stop
           </button>
         </div>
       </div>

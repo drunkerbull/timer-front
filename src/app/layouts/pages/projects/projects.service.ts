@@ -3,6 +3,7 @@ import {BaseHttpService} from '../../../shared/services/base-http.service';
 import {map} from 'rxjs/operators';
 import {IProject} from '../../../shared/interfaces/IProject.interface';
 import {interval} from 'rxjs';
+import {ITime} from '../../../shared/interfaces/ITime.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -85,6 +86,22 @@ export class ProjectsService {
   toggleUserTimer(task) {
     return this.baseHttp.post('/users/me/timer', task)
       .pipe(map(resp => resp as any));
+  }
 
+
+
+  createTime(pack: ITime) {
+    return this.baseHttp.post('/time', pack)
+      .pipe(map(resp => resp as any));
+  }
+
+  changeTime(id: string, pack: ITime) {
+    return this.baseHttp.put('/time/' + id, pack)
+      .pipe(map(resp => resp as any));
+  }
+
+  deleteTime(id: string) {
+    return this.baseHttp.delete('/time/' + id)
+      .pipe(map(resp => resp as any));
   }
 }

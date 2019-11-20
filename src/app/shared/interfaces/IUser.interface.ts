@@ -1,4 +1,4 @@
-import {ITasks} from './ITasks.interface';
+import {ITime} from './ITime.interface';
 
 export interface IUser {
   _id: string,
@@ -10,7 +10,7 @@ export interface IUser {
   online: string,
   avatar?: string,
   haveAvatar: boolean,
-  currentTimer: ITasks | null,
+  currentTimer: ITime | null,
   disableNotifications: boolean,
   blockEveryoneWhoWantWriteMe: boolean,
   blockEveryoneWhoWantAddMeToProject: boolean,

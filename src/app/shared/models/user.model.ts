@@ -1,6 +1,6 @@
 import {IUser} from '../interfaces/IUser.interface';
 import {environment} from '../../../environments/environment';
-import {ITasks} from '../interfaces/ITasks.interface';
+import {ITime} from '../interfaces/ITime.interface';
 
 export class User implements IUser {
   _id: string;
@@ -10,10 +10,10 @@ export class User implements IUser {
   tokens: { token: string }[] = [];
   updatedAt: string = '';
   online: string = null;
-
+  times: ITime[] = null;
   avatar: string = null;
   haveAvatar: boolean = false;
-  currentTimer: ITasks | null = null;
+  currentTimer: ITime | null = null;
   blockEveryoneWhoWantAddMeToProject: boolean = false;
   blockEveryoneWhoWantWriteMe: boolean = false;
   disableNotifications: boolean = false;

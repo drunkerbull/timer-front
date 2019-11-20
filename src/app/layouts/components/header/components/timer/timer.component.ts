@@ -23,20 +23,20 @@ export class TimerComponent extends BaseComponent implements OnInit {
   }
 
   stopTimer() {
-    const currentTaskTimer = this.storageService.user.currentTimer;
-    const total = currentTaskTimer.total + moment().diff(moment(currentTaskTimer.timerStarted));
-    const pack = {timerStarted: '', total};
-    const updateTimerStop = this.projectsService.updateTask(currentTaskTimer._id, pack).subscribe((resTask) => {
-      this.timerNow = '00:00:00';
-      this.toastr.info('Timer stop', currentTaskTimer.name);
-      this.projectsService.toggleUserTimer(currentTaskTimer).subscribe(user => this.storageService.saveUser(user));
-    }, (err) => this.errorHandlingService.showError(err));
-    this.someSubscriptions.add(updateTimerStop);
+    // const currentTaskTimer = this.storageService.user.currentTimer;
+    // const total = currentTaskTimer.total + moment().diff(moment(currentTaskTimer.start));
+    // const pack = {timerStarted: '', total};
+    // const updateTimerStop = this.projectsService.updateTask(currentTaskTimer._id, pack).subscribe((resTask) => {
+    //   this.timerNow = '00:00:00';
+    //   this.toastr.info('Timer stop', currentTaskTimer.name);
+    //   this.projectsService.toggleUserTimer(currentTaskTimer).subscribe(user => this.storageService.saveUser(user));
+    // }, (err) => this.errorHandlingService.showError(err));
+    // this.someSubscriptions.add(updateTimerStop);
   }
 
   updateTimer() {
     this.timerNow = this.storageService.user && this.storageService.user.currentTimer
-      ? this.getTime(moment.duration(moment().diff(moment(this.storageService.user.currentTimer.timerStarted))))
+      ? this.getTime(moment.duration(moment().diff(moment(this.storageService.user.currentTimer.start))))
       : '00:00:00';
   }
 
