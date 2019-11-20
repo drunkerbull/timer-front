@@ -58,8 +58,12 @@ export class ProjectComponent extends BaseComponent implements OnInit {
     }
   }
 
-  changePicker(name, event) {
-    this.form.get(name).setValue(event);
+  changePicker(event) {
+    const dates = event.split(' to ');
+    if (dates.length === 2) {
+      this.form.get('start').setValue(dates[0]);
+      this.form.get('end').setValue(dates[1]);
+    }
   }
 
   deleteWorker(worker, i) {
@@ -82,16 +86,20 @@ export class ProjectComponent extends BaseComponent implements OnInit {
   }
 
   addTask() {
-    this.loading = true;
     const pack = {
       name: this.form.value.name,
       worker: this.project.workers[this.form.value.worker],
       total: 0,
       project: this.project._id
     };
+    if(!pack.name || !pack.worker){
+      this.toastr.error('Nickname and Worker are required');
+      return;
+    }
     if (this.form.value.start && this.form.value.end) {
       pack.total = moment(this.form.value.end, 'DD-MM-YYYY HH:mm').diff(moment(this.form.value.start, 'DD-MM-YYYY HH:mm'));
     }
+    this.loading = true;
     const subDataAddTask = this.projectsService.addTaskToProject(pack).subscribe((task: any) => {
       task.owner = this.storageService.user;
       task.worker = this.project.workers[this.form.value.worker];
@@ -100,7 +108,10 @@ export class ProjectComponent extends BaseComponent implements OnInit {
       this.openAddBox = false;
       this.form.reset();
       this.toastr.info('Task created');
-    }, (err) => this.errorHandlingService.showError(err));
+    }, (err) => {
+      this.loading = false;
+      this.errorHandlingService.showError(err);
+    });
     this.someSubscriptions.add(subDataAddTask);
   }
 

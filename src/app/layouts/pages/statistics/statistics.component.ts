@@ -18,6 +18,7 @@ export class StatisticsComponent extends BaseComponent implements OnInit {
   queryLine: string = '';
   currentType: string = 'worker';
   currentAverageParams: { average: string } = null;
+  totalTime: string = '';
   btnTypes: any[] = [
     {
       name: 'worker',
@@ -101,6 +102,9 @@ export class StatisticsComponent extends BaseComponent implements OnInit {
   createChart() {
     this.chartLabels = this.data.map((task) => task.name);
     this.chartData = [this.data.map((task) => task.total)];
+    const timers:any[] = this.chartData[0]
+    const totalTime = timers.reduce((acc, time) => acc + time);
+    this.totalTime = this.getTime(totalTime);
     this.loading = false;
   }
 

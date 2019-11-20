@@ -8,7 +8,7 @@ import flatpickr from 'flatpickr';
 })
 export class DatetimepickerComponent implements OnInit {
   @ViewChild('inputDate', {static: true}) inputDate: ElementRef;
-  @Output() changeEl: EventEmitter<any> = new EventEmitter();
+  @Output() changeEl: EventEmitter<string> = new EventEmitter();
   @Input() placeholder: string = '';
 
   constructor() {
@@ -18,6 +18,8 @@ export class DatetimepickerComponent implements OnInit {
     const self = this;
     flatpickr(this.inputDate.nativeElement, {
       enableTime: true,
+      mode: "range",
+      inline: true,
       dateFormat: 'd-m-Y H:i',
       onValueUpdate(selectedDates, dateStr, instance) {
         self.changeEl.emit(dateStr);

@@ -7,6 +7,7 @@
 </div>
 <div *ngIf="!loading;else loadingData">
   <app-chart [chartData]="chartData" [chartLabels]="chartLabels"></app-chart>
+  <h3>Total Time: {{totalTime}}</h3>
   <div *ngIf="currentType === 'worker'">
     <h3>All task where you Worker</h3>
     <ul>

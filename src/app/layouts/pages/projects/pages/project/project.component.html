@@ -24,11 +24,10 @@
           </div>
           <div class="content">
             <form [formGroup]="form" class=" some-back some-back--blue">
-              <div class="add-wrapper">
+              <div class="drop-add-task add-wrapper">
                 <input class="input input--big" type="text" placeholder="Name of task" formControlName="name">
-                <app-datetimepicker [placeholder]="'start'"
-                                    (changeEl)="changePicker('start',$event)"></app-datetimepicker>
-                <app-datetimepicker [placeholder]="'end'" (changeEl)="changePicker('end',$event)"></app-datetimepicker>
+                <app-datetimepicker [placeholder]="'Range date'"
+                                    (changeEl)="changePicker($event)"></app-datetimepicker>
                 <label>
                   <span>Who work on task?</span>
                   <select formControlName="worker">
