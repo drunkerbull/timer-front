@@ -1,0 +1,12 @@
+.task-main {
+  .task-main__header {
+    display: flex;
+  }
+}
+:host{
+    display: flex;
+    flex-flow: column;
+    padding: 8px;
+    flex-flow: wrap;
+    justify-content: space-between;
+}

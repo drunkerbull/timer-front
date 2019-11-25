@@ -63,10 +63,6 @@ export class ProjectsService {
       .pipe(map(resp => resp as any));
   }
 
-  updateTask(id, pack) {
-    return this.baseHttp.put('/tasks/' + id, pack)
-      .pipe(map(resp => resp as any));
-  }
 
   deleteTask(id) {
     return this.baseHttp.delete('/tasks/' + id)
@@ -82,12 +78,6 @@ export class ProjectsService {
     return this.baseHttp.delete('/projects/' + id + '/worker/' + pack._id)
       .pipe(map(resp => resp as any));
   }
-
-  toggleUserTimer(task) {
-    return this.baseHttp.post('/users/me/timer', task)
-      .pipe(map(resp => resp as any));
-  }
-
 
 
   createTime(pack: ITime) {

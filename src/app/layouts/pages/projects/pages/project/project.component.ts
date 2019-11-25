@@ -7,8 +7,6 @@ import {FormControl, FormGroup} from '@angular/forms';
 import * as moment from 'moment';
 import * as momentFormat from 'moment-duration-format';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
-import {ITime} from '../../../../../shared/interfaces/ITime.interface';
-import {ITasks} from '../../../../../shared/interfaces/ITasks.interface';
 
 momentFormat(moment);
 
@@ -27,7 +25,7 @@ export class ProjectComponent extends BaseComponent implements OnInit {
     end: new FormControl(''),
     worker: new FormControl('')
   });
-  timerNow: string = '00:00:00';
+
   newWorker: string = '';
   changeProjectMode: boolean = false;
   options: any = {skip: 0, type: 'all'};
@@ -125,8 +123,7 @@ export class ProjectComponent extends BaseComponent implements OnInit {
       this.getTasks();
     }, (err) => this.errorHandlingService.showError(err));
     this.someSubscriptions.add(subData);
-    const subscribeTimerInterval = this.projectsService.timerTimeout.subscribe(el => this.updateTimer());
-    this.someSubscriptions.add(subscribeTimerInterval);
+
 
     const subSearch = this.searchTasks.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe((value) => {
       this.options = {...this.options, skip: 0, search: value};
@@ -156,56 +153,5 @@ export class ProjectComponent extends BaseComponent implements OnInit {
     this.someSubscriptions.add(subDataTasks);
   }
 
-  updateTimer() {
-    this.timerNow = this.storageService.user && this.storageService.user.currentTimer
-      ? this.getTime(moment.duration(moment().diff(moment(this.storageService.user.currentTimer.start))))
-      : '00:00:00';
-  }
 
-  getTime(time) {
-    // @ts-ignore
-    return moment.duration(time).format('HH:mm:ss', {trim: false});
-  }
-
-  deleteTask(task, i) {
-    const updateTaskDelete = this.projectsService.deleteTask(task._id).subscribe((res) => {
-      this.project.tasks.splice(i, 1);
-      this.toastr.info('Task deleted');
-    }, (err) => this.errorHandlingService.showError(err));
-    this.someSubscriptions.add(updateTaskDelete);
-  }
-
-
-  startTimer(task) {
-    const pack: ITime = {task: task._id, start: moment().format()};
-    const subCreateTimer = this.projectsService.createTime(pack).subscribe((time: ITime) => {
-      this.toastr.info('Timer started');
-      const user = this.storageService.user;
-      user.currentTimer = time;
-      this.storageService.saveUser(user);
-    }, (err) => this.errorHandlingService.showError(err));
-    this.someSubscriptions.add(subCreateTimer);
-  }
-
-  changeTime(currentTime) {
-    const pack: ITime = {start: '', end: ''};
-    const subCreateTimer = this.projectsService.changeTime(this.storageService.user.currentTimer._id, pack).subscribe((time: ITime) => {
-      currentTime = time;
-    }, (err) => this.errorHandlingService.showError(err));
-    this.someSubscriptions.add(subCreateTimer);
-  }
-
-
-  stopTimer() {
-    const pack: ITime = {end: moment().format()};
-    const subStopTimer = this.projectsService.changeTime(this.storageService.user.currentTimer._id, pack).subscribe((time: ITime) => {
-      this.toastr.info('Timer stopped');
-      const currentTask = this.project.tasks.find((task: ITasks) => task._id === time.task);
-      currentTask.times.push(time);
-      const user = this.storageService.user;
-      user.currentTimer = null;
-      this.storageService.saveUser(user);
-    }, (err) => this.errorHandlingService.showError(err));
-    this.someSubscriptions.add(subStopTimer);
-  }
 }

@@ -30,6 +30,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
   login(data?) {
     const pack = data || this.form.value;
     const subLogin = this.homeService.login(pack).subscribe((res: IUserLogged) => {
+      console.log(res.user)
       const user = new User(res.user, res.token);
       this.storageService.saveUser(user, res.token);
       this.socketService.initSocket();

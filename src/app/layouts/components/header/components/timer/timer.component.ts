@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ProjectsService} from '../../../../pages/projects/projects.service';
 import * as moment from 'moment';
 import {BaseComponent} from '../../../../../shared/components/base.component';
-import {interval} from 'rxjs';
+import {ITime} from '../../../../../shared/interfaces/ITime.interface';
 
 @Component({
   selector: 'app-timer',
@@ -23,15 +23,14 @@ export class TimerComponent extends BaseComponent implements OnInit {
   }
 
   stopTimer() {
-    // const currentTaskTimer = this.storageService.user.currentTimer;
-    // const total = currentTaskTimer.total + moment().diff(moment(currentTaskTimer.start));
-    // const pack = {timerStarted: '', total};
-    // const updateTimerStop = this.projectsService.updateTask(currentTaskTimer._id, pack).subscribe((resTask) => {
-    //   this.timerNow = '00:00:00';
-    //   this.toastr.info('Timer stop', currentTaskTimer.name);
-    //   this.projectsService.toggleUserTimer(currentTaskTimer).subscribe(user => this.storageService.saveUser(user));
-    // }, (err) => this.errorHandlingService.showError(err));
-    // this.someSubscriptions.add(updateTimerStop);
+    const pack: ITime = {end: moment().format()};
+    const subStopTimer = this.projectsService.changeTime(this.storageService.user.currentTimer._id, pack).subscribe((time: ITime) => {
+      this.toastr.info('Timer stopped');
+      const user = this.storageService.user;
+      user.currentTimer = null;
+      this.storageService.saveUser(user);
+    }, (err) => this.errorHandlingService.showError(err));
+    this.someSubscriptions.add(subStopTimer);
   }
 
   updateTimer() {

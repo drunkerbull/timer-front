@@ -87,22 +87,7 @@
 .task-list {
   margin-top: 50px;
 
-  li {
-    display: flex;
-    flex-flow: column;
-    padding: 8px;
-    flex-flow: wrap;
-    justify-content: space-between;
 
-    .task-main {
-      .task-main__header {
-        display: flex;
-      }
-    }
-
-    .task-timer {
-    }
-  }
 }
 
 .project-tasks-box {

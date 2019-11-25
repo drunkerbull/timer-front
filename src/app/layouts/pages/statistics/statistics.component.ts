@@ -17,7 +17,7 @@ export class StatisticsComponent extends BaseComponent implements OnInit {
   loading: boolean = true;
   queryLine: string = '';
   currentType: string = 'worker';
-  currentAverageParams: { average: string } = null;
+  currentAverage: string = 'all';
   totalTime: string = '';
   btnTypes: any[] = [
     {
@@ -47,7 +47,7 @@ export class StatisticsComponent extends BaseComponent implements OnInit {
       text: 'Months'
     },
     {
-      name: '',
+      name: 'all',
       text: 'All time'
     }
   ];
@@ -57,11 +57,7 @@ export class StatisticsComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.queryParamMap.subscribe(queries => {
-      // @ts-ignore
-      this.currentAverageParams = queries.params;
-      this.updateStatsWithParams();
-    });
+    this.getStatistics();
   }
 
   changeAndUpdateData(type) {
@@ -70,8 +66,9 @@ export class StatisticsComponent extends BaseComponent implements OnInit {
     this.getStatistics();
   }
 
-  updateStatsWithParams() {
-    const params = this.currentAverageParams;
+  updateStatsWithParams(query) {
+    this.currentAverage = query;
+    const params = {average: query};
     this.loading = true;
     let queryLine = '?';
     for (let query in params) {
@@ -102,19 +99,10 @@ export class StatisticsComponent extends BaseComponent implements OnInit {
   createChart() {
     this.chartLabels = this.data.map((task) => task.name);
     this.chartData = [this.data.map((task) => task.total)];
-    const timers:any[] = this.chartData[0]
+    const timers: any[] = this.chartData[0];
     const totalTime = timers.reduce((acc, time) => acc + time);
     this.totalTime = this.getTime(totalTime);
     this.loading = false;
   }
 
-  getStatsWithAverage(query = '') {
-    this.router.navigate(
-      [],
-      {
-        relativeTo: this.route,
-        queryParams: {average: query},
-        queryParamsHandling: 'merge'
-      });
-  }
 }

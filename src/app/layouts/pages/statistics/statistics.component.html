@@ -3,7 +3,7 @@
 </div>
 <hr>
 <div>
-  <button *ngFor="let btn of btnAverage"  [class.active]="btn.name === currentAverageParams.average" (click)="getStatsWithAverage(btn.name)">{{btn.text}}</button>
+  <button *ngFor="let btn of btnAverage"  [class.active]="btn.name === currentAverage" (click)="updateStatsWithParams(btn.name)">{{btn.text}}</button>
 </div>
 <div *ngIf="!loading;else loadingData">
   <app-chart [chartData]="chartData" [chartLabels]="chartLabels"></app-chart>
@@ -16,7 +16,6 @@
         <span><b>Task owner:</b> {{task.owner.nickname}} || </span>
         <span><b>Time: </b> {{this.getTime(task.total)}} || </span>
         <span><b>Project:</b> {{task.project.name}} </span>
-        <span *ngIf="task.timerStarted" style="color:red">The timer is on!</span>
       </li>
     </ul>
   </div>
@@ -28,7 +27,6 @@
         <span><b>Task worker:</b> {{task.worker.nickname}} || </span>
         <span><b>Time: </b> {{this.getTime(task.total)}} || </span>
         <span><b>Project:</b> {{task.project.name}} </span>
-        <span *ngIf="task.timerStarted" style="color:red">The timer is on!</span>
       </li>
     </ul>
   </div>
@@ -41,7 +39,6 @@
         <span><b>Task owner:</b> {{task.owner.nickname}} || </span>
         <span><b>Task worker:</b> {{task.worker.nickname}} || </span>
         <span><b>Time: </b> {{this.getTime(task.total)}} || </span>
-        <span *ngIf="task.timerStarted" style="color:red">The timer is on!</span>
       </li>
     </ul>
   </div>

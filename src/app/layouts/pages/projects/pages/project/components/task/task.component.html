@@ -1,0 +1,49 @@
+<div class="task-main">
+  <div class="task-main__header">
+    <div>
+      <h2>{{task.name}}</h2>
+      <p>Created by: {{task.owner.nickname}}</p>
+      <p>Worker: {{task.worker.nickname}}</p>
+    </div>
+    <div>
+      <button *ngIf="task.worker._id === storageService.user._id || task.owner._id === storageService.user._id"
+              (click)="deleteTask()">Delete
+      </button>
+    </div>
+  </div>
+  <br>
+  <div>
+    Times:
+    <ul>
+      <li *ngFor="let time of task.times; let i = index">
+        START: {{moment(time.start).format('DD-MM-YYYY HH:mm:ss')}} ||
+        END:  {{moment(time.end).format('DD-MM-YYYY HH:mm:ss')}} ||
+        TOTAL: {{getTime(time.total)}} ||
+        <div *ngIf="changeMode === i">
+          <app-datetimepicker [placeholder]="'Range date'"
+                              (changeEl)="changePicker($event)"></app-datetimepicker>
+          <button (click)="saveChangeTaskTime(time)">Save Change</button>
+          <button (click)="resetChangeTaskTime()">Cancel</button>
+        </div>
+        <button *ngIf="changeMode===null" (click)="changeMode = i">Change</button>
+        <button *ngIf="changeMode===null" (click)="deleteTaskTime(time,i)">Delete</button>
+      </li>
+    </ul>
+  </div>
+  <br>
+  <div *ngIf="task.total">
+    <h4>Total:  {{getTime(task.total)}}</h4>
+  </div>
+</div>
+<div class="task-timer"
+     *ngIf="task.worker._id === storageService.user._id">
+  <div class="time">
+    {{timerNow}}
+  </div>
+  <div class="control">
+    <button *ngIf="!storageService.user.currentTimer" (click)="startTimer()">start</button>
+    <button *ngIf="storageService.user.currentTimer && task._id === storageService.user.currentTimer.task "
+            (click)="stopTimer()">stop
+    </button>
+  </div>
+</div>
