@@ -5,7 +5,7 @@ import {ITime} from './ITime.interface';
 export interface ITasks {
   _id: string,
   name: string,
-  project: string | IProject,
+  project: string,
   owner: IUser,
   total: number,
   worker: IUser,

@@ -15,7 +15,10 @@ export class SettingsService {
     return this.baseHttp.get('/users/me')
       .pipe(map(resp => resp as IUser));
   }
-
+  getStatisticsData() {
+    return this.baseHttp.get('/statistics/me')
+      .pipe(map(resp => resp as any));
+  }
   updateMainData(pack) {
     return this.baseHttp.put('/users/me', pack)
       .pipe(map(resp => resp as IUser));

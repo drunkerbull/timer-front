@@ -4,5 +4,8 @@ export interface ITime {
   end?: string,
   owner?: string,
   task?: string,
-  total?: number
+  total?: number;
+  project?:string;
+  worker?:string,
+
 }

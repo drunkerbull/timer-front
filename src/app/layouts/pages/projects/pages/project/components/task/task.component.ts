@@ -40,7 +40,12 @@ export class TaskComponent extends BaseComponent implements OnInit {
   }
 
   startTimer() {
-    const pack: ITime = {task: this.task._id, start: moment().format()};
+    const pack: ITime = {
+      task: this.task._id,
+      project: this.task.project,
+      owner: this.task.owner._id,
+      start: moment().format()
+    };
     const subCreateTimer = this.projectsService.createTime(pack).subscribe((time: ITime) => {
       this.toastr.info('Timer started');
       const user = this.storageService.user;

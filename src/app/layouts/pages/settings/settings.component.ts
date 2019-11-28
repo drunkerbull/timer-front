@@ -5,6 +5,13 @@ import {IUser} from '../../../shared/interfaces/IUser.interface';
 import {BaseComponent} from '../../../shared/components/base.component';
 import {User} from '../../../shared/models/user.model';
 
+interface IUserStatisticsData {
+  projectsOwner: number,
+  projectsWorker: number,
+  tasksOwner: number,
+  tasksWorker: number
+}
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -29,6 +36,7 @@ export class SettingsComponent extends BaseComponent implements OnInit {
   loadedAvatar: boolean = false;
   newBlackListUser: string = '';
   blackList: IUser[] = [];
+  statisticsData: IUserStatisticsData = null;
 
   constructor(private settingsService: SettingsService) {
     super();
@@ -37,6 +45,14 @@ export class SettingsComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.formMain.patchValue(this.storageService.user);
     this.getBlackList();
+    this.getStatisticsData();
+  }
+
+
+  getStatisticsData() {
+    this.settingsService.getStatisticsData().subscribe((res: IUserStatisticsData) => {
+      this.statisticsData = res;
+    });
   }
 
   changeAvatarImg({base64, blob}) {

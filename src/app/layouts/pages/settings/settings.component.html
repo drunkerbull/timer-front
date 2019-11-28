@@ -3,11 +3,12 @@
     <img [src]="storageService.user.avatar" *ngIf="storageService.user.avatar && !loadedAvatar">
     <span>Change</span>
   </div>
-  <div class="statistics-box white-back">
-    <p>Count of projects: ?</p>
-    <p>Count of my projects: ?</p>
-    <p>Count of tasks: ?</p>
-    <p>Count of my tasks: ?</p>
+  <div class="statistics-box white-back"  *ngIf="statisticsData">
+    <h3>Statistics</h3>
+    <p>Projects with me: {{statisticsData.projectsWorker}}</p>
+    <p>My Projects: {{statisticsData.projectsOwner}}</p>
+    <p>Tasks with me: {{statisticsData.tasksWorker}}</p>
+    <p>My Tasks: {{statisticsData.tasksOwner}}</p>
   </div>
 </div>
 <div class="main-side">
